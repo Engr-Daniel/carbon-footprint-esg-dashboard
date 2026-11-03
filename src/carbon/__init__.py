@@ -4,6 +4,7 @@ from .emissions import (
     load_activity,
     load_factors,
     reduction_vs_baseline,
+    select_factors,
     summarise,
 )
 
@@ -13,5 +14,6 @@ __all__ = [
     "load_activity",
     "load_factors",
     "reduction_vs_baseline",
+    "select_factors",
     "summarise",
 ]

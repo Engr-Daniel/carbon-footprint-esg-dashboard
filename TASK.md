@@ -13,13 +13,16 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [x] Streamlit dashboard: KPIs, scope breakdown, hotspots, site trends, target tracking
 - [x] README, methodology, AGENTS.md, MEMORY.md, TASK.md
 
-## 🔜 Phase 2: Credibility (next)
-- [ ] Replace indicative factors with the **latest DEFRA/DESNZ** values (record year in `source`)
-- [ ] Find and apply a current **Nigeria grid emission factor**
-- [ ] Replace the placeholder spend-based factor with **EEIO factors** (EXIOBASE/USEEIO) by spend category
-- [ ] Add a `valid_year` column to factors and support year-specific factors
-- [ ] Export key charts to `reports/figures/` and embed them in the README
-- [ ] Add a dashboard screenshot or GIF to the README
+## ✅ Phase 2: Credibility (done, 2026-11-04)
+- [x] Replace indicative factors with **DESNZ 2026** values (fuels, travel, waste, refrigerant)
+- [x] Apply a current **Nigeria grid factor**: 0.456 kgCO2e/kWh (Ember 2025)
+- [x] Replace the placeholder spend factor with a primary-sourced **EPA Supply Chain v1.3** proxy
+- [x] Add `factor_year`, `gwp_basis`, `source_url` and `verification` columns, plus year-specific factor support (`policy="latest" | "matching"`)
+- [x] Export key charts to `reports/figures/` and embed them in the README
+- [x] Add a dashboard screenshot to the README
+- [x] Update the SQL schema to support multiple factor years; check SQL total = Python total
+- [ ] Open the official DESNZ 2026 workbook and confirm the factors marked "Secondary source" *(needs a browser; **you**)*
+- [ ] Map purchased-goods spend to NAICS categories and use commodity-specific EPA factors (split the synthetic spend into e.g. raw materials, packaging, IT and services)
 
 ## 📈 Phase 3: Strategy & insight
 - [ ] Scenario modelling notebook (`02_decarbonisation_scenarios.ipynb`): solar hybrid, efficiency, travel policy, supplier engagement
