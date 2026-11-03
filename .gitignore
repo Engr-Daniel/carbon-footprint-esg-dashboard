@@ -218,3 +218,19 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- Project-specific ---
+# Data (keep raw/large files out of git; sample & reference data ARE committed)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.parquet
+*.xlsx
+
+# Secrets
+.env
+
+# OS
+.DS_Store
+Thumbs.db
