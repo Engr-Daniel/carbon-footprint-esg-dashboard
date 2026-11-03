@@ -1,0 +1,1117 @@
+period,site,activity_type,quantity,unit
+2023-01,Lagos HQ,diesel,8334.62,litre
+2023-01,Lagos HQ,petrol,1286.25,litre
+2023-01,Lagos HQ,lpg,186.5,litre
+2023-01,Lagos HQ,refrigerant_r410a,1.38,kg
+2023-01,Lagos HQ,grid_electricity_ng,64256.48,kWh
+2023-01,Lagos HQ,business_travel_air_shorthaul,21060.2,passenger_km
+2023-01,Lagos HQ,business_travel_air_longhaul,16764.81,passenger_km
+2023-01,Lagos HQ,employee_commute_car,35043.27,km
+2023-01,Lagos HQ,waste_landfill,3.91,tonne
+2023-01,Lagos HQ,purchased_goods_spend,103072.7,USD
+2023-01,Abuja Office,diesel,3662.37,litre
+2023-01,Abuja Office,petrol,751.2,litre
+2023-01,Abuja Office,lpg,85.8,litre
+2023-01,Abuja Office,refrigerant_r410a,0.68,kg
+2023-01,Abuja Office,grid_electricity_ng,31348.96,kWh
+2023-01,Abuja Office,business_travel_air_shorthaul,10134.82,passenger_km
+2023-01,Abuja Office,business_travel_air_longhaul,6870.99,passenger_km
+2023-01,Abuja Office,employee_commute_car,20535.59,km
+2023-01,Abuja Office,waste_landfill,2.19,tonne
+2023-01,Abuja Office,purchased_goods_spend,51116.98,USD
+2023-01,Port Harcourt Plant,diesel,15721.14,litre
+2023-01,Port Harcourt Plant,petrol,2860.49,litre
+2023-01,Port Harcourt Plant,natural_gas,5141.21,m3
+2023-01,Port Harcourt Plant,lpg,322.79,litre
+2023-01,Port Harcourt Plant,refrigerant_r410a,3.07,kg
+2023-01,Port Harcourt Plant,grid_electricity_ng,102705.66,kWh
+2023-01,Port Harcourt Plant,business_travel_air_shorthaul,31601.66,passenger_km
+2023-01,Port Harcourt Plant,business_travel_air_longhaul,23733.4,passenger_km
+2023-01,Port Harcourt Plant,employee_commute_car,79505.88,km
+2023-01,Port Harcourt Plant,waste_landfill,7.42,tonne
+2023-01,Port Harcourt Plant,purchased_goods_spend,235901.91,USD
+2023-02,Lagos HQ,diesel,8551.36,litre
+2023-02,Lagos HQ,petrol,1516.3,litre
+2023-02,Lagos HQ,lpg,228.39,litre
+2023-02,Lagos HQ,refrigerant_r410a,1.45,kg
+2023-02,Lagos HQ,grid_electricity_ng,60936.73,kWh
+2023-02,Lagos HQ,business_travel_air_shorthaul,21976.43,passenger_km
+2023-02,Lagos HQ,business_travel_air_longhaul,15533.34,passenger_km
+2023-02,Lagos HQ,employee_commute_car,44340.48,km
+2023-02,Lagos HQ,waste_landfill,4.09,tonne
+2023-02,Lagos HQ,purchased_goods_spend,127364.59,USD
+2023-02,Abuja Office,diesel,3454.99,litre
+2023-02,Abuja Office,petrol,688.78,litre
+2023-02,Abuja Office,lpg,93.68,litre
+2023-02,Abuja Office,refrigerant_r410a,0.66,kg
+2023-02,Abuja Office,grid_electricity_ng,27595.12,kWh
+2023-02,Abuja Office,business_travel_air_shorthaul,8803.0,passenger_km
+2023-02,Abuja Office,business_travel_air_longhaul,7000.44,passenger_km
+2023-02,Abuja Office,employee_commute_car,20814.11,km
+2023-02,Abuja Office,waste_landfill,1.92,tonne
+2023-02,Abuja Office,purchased_goods_spend,57663.26,USD
+2023-02,Port Harcourt Plant,diesel,13145.07,litre
+2023-02,Port Harcourt Plant,petrol,2511.25,litre
+2023-02,Port Harcourt Plant,natural_gas,6107.38,m3
+2023-02,Port Harcourt Plant,lpg,375.99,litre
+2023-02,Port Harcourt Plant,refrigerant_r410a,2.79,kg
+2023-02,Port Harcourt Plant,grid_electricity_ng,97344.89,kWh
+2023-02,Port Harcourt Plant,business_travel_air_shorthaul,38474.57,passenger_km
+2023-02,Port Harcourt Plant,business_travel_air_longhaul,24273.56,passenger_km
+2023-02,Port Harcourt Plant,employee_commute_car,69396.24,km
+2023-02,Port Harcourt Plant,waste_landfill,8.26,tonne
+2023-02,Port Harcourt Plant,purchased_goods_spend,225071.98,USD
+2023-03,Lagos HQ,diesel,8136.68,litre
+2023-03,Lagos HQ,petrol,1583.08,litre
+2023-03,Lagos HQ,lpg,220.57,litre
+2023-03,Lagos HQ,refrigerant_r410a,1.62,kg
+2023-03,Lagos HQ,grid_electricity_ng,55122.87,kWh
+2023-03,Lagos HQ,business_travel_air_shorthaul,17192.6,passenger_km
+2023-03,Lagos HQ,business_travel_air_longhaul,14169.54,passenger_km
+2023-03,Lagos HQ,employee_commute_car,37212.89,km
+2023-03,Lagos HQ,waste_landfill,3.65,tonne
+2023-03,Lagos HQ,purchased_goods_spend,135944.75,USD
+2023-03,Abuja Office,diesel,4451.64,litre
+2023-03,Abuja Office,petrol,708.3,litre
+2023-03,Abuja Office,lpg,104.66,litre
+2023-03,Abuja Office,refrigerant_r410a,0.73,kg
+2023-03,Abuja Office,grid_electricity_ng,33730.93,kWh
+2023-03,Abuja Office,business_travel_air_shorthaul,9876.56,passenger_km
+2023-03,Abuja Office,business_travel_air_longhaul,6970.98,passenger_km
+2023-03,Abuja Office,employee_commute_car,18479.77,km
+2023-03,Abuja Office,waste_landfill,2.04,tonne
+2023-03,Abuja Office,purchased_goods_spend,55729.35,USD
+2023-03,Port Harcourt Plant,diesel,14765.41,litre
+2023-03,Port Harcourt Plant,petrol,3022.24,litre
+2023-03,Port Harcourt Plant,natural_gas,5237.03,m3
+2023-03,Port Harcourt Plant,lpg,329.69,litre
+2023-03,Port Harcourt Plant,refrigerant_r410a,3.1,kg
+2023-03,Port Harcourt Plant,grid_electricity_ng,108308.65,kWh
+2023-03,Port Harcourt Plant,business_travel_air_shorthaul,31581.82,passenger_km
+2023-03,Port Harcourt Plant,business_travel_air_longhaul,23331.64,passenger_km
+2023-03,Port Harcourt Plant,employee_commute_car,63568.42,km
+2023-03,Port Harcourt Plant,waste_landfill,7.48,tonne
+2023-03,Port Harcourt Plant,purchased_goods_spend,234926.74,USD
+2023-04,Lagos HQ,diesel,7813.18,litre
+2023-04,Lagos HQ,petrol,1303.59,litre
+2023-04,Lagos HQ,lpg,192.9,litre
+2023-04,Lagos HQ,refrigerant_r410a,1.72,kg
+2023-04,Lagos HQ,grid_electricity_ng,60524.06,kWh
+2023-04,Lagos HQ,business_travel_air_shorthaul,22826.47,passenger_km
+2023-04,Lagos HQ,business_travel_air_longhaul,16623.51,passenger_km
+2023-04,Lagos HQ,employee_commute_car,34137.77,km
+2023-04,Lagos HQ,waste_landfill,4.26,tonne
+2023-04,Lagos HQ,purchased_goods_spend,126541.57,USD
+2023-04,Abuja Office,diesel,4044.36,litre
+2023-04,Abuja Office,petrol,697.54,litre
+2023-04,Abuja Office,lpg,104.23,litre
+2023-04,Abuja Office,refrigerant_r410a,0.66,kg
+2023-04,Abuja Office,grid_electricity_ng,29412.89,kWh
+2023-04,Abuja Office,business_travel_air_shorthaul,9861.17,passenger_km
+2023-04,Abuja Office,business_travel_air_longhaul,8521.09,passenger_km
+2023-04,Abuja Office,employee_commute_car,22255.12,km
+2023-04,Abuja Office,waste_landfill,1.86,tonne
+2023-04,Abuja Office,purchased_goods_spend,60010.55,USD
+2023-04,Port Harcourt Plant,diesel,13011.78,litre
+2023-04,Port Harcourt Plant,petrol,3034.23,litre
+2023-04,Port Harcourt Plant,natural_gas,6000.24,m3
+2023-04,Port Harcourt Plant,lpg,338.23,litre
+2023-04,Port Harcourt Plant,refrigerant_r410a,2.81,kg
+2023-04,Port Harcourt Plant,grid_electricity_ng,111530.63,kWh
+2023-04,Port Harcourt Plant,business_travel_air_shorthaul,32250.66,passenger_km
+2023-04,Port Harcourt Plant,business_travel_air_longhaul,29126.34,passenger_km
+2023-04,Port Harcourt Plant,employee_commute_car,72850.59,km
+2023-04,Port Harcourt Plant,waste_landfill,7.8,tonne
+2023-04,Port Harcourt Plant,purchased_goods_spend,217966.92,USD
+2023-05,Lagos HQ,diesel,6801.37,litre
+2023-05,Lagos HQ,petrol,1420.87,litre
+2023-05,Lagos HQ,lpg,171.17,litre
+2023-05,Lagos HQ,refrigerant_r410a,1.69,kg
+2023-05,Lagos HQ,grid_electricity_ng,66816.99,kWh
+2023-05,Lagos HQ,business_travel_air_shorthaul,21989.99,passenger_km
+2023-05,Lagos HQ,business_travel_air_longhaul,14133.81,passenger_km
+2023-05,Lagos HQ,employee_commute_car,34695.1,km
+2023-05,Lagos HQ,waste_landfill,4.45,tonne
+2023-05,Lagos HQ,purchased_goods_spend,136090.18,USD
+2023-05,Abuja Office,diesel,3502.78,litre
+2023-05,Abuja Office,petrol,746.85,litre
+2023-05,Abuja Office,lpg,87.08,litre
+2023-05,Abuja Office,refrigerant_r410a,0.81,kg
+2023-05,Abuja Office,grid_electricity_ng,32392.51,kWh
+2023-05,Abuja Office,business_travel_air_shorthaul,8885.17,passenger_km
+2023-05,Abuja Office,business_travel_air_longhaul,7444.39,passenger_km
+2023-05,Abuja Office,employee_commute_car,20298.82,km
+2023-05,Abuja Office,waste_landfill,1.86,tonne
+2023-05,Abuja Office,purchased_goods_spend,66703.79,USD
+2023-05,Port Harcourt Plant,diesel,14067.96,litre
+2023-05,Port Harcourt Plant,petrol,2466.56,litre
+2023-05,Port Harcourt Plant,natural_gas,5463.66,m3
+2023-05,Port Harcourt Plant,lpg,384.83,litre
+2023-05,Port Harcourt Plant,refrigerant_r410a,2.46,kg
+2023-05,Port Harcourt Plant,grid_electricity_ng,101899.61,kWh
+2023-05,Port Harcourt Plant,business_travel_air_shorthaul,41347.61,passenger_km
+2023-05,Port Harcourt Plant,business_travel_air_longhaul,28214.01,passenger_km
+2023-05,Port Harcourt Plant,employee_commute_car,70662.96,km
+2023-05,Port Harcourt Plant,waste_landfill,7.24,tonne
+2023-05,Port Harcourt Plant,purchased_goods_spend,191441.07,USD
+2023-06,Lagos HQ,diesel,7339.27,litre
+2023-06,Lagos HQ,petrol,1427.14,litre
+2023-06,Lagos HQ,lpg,205.3,litre
+2023-06,Lagos HQ,refrigerant_r410a,1.38,kg
+2023-06,Lagos HQ,grid_electricity_ng,54963.91,kWh
+2023-06,Lagos HQ,business_travel_air_shorthaul,17425.96,passenger_km
+2023-06,Lagos HQ,business_travel_air_longhaul,15589.96,passenger_km
+2023-06,Lagos HQ,employee_commute_car,36747.3,km
+2023-06,Lagos HQ,waste_landfill,4.49,tonne
+2023-06,Lagos HQ,purchased_goods_spend,132946.87,USD
+2023-06,Abuja Office,diesel,3485.03,litre
+2023-06,Abuja Office,petrol,691.05,litre
+2023-06,Abuja Office,lpg,105.07,litre
+2023-06,Abuja Office,refrigerant_r410a,0.69,kg
+2023-06,Abuja Office,grid_electricity_ng,26690.81,kWh
+2023-06,Abuja Office,business_travel_air_shorthaul,11306.54,passenger_km
+2023-06,Abuja Office,business_travel_air_longhaul,7659.85,passenger_km
+2023-06,Abuja Office,employee_commute_car,19836.03,km
+2023-06,Abuja Office,waste_landfill,2.17,tonne
+2023-06,Abuja Office,purchased_goods_spend,65534.95,USD
+2023-06,Port Harcourt Plant,diesel,13062.57,litre
+2023-06,Port Harcourt Plant,petrol,2373.51,litre
+2023-06,Port Harcourt Plant,natural_gas,5288.3,m3
+2023-06,Port Harcourt Plant,lpg,351.75,litre
+2023-06,Port Harcourt Plant,refrigerant_r410a,2.67,kg
+2023-06,Port Harcourt Plant,grid_electricity_ng,115422.06,kWh
+2023-06,Port Harcourt Plant,business_travel_air_shorthaul,37872.34,passenger_km
+2023-06,Port Harcourt Plant,business_travel_air_longhaul,30921.74,passenger_km
+2023-06,Port Harcourt Plant,employee_commute_car,63325.83,km
+2023-06,Port Harcourt Plant,waste_landfill,6.99,tonne
+2023-06,Port Harcourt Plant,purchased_goods_spend,205586.81,USD
+2023-07,Lagos HQ,diesel,8868.01,litre
+2023-07,Lagos HQ,petrol,1386.9,litre
+2023-07,Lagos HQ,lpg,181.41,litre
+2023-07,Lagos HQ,refrigerant_r410a,1.48,kg
+2023-07,Lagos HQ,grid_electricity_ng,58593.87,kWh
+2023-07,Lagos HQ,business_travel_air_shorthaul,18671.27,passenger_km
+2023-07,Lagos HQ,business_travel_air_longhaul,13874.13,passenger_km
+2023-07,Lagos HQ,employee_commute_car,45079.19,km
+2023-07,Lagos HQ,waste_landfill,3.93,tonne
+2023-07,Lagos HQ,purchased_goods_spend,133008.57,USD
+2023-07,Abuja Office,diesel,4060.39,litre
+2023-07,Abuja Office,petrol,648.88,litre
+2023-07,Abuja Office,lpg,114.98,litre
+2023-07,Abuja Office,refrigerant_r410a,0.83,kg
+2023-07,Abuja Office,grid_electricity_ng,34220.97,kWh
+2023-07,Abuja Office,business_travel_air_shorthaul,11279.1,passenger_km
+2023-07,Abuja Office,business_travel_air_longhaul,8284.57,passenger_km
+2023-07,Abuja Office,employee_commute_car,17997.87,km
+2023-07,Abuja Office,waste_landfill,1.99,tonne
+2023-07,Abuja Office,purchased_goods_spend,54847.45,USD
+2023-07,Port Harcourt Plant,diesel,13972.49,litre
+2023-07,Port Harcourt Plant,petrol,2342.49,litre
+2023-07,Port Harcourt Plant,natural_gas,5203.94,m3
+2023-07,Port Harcourt Plant,lpg,412.41,litre
+2023-07,Port Harcourt Plant,refrigerant_r410a,2.51,kg
+2023-07,Port Harcourt Plant,grid_electricity_ng,117203.89,kWh
+2023-07,Port Harcourt Plant,business_travel_air_shorthaul,35514.09,passenger_km
+2023-07,Port Harcourt Plant,business_travel_air_longhaul,26376.36,passenger_km
+2023-07,Port Harcourt Plant,employee_commute_car,81878.06,km
+2023-07,Port Harcourt Plant,waste_landfill,8.27,tonne
+2023-07,Port Harcourt Plant,purchased_goods_spend,219613.79,USD
+2023-08,Lagos HQ,diesel,8524.18,litre
+2023-08,Lagos HQ,petrol,1344.66,litre
+2023-08,Lagos HQ,lpg,187.8,litre
+2023-08,Lagos HQ,refrigerant_r410a,1.71,kg
+2023-08,Lagos HQ,grid_electricity_ng,61425.25,kWh
+2023-08,Lagos HQ,business_travel_air_shorthaul,20253.17,passenger_km
+2023-08,Lagos HQ,business_travel_air_longhaul,16115.89,passenger_km
+2023-08,Lagos HQ,employee_commute_car,34685.98,km
+2023-08,Lagos HQ,waste_landfill,4.1,tonne
+2023-08,Lagos HQ,purchased_goods_spend,120102.61,USD
+2023-08,Abuja Office,diesel,4423.26,litre
+2023-08,Abuja Office,petrol,672.92,litre
+2023-08,Abuja Office,lpg,113.82,litre
+2023-08,Abuja Office,refrigerant_r410a,0.66,kg
+2023-08,Abuja Office,grid_electricity_ng,27172.42,kWh
+2023-08,Abuja Office,business_travel_air_shorthaul,10285.11,passenger_km
+2023-08,Abuja Office,business_travel_air_longhaul,7894.23,passenger_km
+2023-08,Abuja Office,employee_commute_car,18411.22,km
+2023-08,Abuja Office,waste_landfill,1.77,tonne
+2023-08,Abuja Office,purchased_goods_spend,67025.17,USD
+2023-08,Port Harcourt Plant,diesel,13303.65,litre
+2023-08,Port Harcourt Plant,petrol,2776.56,litre
+2023-08,Port Harcourt Plant,natural_gas,5593.4,m3
+2023-08,Port Harcourt Plant,lpg,351.28,litre
+2023-08,Port Harcourt Plant,refrigerant_r410a,2.77,kg
+2023-08,Port Harcourt Plant,grid_electricity_ng,108738.16,kWh
+2023-08,Port Harcourt Plant,business_travel_air_shorthaul,40694.83,passenger_km
+2023-08,Port Harcourt Plant,business_travel_air_longhaul,24604.5,passenger_km
+2023-08,Port Harcourt Plant,employee_commute_car,76669.74,km
+2023-08,Port Harcourt Plant,waste_landfill,6.64,tonne
+2023-08,Port Harcourt Plant,purchased_goods_spend,209246.92,USD
+2023-09,Lagos HQ,diesel,8412.06,litre
+2023-09,Lagos HQ,petrol,1410.0,litre
+2023-09,Lagos HQ,lpg,188.97,litre
+2023-09,Lagos HQ,refrigerant_r410a,1.61,kg
+2023-09,Lagos HQ,grid_electricity_ng,52305.78,kWh
+2023-09,Lagos HQ,business_travel_air_shorthaul,19749.71,passenger_km
+2023-09,Lagos HQ,business_travel_air_longhaul,17243.04,passenger_km
+2023-09,Lagos HQ,employee_commute_car,45953.16,km
+2023-09,Lagos HQ,waste_landfill,3.49,tonne
+2023-09,Lagos HQ,purchased_goods_spend,109673.56,USD
+2023-09,Abuja Office,diesel,3718.24,litre
+2023-09,Abuja Office,petrol,847.48,litre
+2023-09,Abuja Office,lpg,111.43,litre
+2023-09,Abuja Office,refrigerant_r410a,0.84,kg
+2023-09,Abuja Office,grid_electricity_ng,28825.74,kWh
+2023-09,Abuja Office,business_travel_air_shorthaul,8973.24,passenger_km
+2023-09,Abuja Office,business_travel_air_longhaul,8250.93,passenger_km
+2023-09,Abuja Office,employee_commute_car,21221.24,km
+2023-09,Abuja Office,waste_landfill,2.07,tonne
+2023-09,Abuja Office,purchased_goods_spend,68770.2,USD
+2023-09,Port Harcourt Plant,diesel,15065.18,litre
+2023-09,Port Harcourt Plant,petrol,2301.34,litre
+2023-09,Port Harcourt Plant,natural_gas,5913.71,m3
+2023-09,Port Harcourt Plant,lpg,338.33,litre
+2023-09,Port Harcourt Plant,refrigerant_r410a,2.83,kg
+2023-09,Port Harcourt Plant,grid_electricity_ng,122221.33,kWh
+2023-09,Port Harcourt Plant,business_travel_air_shorthaul,32050.34,passenger_km
+2023-09,Port Harcourt Plant,business_travel_air_longhaul,23884.97,passenger_km
+2023-09,Port Harcourt Plant,employee_commute_car,63511.98,km
+2023-09,Port Harcourt Plant,waste_landfill,7.31,tonne
+2023-09,Port Harcourt Plant,purchased_goods_spend,201248.16,USD
+2023-10,Lagos HQ,diesel,8251.59,litre
+2023-10,Lagos HQ,petrol,1597.93,litre
+2023-10,Lagos HQ,lpg,182.22,litre
+2023-10,Lagos HQ,refrigerant_r410a,1.56,kg
+2023-10,Lagos HQ,grid_electricity_ng,55751.71,kWh
+2023-10,Lagos HQ,business_travel_air_shorthaul,19931.19,passenger_km
+2023-10,Lagos HQ,business_travel_air_longhaul,16824.01,passenger_km
+2023-10,Lagos HQ,employee_commute_car,44153.24,km
+2023-10,Lagos HQ,waste_landfill,3.51,tonne
+2023-10,Lagos HQ,purchased_goods_spend,117248.73,USD
+2023-10,Abuja Office,diesel,3732.02,litre
+2023-10,Abuja Office,petrol,638.3,litre
+2023-10,Abuja Office,lpg,108.13,litre
+2023-10,Abuja Office,refrigerant_r410a,0.78,kg
+2023-10,Abuja Office,grid_electricity_ng,27857.6,kWh
+2023-10,Abuja Office,business_travel_air_shorthaul,10723.69,passenger_km
+2023-10,Abuja Office,business_travel_air_longhaul,7616.28,passenger_km
+2023-10,Abuja Office,employee_commute_car,19566.12,km
+2023-10,Abuja Office,waste_landfill,1.71,tonne
+2023-10,Abuja Office,purchased_goods_spend,52354.39,USD
+2023-10,Port Harcourt Plant,diesel,16055.02,litre
+2023-10,Port Harcourt Plant,petrol,3027.18,litre
+2023-10,Port Harcourt Plant,natural_gas,5473.86,m3
+2023-10,Port Harcourt Plant,lpg,396.14,litre
+2023-10,Port Harcourt Plant,refrigerant_r410a,2.77,kg
+2023-10,Port Harcourt Plant,grid_electricity_ng,96598.24,kWh
+2023-10,Port Harcourt Plant,business_travel_air_shorthaul,31976.41,passenger_km
+2023-10,Port Harcourt Plant,business_travel_air_longhaul,25446.89,passenger_km
+2023-10,Port Harcourt Plant,employee_commute_car,80618.0,km
+2023-10,Port Harcourt Plant,waste_landfill,7.84,tonne
+2023-10,Port Harcourt Plant,purchased_goods_spend,239373.53,USD
+2023-11,Lagos HQ,diesel,8957.42,litre
+2023-11,Lagos HQ,petrol,1369.53,litre
+2023-11,Lagos HQ,lpg,184.97,litre
+2023-11,Lagos HQ,refrigerant_r410a,1.32,kg
+2023-11,Lagos HQ,grid_electricity_ng,65042.09,kWh
+2023-11,Lagos HQ,business_travel_air_shorthaul,22304.81,passenger_km
+2023-11,Lagos HQ,business_travel_air_longhaul,14578.7,passenger_km
+2023-11,Lagos HQ,employee_commute_car,41447.94,km
+2023-11,Lagos HQ,waste_landfill,3.59,tonne
+2023-11,Lagos HQ,purchased_goods_spend,135475.72,USD
+2023-11,Abuja Office,diesel,4437.53,litre
+2023-11,Abuja Office,petrol,857.15,litre
+2023-11,Abuja Office,lpg,109.32,litre
+2023-11,Abuja Office,refrigerant_r410a,0.84,kg
+2023-11,Abuja Office,grid_electricity_ng,25723.08,kWh
+2023-11,Abuja Office,business_travel_air_shorthaul,10709.69,passenger_km
+2023-11,Abuja Office,business_travel_air_longhaul,7122.42,passenger_km
+2023-11,Abuja Office,employee_commute_car,22584.9,km
+2023-11,Abuja Office,waste_landfill,2.18,tonne
+2023-11,Abuja Office,purchased_goods_spend,66553.15,USD
+2023-11,Port Harcourt Plant,diesel,15742.44,litre
+2023-11,Port Harcourt Plant,petrol,2511.11,litre
+2023-11,Port Harcourt Plant,natural_gas,5865.55,m3
+2023-11,Port Harcourt Plant,lpg,317.67,litre
+2023-11,Port Harcourt Plant,refrigerant_r410a,3.0,kg
+2023-11,Port Harcourt Plant,grid_electricity_ng,119618.42,kWh
+2023-11,Port Harcourt Plant,business_travel_air_shorthaul,33002.28,passenger_km
+2023-11,Port Harcourt Plant,business_travel_air_longhaul,29564.35,passenger_km
+2023-11,Port Harcourt Plant,employee_commute_car,71142.55,km
+2023-11,Port Harcourt Plant,waste_landfill,6.78,tonne
+2023-11,Port Harcourt Plant,purchased_goods_spend,235138.39,USD
+2023-12,Lagos HQ,diesel,7346.23,litre
+2023-12,Lagos HQ,petrol,1285.65,litre
+2023-12,Lagos HQ,lpg,181.59,litre
+2023-12,Lagos HQ,refrigerant_r410a,1.42,kg
+2023-12,Lagos HQ,grid_electricity_ng,66558.35,kWh
+2023-12,Lagos HQ,business_travel_air_shorthaul,22801.33,passenger_km
+2023-12,Lagos HQ,business_travel_air_longhaul,14006.06,passenger_km
+2023-12,Lagos HQ,employee_commute_car,41697.78,km
+2023-12,Lagos HQ,waste_landfill,3.88,tonne
+2023-12,Lagos HQ,purchased_goods_spend,137321.39,USD
+2023-12,Abuja Office,diesel,4043.46,litre
+2023-12,Abuja Office,petrol,848.83,litre
+2023-12,Abuja Office,lpg,88.46,litre
+2023-12,Abuja Office,refrigerant_r410a,0.86,kg
+2023-12,Abuja Office,grid_electricity_ng,27107.11,kWh
+2023-12,Abuja Office,business_travel_air_shorthaul,11387.6,passenger_km
+2023-12,Abuja Office,business_travel_air_longhaul,6972.3,passenger_km
+2023-12,Abuja Office,employee_commute_car,17650.42,km
+2023-12,Abuja Office,waste_landfill,1.96,tonne
+2023-12,Abuja Office,purchased_goods_spend,64113.81,USD
+2023-12,Port Harcourt Plant,diesel,13595.09,litre
+2023-12,Port Harcourt Plant,petrol,2786.03,litre
+2023-12,Port Harcourt Plant,natural_gas,5418.51,m3
+2023-12,Port Harcourt Plant,lpg,347.6,litre
+2023-12,Port Harcourt Plant,refrigerant_r410a,2.76,kg
+2023-12,Port Harcourt Plant,grid_electricity_ng,100053.01,kWh
+2023-12,Port Harcourt Plant,business_travel_air_shorthaul,38254.88,passenger_km
+2023-12,Port Harcourt Plant,business_travel_air_longhaul,22963.7,passenger_km
+2023-12,Port Harcourt Plant,employee_commute_car,81192.42,km
+2023-12,Port Harcourt Plant,waste_landfill,7.28,tonne
+2023-12,Port Harcourt Plant,purchased_goods_spend,230219.06,USD
+2024-01,Lagos HQ,diesel,8237.45,litre
+2024-01,Lagos HQ,petrol,1513.71,litre
+2024-01,Lagos HQ,lpg,184.18,litre
+2024-01,Lagos HQ,refrigerant_r410a,1.25,kg
+2024-01,Lagos HQ,grid_electricity_ng,60438.03,kWh
+2024-01,Lagos HQ,business_travel_air_shorthaul,18221.95,passenger_km
+2024-01,Lagos HQ,business_travel_air_longhaul,13596.12,passenger_km
+2024-01,Lagos HQ,employee_commute_car,42409.14,km
+2024-01,Lagos HQ,waste_landfill,4.09,tonne
+2024-01,Lagos HQ,purchased_goods_spend,108299.14,USD
+2024-01,Abuja Office,diesel,3620.3,litre
+2024-01,Abuja Office,petrol,700.21,litre
+2024-01,Abuja Office,lpg,93.19,litre
+2024-01,Abuja Office,refrigerant_r410a,0.68,kg
+2024-01,Abuja Office,grid_electricity_ng,25579.77,kWh
+2024-01,Abuja Office,business_travel_air_shorthaul,9370.89,passenger_km
+2024-01,Abuja Office,business_travel_air_longhaul,8151.19,passenger_km
+2024-01,Abuja Office,employee_commute_car,20221.35,km
+2024-01,Abuja Office,waste_landfill,2.15,tonne
+2024-01,Abuja Office,purchased_goods_spend,59596.1,USD
+2024-01,Port Harcourt Plant,diesel,12998.5,litre
+2024-01,Port Harcourt Plant,petrol,2629.28,litre
+2024-01,Port Harcourt Plant,natural_gas,4407.03,m3
+2024-01,Port Harcourt Plant,lpg,323.51,litre
+2024-01,Port Harcourt Plant,refrigerant_r410a,2.54,kg
+2024-01,Port Harcourt Plant,grid_electricity_ng,106167.85,kWh
+2024-01,Port Harcourt Plant,business_travel_air_shorthaul,36163.99,passenger_km
+2024-01,Port Harcourt Plant,business_travel_air_longhaul,25647.75,passenger_km
+2024-01,Port Harcourt Plant,employee_commute_car,67920.63,km
+2024-01,Port Harcourt Plant,waste_landfill,6.32,tonne
+2024-01,Port Harcourt Plant,purchased_goods_spend,205691.97,USD
+2024-02,Lagos HQ,diesel,8604.32,litre
+2024-02,Lagos HQ,petrol,1567.88,litre
+2024-02,Lagos HQ,lpg,172.97,litre
+2024-02,Lagos HQ,refrigerant_r410a,1.26,kg
+2024-02,Lagos HQ,grid_electricity_ng,57867.01,kWh
+2024-02,Lagos HQ,business_travel_air_shorthaul,19965.74,passenger_km
+2024-02,Lagos HQ,business_travel_air_longhaul,13688.01,passenger_km
+2024-02,Lagos HQ,employee_commute_car,42068.24,km
+2024-02,Lagos HQ,waste_landfill,4.13,tonne
+2024-02,Lagos HQ,purchased_goods_spend,121171.82,USD
+2024-02,Abuja Office,diesel,3522.79,litre
+2024-02,Abuja Office,petrol,655.01,litre
+2024-02,Abuja Office,lpg,82.3,litre
+2024-02,Abuja Office,refrigerant_r410a,0.66,kg
+2024-02,Abuja Office,grid_electricity_ng,28585.18,kWh
+2024-02,Abuja Office,business_travel_air_shorthaul,10607.24,passenger_km
+2024-02,Abuja Office,business_travel_air_longhaul,6277.31,passenger_km
+2024-02,Abuja Office,employee_commute_car,18707.18,km
+2024-02,Abuja Office,waste_landfill,1.99,tonne
+2024-02,Abuja Office,purchased_goods_spend,52319.84,USD
+2024-02,Port Harcourt Plant,diesel,14638.32,litre
+2024-02,Port Harcourt Plant,petrol,2587.63,litre
+2024-02,Port Harcourt Plant,natural_gas,4785.84,m3
+2024-02,Port Harcourt Plant,lpg,361.78,litre
+2024-02,Port Harcourt Plant,refrigerant_r410a,2.21,kg
+2024-02,Port Harcourt Plant,grid_electricity_ng,111486.0,kWh
+2024-02,Port Harcourt Plant,business_travel_air_shorthaul,37359.84,passenger_km
+2024-02,Port Harcourt Plant,business_travel_air_longhaul,22860.82,passenger_km
+2024-02,Port Harcourt Plant,employee_commute_car,67567.83,km
+2024-02,Port Harcourt Plant,waste_landfill,6.24,tonne
+2024-02,Port Harcourt Plant,purchased_goods_spend,235849.15,USD
+2024-03,Lagos HQ,diesel,7721.37,litre
+2024-03,Lagos HQ,petrol,1245.69,litre
+2024-03,Lagos HQ,lpg,177.55,litre
+2024-03,Lagos HQ,refrigerant_r410a,1.59,kg
+2024-03,Lagos HQ,grid_electricity_ng,56847.66,kWh
+2024-03,Lagos HQ,business_travel_air_shorthaul,20936.16,passenger_km
+2024-03,Lagos HQ,business_travel_air_longhaul,15123.94,passenger_km
+2024-03,Lagos HQ,employee_commute_car,44020.52,km
+2024-03,Lagos HQ,waste_landfill,3.95,tonne
+2024-03,Lagos HQ,purchased_goods_spend,130753.37,USD
+2024-03,Abuja Office,diesel,4290.92,litre
+2024-03,Abuja Office,petrol,744.33,litre
+2024-03,Abuja Office,lpg,102.32,litre
+2024-03,Abuja Office,refrigerant_r410a,0.72,kg
+2024-03,Abuja Office,grid_electricity_ng,31656.12,kWh
+2024-03,Abuja Office,business_travel_air_shorthaul,9737.87,passenger_km
+2024-03,Abuja Office,business_travel_air_longhaul,8057.97,passenger_km
+2024-03,Abuja Office,employee_commute_car,20603.46,km
+2024-03,Abuja Office,waste_landfill,1.91,tonne
+2024-03,Abuja Office,purchased_goods_spend,53438.83,USD
+2024-03,Port Harcourt Plant,diesel,12775.75,litre
+2024-03,Port Harcourt Plant,petrol,2699.05,litre
+2024-03,Port Harcourt Plant,natural_gas,5597.39,m3
+2024-03,Port Harcourt Plant,lpg,347.81,litre
+2024-03,Port Harcourt Plant,refrigerant_r410a,2.69,kg
+2024-03,Port Harcourt Plant,grid_electricity_ng,96669.08,kWh
+2024-03,Port Harcourt Plant,business_travel_air_shorthaul,30179.35,passenger_km
+2024-03,Port Harcourt Plant,business_travel_air_longhaul,24253.82,passenger_km
+2024-03,Port Harcourt Plant,employee_commute_car,64386.28,km
+2024-03,Port Harcourt Plant,waste_landfill,6.54,tonne
+2024-03,Port Harcourt Plant,purchased_goods_spend,209857.79,USD
+2024-04,Lagos HQ,diesel,6846.81,litre
+2024-04,Lagos HQ,petrol,1323.9,litre
+2024-04,Lagos HQ,lpg,203.17,litre
+2024-04,Lagos HQ,refrigerant_r410a,1.53,kg
+2024-04,Lagos HQ,grid_electricity_ng,50069.87,kWh
+2024-04,Lagos HQ,business_travel_air_shorthaul,18667.77,passenger_km
+2024-04,Lagos HQ,business_travel_air_longhaul,14584.08,passenger_km
+2024-04,Lagos HQ,employee_commute_car,37429.72,km
+2024-04,Lagos HQ,waste_landfill,3.5,tonne
+2024-04,Lagos HQ,purchased_goods_spend,112440.16,USD
+2024-04,Abuja Office,diesel,4306.37,litre
+2024-04,Abuja Office,petrol,738.16,litre
+2024-04,Abuja Office,lpg,101.63,litre
+2024-04,Abuja Office,refrigerant_r410a,0.8,kg
+2024-04,Abuja Office,grid_electricity_ng,31094.74,kWh
+2024-04,Abuja Office,business_travel_air_shorthaul,9255.5,passenger_km
+2024-04,Abuja Office,business_travel_air_longhaul,6132.74,passenger_km
+2024-04,Abuja Office,employee_commute_car,18346.13,km
+2024-04,Abuja Office,waste_landfill,2.07,tonne
+2024-04,Abuja Office,purchased_goods_spend,63707.58,USD
+2024-04,Port Harcourt Plant,diesel,15704.47,litre
+2024-04,Port Harcourt Plant,petrol,2529.03,litre
+2024-04,Port Harcourt Plant,natural_gas,5568.94,m3
+2024-04,Port Harcourt Plant,lpg,350.38,litre
+2024-04,Port Harcourt Plant,refrigerant_r410a,2.67,kg
+2024-04,Port Harcourt Plant,grid_electricity_ng,94987.64,kWh
+2024-04,Port Harcourt Plant,business_travel_air_shorthaul,31650.96,passenger_km
+2024-04,Port Harcourt Plant,business_travel_air_longhaul,25421.06,passenger_km
+2024-04,Port Harcourt Plant,employee_commute_car,59353.86,km
+2024-04,Port Harcourt Plant,waste_landfill,6.57,tonne
+2024-04,Port Harcourt Plant,purchased_goods_spend,218504.06,USD
+2024-05,Lagos HQ,diesel,7459.55,litre
+2024-05,Lagos HQ,petrol,1295.3,litre
+2024-05,Lagos HQ,lpg,190.12,litre
+2024-05,Lagos HQ,refrigerant_r410a,1.28,kg
+2024-05,Lagos HQ,grid_electricity_ng,59712.6,kWh
+2024-05,Lagos HQ,business_travel_air_shorthaul,16475.33,passenger_km
+2024-05,Lagos HQ,business_travel_air_longhaul,13942.17,passenger_km
+2024-05,Lagos HQ,employee_commute_car,39141.8,km
+2024-05,Lagos HQ,waste_landfill,3.3,tonne
+2024-05,Lagos HQ,purchased_goods_spend,120133.43,USD
+2024-05,Abuja Office,diesel,3420.33,litre
+2024-05,Abuja Office,petrol,711.73,litre
+2024-05,Abuja Office,lpg,83.05,litre
+2024-05,Abuja Office,refrigerant_r410a,0.69,kg
+2024-05,Abuja Office,grid_electricity_ng,26308.74,kWh
+2024-05,Abuja Office,business_travel_air_shorthaul,9101.32,passenger_km
+2024-05,Abuja Office,business_travel_air_longhaul,7764.26,passenger_km
+2024-05,Abuja Office,employee_commute_car,18503.77,km
+2024-05,Abuja Office,waste_landfill,2.07,tonne
+2024-05,Abuja Office,purchased_goods_spend,63335.65,USD
+2024-05,Port Harcourt Plant,diesel,12796.62,litre
+2024-05,Port Harcourt Plant,petrol,2266.89,litre
+2024-05,Port Harcourt Plant,natural_gas,4436.54,m3
+2024-05,Port Harcourt Plant,lpg,349.69,litre
+2024-05,Port Harcourt Plant,refrigerant_r410a,2.98,kg
+2024-05,Port Harcourt Plant,grid_electricity_ng,99013.17,kWh
+2024-05,Port Harcourt Plant,business_travel_air_shorthaul,36116.69,passenger_km
+2024-05,Port Harcourt Plant,business_travel_air_longhaul,28106.87,passenger_km
+2024-05,Port Harcourt Plant,employee_commute_car,72266.78,km
+2024-05,Port Harcourt Plant,waste_landfill,7.44,tonne
+2024-05,Port Harcourt Plant,purchased_goods_spend,235329.45,USD
+2024-06,Lagos HQ,diesel,6987.33,litre
+2024-06,Lagos HQ,petrol,1232.8,litre
+2024-06,Lagos HQ,lpg,171.98,litre
+2024-06,Lagos HQ,refrigerant_r410a,1.28,kg
+2024-06,Lagos HQ,grid_electricity_ng,60528.25,kWh
+2024-06,Lagos HQ,business_travel_air_shorthaul,19568.46,passenger_km
+2024-06,Lagos HQ,business_travel_air_longhaul,13181.61,passenger_km
+2024-06,Lagos HQ,employee_commute_car,40697.84,km
+2024-06,Lagos HQ,waste_landfill,4.15,tonne
+2024-06,Lagos HQ,purchased_goods_spend,103718.79,USD
+2024-06,Abuja Office,diesel,3963.55,litre
+2024-06,Abuja Office,petrol,773.55,litre
+2024-06,Abuja Office,lpg,84.9,litre
+2024-06,Abuja Office,refrigerant_r410a,0.79,kg
+2024-06,Abuja Office,grid_electricity_ng,32815.19,kWh
+2024-06,Abuja Office,business_travel_air_shorthaul,8471.32,passenger_km
+2024-06,Abuja Office,business_travel_air_longhaul,6175.47,passenger_km
+2024-06,Abuja Office,employee_commute_car,18116.87,km
+2024-06,Abuja Office,waste_landfill,2.02,tonne
+2024-06,Abuja Office,purchased_goods_spend,65517.23,USD
+2024-06,Port Harcourt Plant,diesel,13395.41,litre
+2024-06,Port Harcourt Plant,petrol,2759.2,litre
+2024-06,Port Harcourt Plant,natural_gas,4524.59,m3
+2024-06,Port Harcourt Plant,lpg,365.36,litre
+2024-06,Port Harcourt Plant,refrigerant_r410a,2.69,kg
+2024-06,Port Harcourt Plant,grid_electricity_ng,91297.54,kWh
+2024-06,Port Harcourt Plant,business_travel_air_shorthaul,37385.08,passenger_km
+2024-06,Port Harcourt Plant,business_travel_air_longhaul,28643.88,passenger_km
+2024-06,Port Harcourt Plant,employee_commute_car,71202.14,km
+2024-06,Port Harcourt Plant,waste_landfill,6.13,tonne
+2024-06,Port Harcourt Plant,purchased_goods_spend,237458.99,USD
+2024-07,Lagos HQ,diesel,8331.19,litre
+2024-07,Lagos HQ,petrol,1373.99,litre
+2024-07,Lagos HQ,lpg,187.87,litre
+2024-07,Lagos HQ,refrigerant_r410a,1.38,kg
+2024-07,Lagos HQ,grid_electricity_ng,57703.0,kWh
+2024-07,Lagos HQ,business_travel_air_shorthaul,18285.49,passenger_km
+2024-07,Lagos HQ,business_travel_air_longhaul,15910.17,passenger_km
+2024-07,Lagos HQ,employee_commute_car,42113.25,km
+2024-07,Lagos HQ,waste_landfill,3.39,tonne
+2024-07,Lagos HQ,purchased_goods_spend,131124.82,USD
+2024-07,Abuja Office,diesel,3996.19,litre
+2024-07,Abuja Office,petrol,791.0,litre
+2024-07,Abuja Office,lpg,101.97,litre
+2024-07,Abuja Office,refrigerant_r410a,0.71,kg
+2024-07,Abuja Office,grid_electricity_ng,30819.99,kWh
+2024-07,Abuja Office,business_travel_air_shorthaul,10940.56,passenger_km
+2024-07,Abuja Office,business_travel_air_longhaul,6703.38,passenger_km
+2024-07,Abuja Office,employee_commute_car,20975.23,km
+2024-07,Abuja Office,waste_landfill,1.94,tonne
+2024-07,Abuja Office,purchased_goods_spend,57314.84,USD
+2024-07,Port Harcourt Plant,diesel,13556.81,litre
+2024-07,Port Harcourt Plant,petrol,2771.65,litre
+2024-07,Port Harcourt Plant,natural_gas,4823.81,m3
+2024-07,Port Harcourt Plant,lpg,382.07,litre
+2024-07,Port Harcourt Plant,refrigerant_r410a,2.85,kg
+2024-07,Port Harcourt Plant,grid_electricity_ng,90823.56,kWh
+2024-07,Port Harcourt Plant,business_travel_air_shorthaul,38516.75,passenger_km
+2024-07,Port Harcourt Plant,business_travel_air_longhaul,23928.28,passenger_km
+2024-07,Port Harcourt Plant,employee_commute_car,68388.19,km
+2024-07,Port Harcourt Plant,waste_landfill,7.14,tonne
+2024-07,Port Harcourt Plant,purchased_goods_spend,199832.17,USD
+2024-08,Lagos HQ,diesel,6594.12,litre
+2024-08,Lagos HQ,petrol,1591.61,litre
+2024-08,Lagos HQ,lpg,173.67,litre
+2024-08,Lagos HQ,refrigerant_r410a,1.32,kg
+2024-08,Lagos HQ,grid_electricity_ng,62746.54,kWh
+2024-08,Lagos HQ,business_travel_air_shorthaul,18280.35,passenger_km
+2024-08,Lagos HQ,business_travel_air_longhaul,16042.98,passenger_km
+2024-08,Lagos HQ,employee_commute_car,40717.64,km
+2024-08,Lagos HQ,waste_landfill,3.58,tonne
+2024-08,Lagos HQ,purchased_goods_spend,98270.82,USD
+2024-08,Abuja Office,diesel,4356.17,litre
+2024-08,Abuja Office,petrol,630.49,litre
+2024-08,Abuja Office,lpg,102.34,litre
+2024-08,Abuja Office,refrigerant_r410a,0.72,kg
+2024-08,Abuja Office,grid_electricity_ng,31030.54,kWh
+2024-08,Abuja Office,business_travel_air_shorthaul,10148.95,passenger_km
+2024-08,Abuja Office,business_travel_air_longhaul,7515.15,passenger_km
+2024-08,Abuja Office,employee_commute_car,19147.13,km
+2024-08,Abuja Office,waste_landfill,2.09,tonne
+2024-08,Abuja Office,purchased_goods_spend,50567.96,USD
+2024-08,Port Harcourt Plant,diesel,12669.4,litre
+2024-08,Port Harcourt Plant,petrol,2741.13,litre
+2024-08,Port Harcourt Plant,natural_gas,4882.61,m3
+2024-08,Port Harcourt Plant,lpg,354.06,litre
+2024-08,Port Harcourt Plant,refrigerant_r410a,2.57,kg
+2024-08,Port Harcourt Plant,grid_electricity_ng,104641.8,kWh
+2024-08,Port Harcourt Plant,business_travel_air_shorthaul,33787.62,passenger_km
+2024-08,Port Harcourt Plant,business_travel_air_longhaul,27832.39,passenger_km
+2024-08,Port Harcourt Plant,employee_commute_car,65611.29,km
+2024-08,Port Harcourt Plant,waste_landfill,7.33,tonne
+2024-08,Port Harcourt Plant,purchased_goods_spend,193109.17,USD
+2024-09,Lagos HQ,diesel,7107.23,litre
+2024-09,Lagos HQ,petrol,1276.12,litre
+2024-09,Lagos HQ,lpg,174.29,litre
+2024-09,Lagos HQ,refrigerant_r410a,1.28,kg
+2024-09,Lagos HQ,grid_electricity_ng,58219.73,kWh
+2024-09,Lagos HQ,business_travel_air_shorthaul,20710.21,passenger_km
+2024-09,Lagos HQ,business_travel_air_longhaul,13039.85,passenger_km
+2024-09,Lagos HQ,employee_commute_car,35132.75,km
+2024-09,Lagos HQ,waste_landfill,3.82,tonne
+2024-09,Lagos HQ,purchased_goods_spend,122961.66,USD
+2024-09,Abuja Office,diesel,4389.05,litre
+2024-09,Abuja Office,petrol,725.32,litre
+2024-09,Abuja Office,lpg,89.75,litre
+2024-09,Abuja Office,refrigerant_r410a,0.63,kg
+2024-09,Abuja Office,grid_electricity_ng,26157.18,kWh
+2024-09,Abuja Office,business_travel_air_shorthaul,8815.15,passenger_km
+2024-09,Abuja Office,business_travel_air_longhaul,6507.59,passenger_km
+2024-09,Abuja Office,employee_commute_car,16401.49,km
+2024-09,Abuja Office,waste_landfill,1.94,tonne
+2024-09,Abuja Office,purchased_goods_spend,53700.1,USD
+2024-09,Port Harcourt Plant,diesel,15791.0,litre
+2024-09,Port Harcourt Plant,petrol,2633.49,litre
+2024-09,Port Harcourt Plant,natural_gas,5491.02,m3
+2024-09,Port Harcourt Plant,lpg,306.85,litre
+2024-09,Port Harcourt Plant,refrigerant_r410a,2.88,kg
+2024-09,Port Harcourt Plant,grid_electricity_ng,103396.29,kWh
+2024-09,Port Harcourt Plant,business_travel_air_shorthaul,38424.36,passenger_km
+2024-09,Port Harcourt Plant,business_travel_air_longhaul,26495.92,passenger_km
+2024-09,Port Harcourt Plant,employee_commute_car,68485.42,km
+2024-09,Port Harcourt Plant,waste_landfill,6.79,tonne
+2024-09,Port Harcourt Plant,purchased_goods_spend,187724.9,USD
+2024-10,Lagos HQ,diesel,6646.37,litre
+2024-10,Lagos HQ,petrol,1630.54,litre
+2024-10,Lagos HQ,lpg,190.72,litre
+2024-10,Lagos HQ,refrigerant_r410a,1.58,kg
+2024-10,Lagos HQ,grid_electricity_ng,55884.22,kWh
+2024-10,Lagos HQ,business_travel_air_shorthaul,16746.71,passenger_km
+2024-10,Lagos HQ,business_travel_air_longhaul,14959.21,passenger_km
+2024-10,Lagos HQ,employee_commute_car,33257.58,km
+2024-10,Lagos HQ,waste_landfill,3.44,tonne
+2024-10,Lagos HQ,purchased_goods_spend,117371.74,USD
+2024-10,Abuja Office,diesel,3614.02,litre
+2024-10,Abuja Office,petrol,826.69,litre
+2024-10,Abuja Office,lpg,85.01,litre
+2024-10,Abuja Office,refrigerant_r410a,0.78,kg
+2024-10,Abuja Office,grid_electricity_ng,29718.58,kWh
+2024-10,Abuja Office,business_travel_air_shorthaul,10437.33,passenger_km
+2024-10,Abuja Office,business_travel_air_longhaul,6607.48,passenger_km
+2024-10,Abuja Office,employee_commute_car,19330.02,km
+2024-10,Abuja Office,waste_landfill,1.89,tonne
+2024-10,Abuja Office,purchased_goods_spend,56610.22,USD
+2024-10,Port Harcourt Plant,diesel,15317.68,litre
+2024-10,Port Harcourt Plant,petrol,2973.05,litre
+2024-10,Port Harcourt Plant,natural_gas,4881.33,m3
+2024-10,Port Harcourt Plant,lpg,358.15,litre
+2024-10,Port Harcourt Plant,refrigerant_r410a,2.68,kg
+2024-10,Port Harcourt Plant,grid_electricity_ng,111147.74,kWh
+2024-10,Port Harcourt Plant,business_travel_air_shorthaul,39200.62,passenger_km
+2024-10,Port Harcourt Plant,business_travel_air_longhaul,23647.76,passenger_km
+2024-10,Port Harcourt Plant,employee_commute_car,63127.82,km
+2024-10,Port Harcourt Plant,waste_landfill,7.24,tonne
+2024-10,Port Harcourt Plant,purchased_goods_spend,186026.21,USD
+2024-11,Lagos HQ,diesel,6928.47,litre
+2024-11,Lagos HQ,petrol,1256.43,litre
+2024-11,Lagos HQ,lpg,163.35,litre
+2024-11,Lagos HQ,refrigerant_r410a,1.42,kg
+2024-11,Lagos HQ,grid_electricity_ng,59221.06,kWh
+2024-11,Lagos HQ,business_travel_air_shorthaul,17997.65,passenger_km
+2024-11,Lagos HQ,business_travel_air_longhaul,13239.98,passenger_km
+2024-11,Lagos HQ,employee_commute_car,40784.13,km
+2024-11,Lagos HQ,waste_landfill,4.07,tonne
+2024-11,Lagos HQ,purchased_goods_spend,113611.32,USD
+2024-11,Abuja Office,diesel,4055.87,litre
+2024-11,Abuja Office,petrol,811.56,litre
+2024-11,Abuja Office,lpg,104.29,litre
+2024-11,Abuja Office,refrigerant_r410a,0.75,kg
+2024-11,Abuja Office,grid_electricity_ng,30192.62,kWh
+2024-11,Abuja Office,business_travel_air_shorthaul,10848.97,passenger_km
+2024-11,Abuja Office,business_travel_air_longhaul,7038.3,passenger_km
+2024-11,Abuja Office,employee_commute_car,19456.68,km
+2024-11,Abuja Office,waste_landfill,2.01,tonne
+2024-11,Abuja Office,purchased_goods_spend,64657.35,USD
+2024-11,Port Harcourt Plant,diesel,15178.6,litre
+2024-11,Port Harcourt Plant,petrol,2258.73,litre
+2024-11,Port Harcourt Plant,natural_gas,4664.44,m3
+2024-11,Port Harcourt Plant,lpg,325.65,litre
+2024-11,Port Harcourt Plant,refrigerant_r410a,2.79,kg
+2024-11,Port Harcourt Plant,grid_electricity_ng,105832.62,kWh
+2024-11,Port Harcourt Plant,business_travel_air_shorthaul,32368.31,passenger_km
+2024-11,Port Harcourt Plant,business_travel_air_longhaul,22998.97,passenger_km
+2024-11,Port Harcourt Plant,employee_commute_car,73032.43,km
+2024-11,Port Harcourt Plant,waste_landfill,7.33,tonne
+2024-11,Port Harcourt Plant,purchased_goods_spend,234898.0,USD
+2024-12,Lagos HQ,diesel,7681.09,litre
+2024-12,Lagos HQ,petrol,1437.32,litre
+2024-12,Lagos HQ,lpg,167.83,litre
+2024-12,Lagos HQ,refrigerant_r410a,1.24,kg
+2024-12,Lagos HQ,grid_electricity_ng,56425.46,kWh
+2024-12,Lagos HQ,business_travel_air_shorthaul,18176.57,passenger_km
+2024-12,Lagos HQ,business_travel_air_longhaul,13321.59,passenger_km
+2024-12,Lagos HQ,employee_commute_car,33692.09,km
+2024-12,Lagos HQ,waste_landfill,4.37,tonne
+2024-12,Lagos HQ,purchased_goods_spend,126810.73,USD
+2024-12,Abuja Office,diesel,3926.63,litre
+2024-12,Abuja Office,petrol,817.37,litre
+2024-12,Abuja Office,lpg,110.39,litre
+2024-12,Abuja Office,refrigerant_r410a,0.76,kg
+2024-12,Abuja Office,grid_electricity_ng,26808.58,kWh
+2024-12,Abuja Office,business_travel_air_shorthaul,8275.87,passenger_km
+2024-12,Abuja Office,business_travel_air_longhaul,7753.54,passenger_km
+2024-12,Abuja Office,employee_commute_car,19030.08,km
+2024-12,Abuja Office,waste_landfill,2.01,tonne
+2024-12,Abuja Office,purchased_goods_spend,64789.74,USD
+2024-12,Port Harcourt Plant,diesel,12503.07,litre
+2024-12,Port Harcourt Plant,petrol,2658.35,litre
+2024-12,Port Harcourt Plant,natural_gas,5393.62,m3
+2024-12,Port Harcourt Plant,lpg,344.74,litre
+2024-12,Port Harcourt Plant,refrigerant_r410a,2.27,kg
+2024-12,Port Harcourt Plant,grid_electricity_ng,98950.98,kWh
+2024-12,Port Harcourt Plant,business_travel_air_shorthaul,32831.74,passenger_km
+2024-12,Port Harcourt Plant,business_travel_air_longhaul,27242.96,passenger_km
+2024-12,Port Harcourt Plant,employee_commute_car,76537.95,km
+2024-12,Port Harcourt Plant,waste_landfill,6.56,tonne
+2024-12,Port Harcourt Plant,purchased_goods_spend,219408.05,USD
+2025-01,Lagos HQ,diesel,6817.47,litre
+2025-01,Lagos HQ,petrol,1547.31,litre
+2025-01,Lagos HQ,lpg,199.12,litre
+2025-01,Lagos HQ,refrigerant_r410a,1.39,kg
+2025-01,Lagos HQ,grid_electricity_ng,53860.05,kWh
+2025-01,Lagos HQ,business_travel_air_shorthaul,17187.26,passenger_km
+2025-01,Lagos HQ,business_travel_air_longhaul,12926.31,passenger_km
+2025-01,Lagos HQ,employee_commute_car,41534.42,km
+2025-01,Lagos HQ,waste_landfill,3.54,tonne
+2025-01,Lagos HQ,purchased_goods_spend,109678.17,USD
+2025-01,Abuja Office,diesel,4173.03,litre
+2025-01,Abuja Office,petrol,714.78,litre
+2025-01,Abuja Office,lpg,92.16,litre
+2025-01,Abuja Office,refrigerant_r410a,0.66,kg
+2025-01,Abuja Office,grid_electricity_ng,24741.3,kWh
+2025-01,Abuja Office,business_travel_air_shorthaul,8722.66,passenger_km
+2025-01,Abuja Office,business_travel_air_longhaul,7350.07,passenger_km
+2025-01,Abuja Office,employee_commute_car,18884.73,km
+2025-01,Abuja Office,waste_landfill,1.96,tonne
+2025-01,Abuja Office,purchased_goods_spend,49744.28,USD
+2025-01,Port Harcourt Plant,diesel,13297.49,litre
+2025-01,Port Harcourt Plant,petrol,2772.24,litre
+2025-01,Port Harcourt Plant,natural_gas,4822.77,m3
+2025-01,Port Harcourt Plant,lpg,347.08,litre
+2025-01,Port Harcourt Plant,refrigerant_r410a,2.18,kg
+2025-01,Port Harcourt Plant,grid_electricity_ng,112230.26,kWh
+2025-01,Port Harcourt Plant,business_travel_air_shorthaul,33829.99,passenger_km
+2025-01,Port Harcourt Plant,business_travel_air_longhaul,22648.36,passenger_km
+2025-01,Port Harcourt Plant,employee_commute_car,58805.08,km
+2025-01,Port Harcourt Plant,waste_landfill,6.65,tonne
+2025-01,Port Harcourt Plant,purchased_goods_spend,199641.16,USD
+2025-02,Lagos HQ,diesel,6391.57,litre
+2025-02,Lagos HQ,petrol,1566.58,litre
+2025-02,Lagos HQ,lpg,204.55,litre
+2025-02,Lagos HQ,refrigerant_r410a,1.35,kg
+2025-02,Lagos HQ,grid_electricity_ng,48334.1,kWh
+2025-02,Lagos HQ,business_travel_air_shorthaul,20013.5,passenger_km
+2025-02,Lagos HQ,business_travel_air_longhaul,13643.35,passenger_km
+2025-02,Lagos HQ,employee_commute_car,38765.31,km
+2025-02,Lagos HQ,waste_landfill,3.65,tonne
+2025-02,Lagos HQ,purchased_goods_spend,101777.4,USD
+2025-02,Abuja Office,diesel,4005.52,litre
+2025-02,Abuja Office,petrol,780.83,litre
+2025-02,Abuja Office,lpg,84.0,litre
+2025-02,Abuja Office,refrigerant_r410a,0.69,kg
+2025-02,Abuja Office,grid_electricity_ng,26346.57,kWh
+2025-02,Abuja Office,business_travel_air_shorthaul,10251.7,passenger_km
+2025-02,Abuja Office,business_travel_air_longhaul,6841.87,passenger_km
+2025-02,Abuja Office,employee_commute_car,20271.12,km
+2025-02,Abuja Office,waste_landfill,2.02,tonne
+2025-02,Abuja Office,purchased_goods_spend,50934.93,USD
+2025-02,Port Harcourt Plant,diesel,14244.07,litre
+2025-02,Port Harcourt Plant,petrol,2394.3,litre
+2025-02,Port Harcourt Plant,natural_gas,5554.17,m3
+2025-02,Port Harcourt Plant,lpg,328.36,litre
+2025-02,Port Harcourt Plant,refrigerant_r410a,2.69,kg
+2025-02,Port Harcourt Plant,grid_electricity_ng,91877.22,kWh
+2025-02,Port Harcourt Plant,business_travel_air_shorthaul,30780.21,passenger_km
+2025-02,Port Harcourt Plant,business_travel_air_longhaul,25210.82,passenger_km
+2025-02,Port Harcourt Plant,employee_commute_car,75326.42,km
+2025-02,Port Harcourt Plant,waste_landfill,6.53,tonne
+2025-02,Port Harcourt Plant,purchased_goods_spend,175838.37,USD
+2025-03,Lagos HQ,diesel,7364.26,litre
+2025-03,Lagos HQ,petrol,1301.58,litre
+2025-03,Lagos HQ,lpg,184.83,litre
+2025-03,Lagos HQ,refrigerant_r410a,1.38,kg
+2025-03,Lagos HQ,grid_electricity_ng,53868.54,kWh
+2025-03,Lagos HQ,business_travel_air_shorthaul,17226.9,passenger_km
+2025-03,Lagos HQ,business_travel_air_longhaul,12375.03,passenger_km
+2025-03,Lagos HQ,employee_commute_car,38556.68,km
+2025-03,Lagos HQ,waste_landfill,3.72,tonne
+2025-03,Lagos HQ,purchased_goods_spend,100471.51,USD
+2025-03,Abuja Office,diesel,3940.89,litre
+2025-03,Abuja Office,petrol,589.06,litre
+2025-03,Abuja Office,lpg,97.68,litre
+2025-03,Abuja Office,refrigerant_r410a,0.72,kg
+2025-03,Abuja Office,grid_electricity_ng,29850.44,kWh
+2025-03,Abuja Office,business_travel_air_shorthaul,8788.99,passenger_km
+2025-03,Abuja Office,business_travel_air_longhaul,7160.15,passenger_km
+2025-03,Abuja Office,employee_commute_car,19951.28,km
+2025-03,Abuja Office,waste_landfill,2.08,tonne
+2025-03,Abuja Office,purchased_goods_spend,54523.48,USD
+2025-03,Port Harcourt Plant,diesel,11283.93,litre
+2025-03,Port Harcourt Plant,petrol,2458.69,litre
+2025-03,Port Harcourt Plant,natural_gas,5046.94,m3
+2025-03,Port Harcourt Plant,lpg,363.93,litre
+2025-03,Port Harcourt Plant,refrigerant_r410a,2.73,kg
+2025-03,Port Harcourt Plant,grid_electricity_ng,96519.99,kWh
+2025-03,Port Harcourt Plant,business_travel_air_shorthaul,33015.05,passenger_km
+2025-03,Port Harcourt Plant,business_travel_air_longhaul,24252.52,passenger_km
+2025-03,Port Harcourt Plant,employee_commute_car,69892.36,km
+2025-03,Port Harcourt Plant,waste_landfill,6.38,tonne
+2025-03,Port Harcourt Plant,purchased_goods_spend,205687.15,USD
+2025-04,Lagos HQ,diesel,6525.12,litre
+2025-04,Lagos HQ,petrol,1352.51,litre
+2025-04,Lagos HQ,lpg,207.62,litre
+2025-04,Lagos HQ,refrigerant_r410a,1.3,kg
+2025-04,Lagos HQ,grid_electricity_ng,57756.5,kWh
+2025-04,Lagos HQ,business_travel_air_shorthaul,19018.11,passenger_km
+2025-04,Lagos HQ,business_travel_air_longhaul,15090.48,passenger_km
+2025-04,Lagos HQ,employee_commute_car,40247.57,km
+2025-04,Lagos HQ,waste_landfill,4.03,tonne
+2025-04,Lagos HQ,purchased_goods_spend,105269.11,USD
+2025-04,Abuja Office,diesel,3439.79,litre
+2025-04,Abuja Office,petrol,727.28,litre
+2025-04,Abuja Office,lpg,98.08,litre
+2025-04,Abuja Office,refrigerant_r410a,0.76,kg
+2025-04,Abuja Office,grid_electricity_ng,23499.01,kWh
+2025-04,Abuja Office,business_travel_air_shorthaul,7921.79,passenger_km
+2025-04,Abuja Office,business_travel_air_longhaul,7093.55,passenger_km
+2025-04,Abuja Office,employee_commute_car,20498.27,km
+2025-04,Abuja Office,waste_landfill,2.09,tonne
+2025-04,Abuja Office,purchased_goods_spend,58642.03,USD
+2025-04,Port Harcourt Plant,diesel,12844.43,litre
+2025-04,Port Harcourt Plant,petrol,2161.01,litre
+2025-04,Port Harcourt Plant,natural_gas,5111.17,m3
+2025-04,Port Harcourt Plant,lpg,364.22,litre
+2025-04,Port Harcourt Plant,refrigerant_r410a,2.42,kg
+2025-04,Port Harcourt Plant,grid_electricity_ng,103999.93,kWh
+2025-04,Port Harcourt Plant,business_travel_air_shorthaul,36724.85,passenger_km
+2025-04,Port Harcourt Plant,business_travel_air_longhaul,21223.5,passenger_km
+2025-04,Port Harcourt Plant,employee_commute_car,71341.0,km
+2025-04,Port Harcourt Plant,waste_landfill,6.15,tonne
+2025-04,Port Harcourt Plant,purchased_goods_spend,189179.63,USD
+2025-05,Lagos HQ,diesel,6505.92,litre
+2025-05,Lagos HQ,petrol,1377.76,litre
+2025-05,Lagos HQ,lpg,185.6,litre
+2025-05,Lagos HQ,refrigerant_r410a,1.48,kg
+2025-05,Lagos HQ,grid_electricity_ng,49194.33,kWh
+2025-05,Lagos HQ,business_travel_air_shorthaul,15901.17,passenger_km
+2025-05,Lagos HQ,business_travel_air_longhaul,15168.59,passenger_km
+2025-05,Lagos HQ,employee_commute_car,37707.24,km
+2025-05,Lagos HQ,waste_landfill,3.36,tonne
+2025-05,Lagos HQ,purchased_goods_spend,122724.28,USD
+2025-05,Abuja Office,diesel,3250.28,litre
+2025-05,Abuja Office,petrol,674.55,litre
+2025-05,Abuja Office,lpg,84.28,litre
+2025-05,Abuja Office,refrigerant_r410a,0.63,kg
+2025-05,Abuja Office,grid_electricity_ng,23281.96,kWh
+2025-05,Abuja Office,business_travel_air_shorthaul,9931.65,passenger_km
+2025-05,Abuja Office,business_travel_air_longhaul,7646.48,passenger_km
+2025-05,Abuja Office,employee_commute_car,19169.76,km
+2025-05,Abuja Office,waste_landfill,1.63,tonne
+2025-05,Abuja Office,purchased_goods_spend,53645.53,USD
+2025-05,Port Harcourt Plant,diesel,12496.89,litre
+2025-05,Port Harcourt Plant,petrol,2521.55,litre
+2025-05,Port Harcourt Plant,natural_gas,5118.82,m3
+2025-05,Port Harcourt Plant,lpg,320.16,litre
+2025-05,Port Harcourt Plant,refrigerant_r410a,2.27,kg
+2025-05,Port Harcourt Plant,grid_electricity_ng,108460.94,kWh
+2025-05,Port Harcourt Plant,business_travel_air_shorthaul,29803.9,passenger_km
+2025-05,Port Harcourt Plant,business_travel_air_longhaul,23720.07,passenger_km
+2025-05,Port Harcourt Plant,employee_commute_car,65189.94,km
+2025-05,Port Harcourt Plant,waste_landfill,6.04,tonne
+2025-05,Port Harcourt Plant,purchased_goods_spend,200801.14,USD
+2025-06,Lagos HQ,diesel,7443.39,litre
+2025-06,Lagos HQ,petrol,1566.76,litre
+2025-06,Lagos HQ,lpg,170.82,litre
+2025-06,Lagos HQ,refrigerant_r410a,1.56,kg
+2025-06,Lagos HQ,grid_electricity_ng,57191.8,kWh
+2025-06,Lagos HQ,business_travel_air_shorthaul,16968.66,passenger_km
+2025-06,Lagos HQ,business_travel_air_longhaul,13919.98,passenger_km
+2025-06,Lagos HQ,employee_commute_car,38428.93,km
+2025-06,Lagos HQ,waste_landfill,3.91,tonne
+2025-06,Lagos HQ,purchased_goods_spend,94426.69,USD
+2025-06,Abuja Office,diesel,3756.2,litre
+2025-06,Abuja Office,petrol,681.83,litre
+2025-06,Abuja Office,lpg,102.03,litre
+2025-06,Abuja Office,refrigerant_r410a,0.64,kg
+2025-06,Abuja Office,grid_electricity_ng,29747.66,kWh
+2025-06,Abuja Office,business_travel_air_shorthaul,9392.29,passenger_km
+2025-06,Abuja Office,business_travel_air_longhaul,6522.63,passenger_km
+2025-06,Abuja Office,employee_commute_car,18945.93,km
+2025-06,Abuja Office,waste_landfill,1.89,tonne
+2025-06,Abuja Office,purchased_goods_spend,57511.78,USD
+2025-06,Port Harcourt Plant,diesel,13972.51,litre
+2025-06,Port Harcourt Plant,petrol,2574.33,litre
+2025-06,Port Harcourt Plant,natural_gas,5412.78,m3
+2025-06,Port Harcourt Plant,lpg,340.2,litre
+2025-06,Port Harcourt Plant,refrigerant_r410a,2.75,kg
+2025-06,Port Harcourt Plant,grid_electricity_ng,102594.71,kWh
+2025-06,Port Harcourt Plant,business_travel_air_shorthaul,30882.19,passenger_km
+2025-06,Port Harcourt Plant,business_travel_air_longhaul,24133.81,passenger_km
+2025-06,Port Harcourt Plant,employee_commute_car,67084.1,km
+2025-06,Port Harcourt Plant,waste_landfill,7.01,tonne
+2025-06,Port Harcourt Plant,purchased_goods_spend,172390.98,USD
+2025-07,Lagos HQ,diesel,6832.52,litre
+2025-07,Lagos HQ,petrol,1466.34,litre
+2025-07,Lagos HQ,lpg,164.29,litre
+2025-07,Lagos HQ,refrigerant_r410a,1.21,kg
+2025-07,Lagos HQ,grid_electricity_ng,55245.5,kWh
+2025-07,Lagos HQ,business_travel_air_shorthaul,20774.33,passenger_km
+2025-07,Lagos HQ,business_travel_air_longhaul,13776.34,passenger_km
+2025-07,Lagos HQ,employee_commute_car,40915.28,km
+2025-07,Lagos HQ,waste_landfill,4.0,tonne
+2025-07,Lagos HQ,purchased_goods_spend,101238.34,USD
+2025-07,Abuja Office,diesel,3994.56,litre
+2025-07,Abuja Office,petrol,678.78,litre
+2025-07,Abuja Office,lpg,99.37,litre
+2025-07,Abuja Office,refrigerant_r410a,0.73,kg
+2025-07,Abuja Office,grid_electricity_ng,25979.08,kWh
+2025-07,Abuja Office,business_travel_air_shorthaul,8049.41,passenger_km
+2025-07,Abuja Office,business_travel_air_longhaul,7772.77,passenger_km
+2025-07,Abuja Office,employee_commute_car,16238.53,km
+2025-07,Abuja Office,waste_landfill,2.07,tonne
+2025-07,Abuja Office,purchased_goods_spend,60499.1,USD
+2025-07,Port Harcourt Plant,diesel,13985.44,litre
+2025-07,Port Harcourt Plant,petrol,2810.77,litre
+2025-07,Port Harcourt Plant,natural_gas,5602.85,m3
+2025-07,Port Harcourt Plant,lpg,357.53,litre
+2025-07,Port Harcourt Plant,refrigerant_r410a,2.36,kg
+2025-07,Port Harcourt Plant,grid_electricity_ng,106850.47,kWh
+2025-07,Port Harcourt Plant,business_travel_air_shorthaul,27982.79,passenger_km
+2025-07,Port Harcourt Plant,business_travel_air_longhaul,24839.57,passenger_km
+2025-07,Port Harcourt Plant,employee_commute_car,64631.27,km
+2025-07,Port Harcourt Plant,waste_landfill,6.89,tonne
+2025-07,Port Harcourt Plant,purchased_goods_spend,206722.59,USD
+2025-08,Lagos HQ,diesel,7464.68,litre
+2025-08,Lagos HQ,petrol,1497.03,litre
+2025-08,Lagos HQ,lpg,206.04,litre
+2025-08,Lagos HQ,refrigerant_r410a,1.2,kg
+2025-08,Lagos HQ,grid_electricity_ng,50240.0,kWh
+2025-08,Lagos HQ,business_travel_air_shorthaul,15606.63,passenger_km
+2025-08,Lagos HQ,business_travel_air_longhaul,15223.44,passenger_km
+2025-08,Lagos HQ,employee_commute_car,37070.57,km
+2025-08,Lagos HQ,waste_landfill,4.09,tonne
+2025-08,Lagos HQ,purchased_goods_spend,100071.99,USD
+2025-08,Abuja Office,diesel,3163.03,litre
+2025-08,Abuja Office,petrol,748.81,litre
+2025-08,Abuja Office,lpg,102.18,litre
+2025-08,Abuja Office,refrigerant_r410a,0.64,kg
+2025-08,Abuja Office,grid_electricity_ng,26548.94,kWh
+2025-08,Abuja Office,business_travel_air_shorthaul,8116.59,passenger_km
+2025-08,Abuja Office,business_travel_air_longhaul,7738.72,passenger_km
+2025-08,Abuja Office,employee_commute_car,17131.83,km
+2025-08,Abuja Office,waste_landfill,1.82,tonne
+2025-08,Abuja Office,purchased_goods_spend,48002.0,USD
+2025-08,Port Harcourt Plant,diesel,14626.39,litre
+2025-08,Port Harcourt Plant,petrol,2188.45,litre
+2025-08,Port Harcourt Plant,natural_gas,4845.66,m3
+2025-08,Port Harcourt Plant,lpg,344.36,litre
+2025-08,Port Harcourt Plant,refrigerant_r410a,2.64,kg
+2025-08,Port Harcourt Plant,grid_electricity_ng,111429.1,kWh
+2025-08,Port Harcourt Plant,business_travel_air_shorthaul,31965.18,passenger_km
+2025-08,Port Harcourt Plant,business_travel_air_longhaul,26355.76,passenger_km
+2025-08,Port Harcourt Plant,employee_commute_car,58729.3,km
+2025-08,Port Harcourt Plant,waste_landfill,6.38,tonne
+2025-08,Port Harcourt Plant,purchased_goods_spend,172915.11,USD
+2025-09,Lagos HQ,diesel,7256.73,litre
+2025-09,Lagos HQ,petrol,1327.37,litre
+2025-09,Lagos HQ,lpg,206.65,litre
+2025-09,Lagos HQ,refrigerant_r410a,1.17,kg
+2025-09,Lagos HQ,grid_electricity_ng,52479.28,kWh
+2025-09,Lagos HQ,business_travel_air_shorthaul,17890.87,passenger_km
+2025-09,Lagos HQ,business_travel_air_longhaul,15495.02,passenger_km
+2025-09,Lagos HQ,employee_commute_car,40281.52,km
+2025-09,Lagos HQ,waste_landfill,3.2,tonne
+2025-09,Lagos HQ,purchased_goods_spend,115282.89,USD
+2025-09,Abuja Office,diesel,3688.56,litre
+2025-09,Abuja Office,petrol,780.34,litre
+2025-09,Abuja Office,lpg,87.14,litre
+2025-09,Abuja Office,refrigerant_r410a,0.66,kg
+2025-09,Abuja Office,grid_electricity_ng,24759.53,kWh
+2025-09,Abuja Office,business_travel_air_shorthaul,8068.5,passenger_km
+2025-09,Abuja Office,business_travel_air_longhaul,7537.6,passenger_km
+2025-09,Abuja Office,employee_commute_car,17952.76,km
+2025-09,Abuja Office,waste_landfill,1.91,tonne
+2025-09,Abuja Office,purchased_goods_spend,56921.12,USD
+2025-09,Port Harcourt Plant,diesel,13485.9,litre
+2025-09,Port Harcourt Plant,petrol,2104.19,litre
+2025-09,Port Harcourt Plant,natural_gas,5336.79,m3
+2025-09,Port Harcourt Plant,lpg,302.4,litre
+2025-09,Port Harcourt Plant,refrigerant_r410a,2.18,kg
+2025-09,Port Harcourt Plant,grid_electricity_ng,100184.02,kWh
+2025-09,Port Harcourt Plant,business_travel_air_shorthaul,28520.3,passenger_km
+2025-09,Port Harcourt Plant,business_travel_air_longhaul,26524.48,passenger_km
+2025-09,Port Harcourt Plant,employee_commute_car,59763.89,km
+2025-09,Port Harcourt Plant,waste_landfill,5.99,tonne
+2025-09,Port Harcourt Plant,purchased_goods_spend,218360.2,USD
+2025-10,Lagos HQ,diesel,6905.57,litre
+2025-10,Lagos HQ,petrol,1220.67,litre
+2025-10,Lagos HQ,lpg,203.87,litre
+2025-10,Lagos HQ,refrigerant_r410a,1.16,kg
+2025-10,Lagos HQ,grid_electricity_ng,60470.69,kWh
+2025-10,Lagos HQ,business_travel_air_shorthaul,16260.0,passenger_km
+2025-10,Lagos HQ,business_travel_air_longhaul,12134.82,passenger_km
+2025-10,Lagos HQ,employee_commute_car,33677.14,km
+2025-10,Lagos HQ,waste_landfill,3.28,tonne
+2025-10,Lagos HQ,purchased_goods_spend,114476.25,USD
+2025-10,Abuja Office,diesel,3122.15,litre
+2025-10,Abuja Office,petrol,583.17,litre
+2025-10,Abuja Office,lpg,98.92,litre
+2025-10,Abuja Office,refrigerant_r410a,0.63,kg
+2025-10,Abuja Office,grid_electricity_ng,25856.69,kWh
+2025-10,Abuja Office,business_travel_air_shorthaul,8210.69,passenger_km
+2025-10,Abuja Office,business_travel_air_longhaul,5908.54,passenger_km
+2025-10,Abuja Office,employee_commute_car,19519.78,km
+2025-10,Abuja Office,waste_landfill,1.83,tonne
+2025-10,Abuja Office,purchased_goods_spend,58624.0,USD
+2025-10,Port Harcourt Plant,diesel,13010.62,litre
+2025-10,Port Harcourt Plant,petrol,2661.93,litre
+2025-10,Port Harcourt Plant,natural_gas,4933.52,m3
+2025-10,Port Harcourt Plant,lpg,289.18,litre
+2025-10,Port Harcourt Plant,refrigerant_r410a,2.46,kg
+2025-10,Port Harcourt Plant,grid_electricity_ng,111412.63,kWh
+2025-10,Port Harcourt Plant,business_travel_air_shorthaul,28272.19,passenger_km
+2025-10,Port Harcourt Plant,business_travel_air_longhaul,26657.67,passenger_km
+2025-10,Port Harcourt Plant,employee_commute_car,72733.38,km
+2025-10,Port Harcourt Plant,waste_landfill,6.59,tonne
+2025-10,Port Harcourt Plant,purchased_goods_spend,194085.85,USD
+2025-11,Lagos HQ,diesel,8293.43,litre
+2025-11,Lagos HQ,petrol,1185.16,litre
+2025-11,Lagos HQ,lpg,180.85,litre
+2025-11,Lagos HQ,refrigerant_r410a,1.32,kg
+2025-11,Lagos HQ,grid_electricity_ng,57648.28,kWh
+2025-11,Lagos HQ,business_travel_air_shorthaul,18146.87,passenger_km
+2025-11,Lagos HQ,business_travel_air_longhaul,15327.72,passenger_km
+2025-11,Lagos HQ,employee_commute_car,31742.52,km
+2025-11,Lagos HQ,waste_landfill,3.18,tonne
+2025-11,Lagos HQ,purchased_goods_spend,112747.82,USD
+2025-11,Abuja Office,diesel,3165.72,litre
+2025-11,Abuja Office,petrol,636.43,litre
+2025-11,Abuja Office,lpg,94.63,litre
+2025-11,Abuja Office,refrigerant_r410a,0.69,kg
+2025-11,Abuja Office,grid_electricity_ng,25868.27,kWh
+2025-11,Abuja Office,business_travel_air_shorthaul,10450.33,passenger_km
+2025-11,Abuja Office,business_travel_air_longhaul,6887.57,passenger_km
+2025-11,Abuja Office,employee_commute_car,17947.29,km
+2025-11,Abuja Office,waste_landfill,1.88,tonne
+2025-11,Abuja Office,purchased_goods_spend,48034.54,USD
+2025-11,Port Harcourt Plant,diesel,13897.24,litre
+2025-11,Port Harcourt Plant,petrol,2717.04,litre
+2025-11,Port Harcourt Plant,natural_gas,5136.48,m3
+2025-11,Port Harcourt Plant,lpg,354.03,litre
+2025-11,Port Harcourt Plant,refrigerant_r410a,2.62,kg
+2025-11,Port Harcourt Plant,grid_electricity_ng,89877.74,kWh
+2025-11,Port Harcourt Plant,business_travel_air_shorthaul,32283.88,passenger_km
+2025-11,Port Harcourt Plant,business_travel_air_longhaul,22568.73,passenger_km
+2025-11,Port Harcourt Plant,employee_commute_car,62354.04,km
+2025-11,Port Harcourt Plant,waste_landfill,6.46,tonne
+2025-11,Port Harcourt Plant,purchased_goods_spend,191606.08,USD
+2025-12,Lagos HQ,diesel,6395.67,litre
+2025-12,Lagos HQ,petrol,1335.01,litre
+2025-12,Lagos HQ,lpg,191.01,litre
+2025-12,Lagos HQ,refrigerant_r410a,1.31,kg
+2025-12,Lagos HQ,grid_electricity_ng,48910.23,kWh
+2025-12,Lagos HQ,business_travel_air_shorthaul,20509.5,passenger_km
+2025-12,Lagos HQ,business_travel_air_longhaul,11877.41,passenger_km
+2025-12,Lagos HQ,employee_commute_car,40022.95,km
+2025-12,Lagos HQ,waste_landfill,3.2,tonne
+2025-12,Lagos HQ,purchased_goods_spend,95983.45,USD
+2025-12,Abuja Office,diesel,3900.77,litre
+2025-12,Abuja Office,petrol,746.33,litre
+2025-12,Abuja Office,lpg,92.54,litre
+2025-12,Abuja Office,refrigerant_r410a,0.7,kg
+2025-12,Abuja Office,grid_electricity_ng,27804.39,kWh
+2025-12,Abuja Office,business_travel_air_shorthaul,8634.93,passenger_km
+2025-12,Abuja Office,business_travel_air_longhaul,6051.52,passenger_km
+2025-12,Abuja Office,employee_commute_car,17400.65,km
+2025-12,Abuja Office,waste_landfill,1.91,tonne
+2025-12,Abuja Office,purchased_goods_spend,58699.66,USD
+2025-12,Port Harcourt Plant,diesel,14551.04,litre
+2025-12,Port Harcourt Plant,petrol,2619.94,litre
+2025-12,Port Harcourt Plant,natural_gas,5604.51,m3
+2025-12,Port Harcourt Plant,lpg,337.47,litre
+2025-12,Port Harcourt Plant,refrigerant_r410a,2.35,kg
+2025-12,Port Harcourt Plant,grid_electricity_ng,100577.35,kWh
+2025-12,Port Harcourt Plant,business_travel_air_shorthaul,29936.8,passenger_km
+2025-12,Port Harcourt Plant,business_travel_air_longhaul,25725.3,passenger_km
+2025-12,Port Harcourt Plant,employee_commute_car,60099.76,km
+2025-12,Port Harcourt Plant,waste_landfill,5.78,tonne
+2025-12,Port Harcourt Plant,purchased_goods_spend,216925.98,USD
