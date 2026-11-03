@@ -20,9 +20,20 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 - Port Harcourt Plant = 56% of the total
 - The Python engine and the SQL view give identical totals (12,270.2 tCO2e)
 
+## Scenario results snapshot (Phase 3)
+- 9 levers: physical abatement ~800 tCO2e/yr (−21% vs 2025); with the PPA, ~1,048 (−27%)
+- Capex $424k; net annualised saving ~$124k/yr; 4 cost-negative levers deliver 48% of abatement
+- L2 Port Harcourt solar hybrid: ~215 t/yr, ~2-yr payback (3.2 yrs even at ₦1,200/L diesel)
+- 2030: market-based 3,128 vs SBTi target 3,264 ✅; location-based 3,402 ❌. 2035: both miss (growth +2%/yr)
+
 ## Decision log
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-11-04 | Levers applied sequentially to residual activity | Avoids double-counting overlapping levers (efficiency, then solar) |
+| 2026-11-04 | SBTi target split: S1+2 4.2%/yr, S3 2.5%/yr from 2023 | SBTi near-term criteria; S3 ≥40% of the total, so a S3 target is required |
+| 2026-11-04 | Discount rate 12% real USD; BAU growth 2%/yr; FX ₦1,350/$ | Reflects Nigerian cost of capital. All three are adjustable in the dashboard |
+| 2026-11-04 | Cost inputs sourced to Oct 2026 market data (diesel ₦1,900/L depot, Band A ₦209.5/kWh) | Credibility. Capex/opex per lever remain labelled assumptions |
+| 2026-11-04 | PPA/I-REC lever (L9) affects market-based Scope 2 only | GHG Protocol Scope 2 dual reporting |
 | 2026-11-04 | Replace indicative factors with DESNZ 2026, Ember 2025 (Nigeria grid) and EPA Supply Chain v1.3 | Phase 2: credibility. Every factor now has a year, a source URL and a verification status |
 | 2026-11-04 | Use **100% mineral** diesel and petrol factors, not the UK average biofuel blend | Nigerian AGO and PMS have no biofuel blend |
 | 2026-11-04 | Nigeria grid = 0.456 kgCO2e/kWh (Ember 2025, lifecycle) | Latest open, country-specific average. IFI factors (395/477 g, v2.0 2019) are *combined-margin* factors for RE projects, not inventory averages |

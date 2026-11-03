@@ -32,21 +32,27 @@ carbon-footprint-esg-dashboard/
 │   ├── raw/                      # Raw inputs (git-ignored)
 │   ├── processed/                # Cleaned outputs (git-ignored)
 │   ├── reference/
-│   │   └── emission_factors.csv  # Emission factor library
+│   │   ├── emission_factors.csv  # Emission factor library
+│   │   ├── reduction_levers.csv  # Lever sizing, capex, opex, lifetime
+│   │   └── cost_assumptions.csv  # Fuel prices, tariff, FX, discount rate (sourced)
 │   └── sample/
-│       └── activity_data_sample.csv  # Synthetic activity data
+│       ├── activity_data_sample.csv  # Synthetic activity data
+│       └── company_profile.csv       # Synthetic employees / revenue / production
 ├── docs/
 │   └── methodology.md            # Boundaries, scopes, assumptions
 ├── notebooks/
-│   └── 01_exploratory_analysis.ipynb
+│   ├── 01_exploratory_analysis.ipynb
+│   └── 02_decarbonisation_scenarios.ipynb   # MACC, pathway, sensitivity
 ├── reports/figures/              # Exported charts + dashboard screenshot
 ├── sql/
 │   └── schema.sql                # Relational data model + views
 ├── src/carbon/
 │   ├── emissions.py              # Calculation engine
+│   ├── scenarios.py              # Levers, MACC, pathway, intensity, dual Scope 2
 │   └── report_figures.py         # Exports report charts
 ├── tests/
-│   └── test_emissions.py         # Unit tests (pytest)
+│   ├── test_emissions.py         # Unit tests (pytest)
+│   └── test_scenarios.py
 ├── AGENTS.md                     # Guide for AI coding agents / collaborators
 ├── MEMORY.md                     # Project decisions & context log
 ├── TASK.md                       # Roadmap & task tracker
@@ -84,7 +90,25 @@ The full method is in [`docs/methodology.md`](docs/methodology.md).
   <img src="reports/figures/03_target_progress.png" width="49%" />
 </p>
 
+## 🛠️ Decarbonisation Strategy (scenario model)
+Nine reduction levers were sized against the 2025 baseline and costed with **2026 Nigerian market prices**: diesel ₦1,900/L, Band A grid tariff ₦209.5/kWh, ₦1,350/USD. Each lever is ranked on a **marginal abatement cost curve (MACC)**.
+
+| Result | Value |
+|---|---|
+| Physical abatement (8 levers) | **~800 tCO2e/yr (−21% vs 2025)** |
+| + Renewable PPA (market-based) | ~1,050 tCO2e/yr (−27%) |
+| Total capex | **$424k** |
+| Net annualised saving | **~$124k/yr** (the portfolio pays for itself) |
+| Port Harcourt solar-battery hybrid | ~215 tCO2e/yr, **~2-year payback** |
+| 2030 vs SBTi-aligned target | ✅ Met **only with the PPA** (market-based); ❌ missed on a location basis |
+
+![MACC](reports/figures/05_macc_curve.png)
+![Pathway](reports/figures/06_decarbonisation_pathway.png)
+
+**So what?** The first wave of levers is cost-negative and should be funded now. Growth of +2%/yr erodes the gains after 2027, though, so a **second wave** is needed by ~2029 to stay on an SBTi path to 2035: deeper supplier engagement, fleet conversion and more on-site solar. Explore it interactively in the dashboard's **Scenarios** tab, where you can change the diesel price, FX, discount rate, growth and lever selection.
+
 ## 💡 Recommendations
+0. **Fund the cost-negative levers first:** travel policy, the Port Harcourt solar-battery hybrid, efficiency, rooftop solar (see [notebook 02](notebooks/02_decarbonisation_scenarios.ipynb)).
 1. **Supplier engagement:** collect primary data from the top suppliers. Move from a generic spend proxy to category-level (NAICS-mapped) factors, then to supplier-specific data.
 2. **Solar + battery hybrid systems** at Port Harcourt Plant to cut diesel and grid dependence.
 3. **Energy efficiency:** HVAC upgrades and refrigerant leak management.
@@ -116,6 +140,8 @@ Python (pandas, plotly, matplotlib) · Streamlit · SQL · Jupyter · pytest
 - [UK DESNZ – GHG Conversion Factors 2026](https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026) (published June 2026, AR5 GWP100)
 - [Ember – Yearly Electricity Data](https://ember-energy.org/data/yearly-electricity-data/) (Nigeria grid intensity 2025, CC BY 4.0)
 - [US EPA – Supply Chain GHG Emission Factors v1.3](https://doi.org/10.23719/1531143) (USD 2022)
+- [SBTi Corporate Near-Term Criteria](https://sciencebasedtargets.org/) – 4.2%/yr (Scope 1+2), 2.5%/yr (Scope 3) minimum rates
+- Cost data: NBS / depot diesel and petrol prices (2026), NERC Band A tariff, 2026 Nigerian solar market pricing
 - IPCC AR5 – Global Warming Potentials
 - IFRS S2 – Climate-related Disclosures
 
