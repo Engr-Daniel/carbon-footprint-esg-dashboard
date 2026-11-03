@@ -49,7 +49,7 @@ Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `
 | Domestic flight (with RF) | 0.22928 | kgCO2e/passenger-km | DESNZ 2026 |
 | Long-haul economy flight (with RF) | 0.11704 | kgCO2e/passenger-km | DESNZ 2026 |
 | Average petrol car | 0.16152 | kgCO2e/km | DESNZ 2026 |
-| Mixed municipal waste to landfill | 497.29 | kgCO2e/tonne | DESNZ 2026 |
+| Commercial & industrial waste to landfill | 520.58 | kgCO2e/tonne | DESNZ 2026 |
 | Purchased goods (generic spend proxy) | 0.2819 | kgCO2e/USD (2022) | US EPA Supply Chain Factors v1.3 |
 
 ### Key factor choices
@@ -62,7 +62,9 @@ Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `
 `calculate_emissions(..., policy="latest")` (the default) applies the most recent factor set to **all** years. This gives a like-for-like trend, consistent with the GHG Protocol's guidance to recalculate the base year when methodology changes. `policy="matching"` uses the factor year that matches each reporting year, falling back to the closest earlier year (this mirrors statutory year-by-year reporting).
 
 ### Verification status
-DESNZ values were taken from published reproductions of the 2026 workbook. Values marked `Cross-checked` agree across at least two independent sources. Values marked `Secondary source – confirm in workbook` should be checked against the official `ghg-conversion-factors-2026-full-set.xlsx` before any external use.
+All DESNZ factors were **verified cell-by-cell against the official `ghg-conversion-factors-2026-full-set.xlsx`** on 2026-11-04. The `verification` column records each cell reference (e.g. `Fuels!D76`). This check corrected one factor: waste moved from *household residual waste* (497.29) to **commercial and industrial waste → landfill (520.58)**, which is the right category for a company. The Nigeria grid factor is not in DESNZ (UK-only) and was cross-checked across 3 sources. The spend-based factor remains a documented proxy.
+
+**Optional refinement:** DESNZ also publishes *International, to/from non-UK* flight factors (economy with RF: 0.10916, `Business travel- air!E33`). These may suit Nigerian international routes that don't touch the UK better than the *long-haul to/from UK* factor used here.
 
 ## 7. Scenario modelling (Phase 3)
 Code: `src/carbon/scenarios.py`. Inputs: `data/reference/reduction_levers.csv` and `data/reference/cost_assumptions.csv`.
