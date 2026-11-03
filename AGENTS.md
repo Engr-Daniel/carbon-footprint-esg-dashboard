@@ -19,6 +19,7 @@ jupyter nbconvert --to notebook --execute --inplace notebooks/01_exploratory_ana
 | Path | Purpose |
 |---|---|
 | `src/carbon/emissions.py` | Calculation engine. All emissions maths lives here. |
+| `src/carbon/report_figures.py` | Exports README/report charts to `reports/figures/` (re-run after changing data or factors) |
 | `app/streamlit_app.py` | Dashboard UI only. It must not contain calculation logic. |
 | `data/reference/emission_factors.csv` | Emission factor library (single source of truth) |
 | `data/sample/` | Synthetic demo data (committed) |

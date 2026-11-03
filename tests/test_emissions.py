@@ -58,6 +58,49 @@ def test_intensity():
         intensity(100, 0)
 
 
+@pytest.fixture
+def yearly_factors():
+    return pd.DataFrame(
+        {
+            "activity_type": ["diesel", "diesel"],
+            "scope": [1, 1],
+            "category": ["Combustion", "Combustion"],
+            "unit": ["litre", "litre"],
+            "kgco2e_per_unit": [2.0, 3.0],
+            "factor_year": [2023, 2025],
+        }
+    )
+
+
+def test_latest_policy_applies_newest_factor_to_all_years(yearly_factors):
+    act = make_activity([["2023-01", "A", "diesel", 1000, "litre"], ["2024-01", "A", "diesel", 1000, "litre"]])
+    out = calculate_emissions(act, yearly_factors, policy="latest")
+    assert out["tco2e"].tolist() == pytest.approx([3.0, 3.0])
+
+
+def test_matching_policy_uses_year_specific_factor_with_fallback(yearly_factors):
+    act = make_activity(
+        [["2022-01", "A", "diesel", 1000, "litre"],   # before any factor -> earliest (2023)
+         ["2024-01", "A", "diesel", 1000, "litre"],   # no 2024 factor -> latest <= 2024 (2023)
+         ["2025-01", "A", "diesel", 1000, "litre"]]   # exact match (2025)
+    )
+    out = calculate_emissions(act, yearly_factors, policy="matching")
+    assert out["tco2e"].tolist() == pytest.approx([2.0, 2.0, 3.0])
+
+
+def test_invalid_policy_raises(yearly_factors):
+    act = make_activity([["2024-01", "A", "diesel", 1, "litre"]])
+    with pytest.raises(ValueError, match="policy"):
+        calculate_emissions(act, yearly_factors, policy="bogus")
+
+
+def test_every_factor_has_source_and_year():
+    f = load_factors()
+    assert f["source"].notna().all() and (f["source"].str.len() > 0).all()
+    assert f["factor_year"].notna().all()
+    assert f["activity_type"].is_unique
+
+
 def test_sample_data_runs_end_to_end():
     out = calculate_emissions(load_activity(), load_factors())
     assert out["tco2e"].sum() > 0
