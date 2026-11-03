@@ -25,6 +25,7 @@ from carbon.emissions import (  # noqa: E402
 
 FIG_DIR = ROOT / "reports" / "figures"
 SCOPE_COLORS = {1: "#2a6f97", 2: "#f4a261", 3: "#2a9d8f"}
+SCEN_NOTE = "Lever costs are modelled assumptions (see data/reference/*.csv). "
 FOOTNOTE = "Synthetic data: EcoNaija Manufacturing Ltd (fictional). Factors: DESNZ 2026, Ember 2025, US EPA v1.3."
 
 
@@ -104,11 +105,66 @@ def site_breakdown(em):
     return _save(fig, "04_emissions_by_site.png")
 
 
+def macc(lever_results):
+    """Marginal abatement cost curve: bar width = abatement, height = cost per tCO2e."""
+    df = lever_results.sort_values("cost_per_tco2e_usd").reset_index(drop=True)
+    fig, ax = plt.subplots(figsize=(10, 5.5))
+    x = 0.0
+    for r in df.itertuples():
+        color = "#2a9d8f" if r.cost_per_tco2e_usd < 0 else ("#e9c46a" if r.cost_per_tco2e_usd <= 100 else "#e76f51")
+        hatch = "//" if r.accounting == "market" else None
+        ax.bar(x, r.cost_per_tco2e_usd, width=r.abatement_tco2e, align="edge", color=color,
+               edgecolor="white", hatch=hatch)
+        ypos = r.cost_per_tco2e_usd + (15 if r.cost_per_tco2e_usd >= 0 else -15)
+        ax.text(x + r.abatement_tco2e / 2, ypos, r.lever_id, ha="center",
+                va="bottom" if r.cost_per_tco2e_usd >= 0 else "top", fontsize=9, fontweight="bold")
+        x += r.abatement_tco2e
+    ax.axhline(0, color="black", linewidth=0.8)
+    ax.set_xlim(0, x)
+    _style(ax, "Marginal abatement cost curve (2025 baseline)", "USD per tCO2e (annualised)")
+    ax.set_xlabel("Annual abatement (tCO2e/yr)  -  hatched = market-based only (PPA / I-RECs)")
+    legend = "\n".join(f"{r.lever_id}: {(r.lever[:52] + "…") if len(r.lever) > 52 else r.lever}" for r in df.sort_values("lever_id").itertuples())
+    ax.text(1.01, 1.0, legend, transform=ax.transAxes, fontsize=7.5, va="top", family="monospace")
+    fig.text(0.01, 0.01, SCEN_NOTE + FOOTNOTE, fontsize=7, color="grey")
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    path = FIG_DIR / "05_macc_curve.png"
+    fig.savefig(path, dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    return path
+
+
+def pathway_chart(path_df):
+    fig, ax = plt.subplots(figsize=(9, 5))
+    ax.plot(path_df.year, path_df.actual, marker="o", color="#264653", label="Actual", linewidth=2)
+    ax.plot(path_df.year, path_df.bau, color="grey", linestyle=":", label="Business as usual (+2%/yr)")
+    ax.plot(path_df.year, path_df.with_levers_location, color="#2a6f97", label="With levers (location-based)")
+    ax.plot(path_df.year, path_df.with_levers_market, color="#2a9d8f", label="With levers + PPA (market-based)")
+    ax.plot(path_df.year, path_df.sbti_target, color="#e76f51", linestyle="--",
+            label="SBTi-aligned target (S1+2: 4.2%/yr, S3: 2.5%/yr)")
+    ax.axvline(2030, color="lightgrey", linewidth=0.8)
+    ax.set_ylim(0, path_df[["bau", "actual"]].max().max() * 1.1)
+    ax.legend(frameon=False, fontsize=8, loc="lower left")
+    _style(ax, "Decarbonisation pathway to 2035")
+    fig.text(0.01, 0.01, SCEN_NOTE + FOOTNOTE, fontsize=7, color="grey")
+    fig.tight_layout(rect=(0, 0.03, 1, 1))
+    path = FIG_DIR / "06_decarbonisation_pathway.png"
+    fig.savefig(path, dpi=150)
+    plt.close(fig)
+    return path
+
+
 def main():
+    from carbon.scenarios import apply_levers, baseline_activity, load_cost_assumptions, load_levers, pathway
+
     FIG_DIR.mkdir(parents=True, exist_ok=True)
-    em = calculate_emissions(load_activity(), load_factors())
+    act, factors = load_activity(), load_factors()
+    em = calculate_emissions(act, factors)
     for fn in (scope_by_year, hotspots, target_progress, site_breakdown):
         print("saved", fn(em).relative_to(ROOT))
+    a = load_cost_assumptions()
+    res, _ = apply_levers(baseline_activity(act, 2025), load_levers(), factors, a, 2025)
+    print("saved", macc(res).relative_to(ROOT))
+    print("saved", pathway_chart(pathway(em, res, 2023, 2025, 2035, a["bau_growth_rate"])).relative_to(ROOT))
 
 
 if __name__ == "__main__":

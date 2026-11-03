@@ -64,9 +64,23 @@ Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `
 ### Verification status
 DESNZ values were taken from published reproductions of the 2026 workbook. Values marked `Cross-checked` agree across at least two independent sources. Values marked `Secondary source – confirm in workbook` should be checked against the official `ghg-conversion-factors-2026-full-set.xlsx` before any external use.
 
-## 7. Limitations & assumptions
+## 7. Scenario modelling (Phase 3)
+Code: `src/carbon/scenarios.py`. Inputs: `data/reference/reduction_levers.csv` and `data/reference/cost_assumptions.csv`.
+
+- **Baseline:** 2025 annual activity by site and activity type.
+- **Sequential application:** levers run in `order` on the *residual* activity, so efficiency (L1) reduces the load before rooftop solar (L3) is sized. Abatement is never double-counted.
+- **Location vs market levers:** physical levers reduce activity. Contractual instruments (PPA / I-RECs, L9) leave activity unchanged and reduce **market-based Scope 2 only**.
+- **Costs:** annualised cost = capex × CRF(r, n) + opex − savings, where CRF = r(1+r)ⁿ / ((1+r)ⁿ − 1) and r = 12% real USD. Savings = avoided activity × unit price (diesel, petrol, grid, flights, refrigerant, landfill fees). Commuting and supplier levers carry no company savings.
+- **Pathway:** BAU grows +2%/yr from 2025. A lever's full abatement (scaled by growth) applies from its `start_year`.
+- **Targets:** SBTi Absolute Contraction Approach minimums from the 2023 base year: **Scope 1+2 −4.2%/yr** (1.5°C) and **Scope 3 −2.5%/yr** (well-below 2°C, required because Scope 3 is ≥40% of the total).
+- **Dual Scope 2:** contractual kWh get zero emissions. Nigeria has no residual-mix factor, so uncovered kWh use the grid average, following the GHG Protocol Scope 2 Guidance fallback.
+- **Intensity:** tCO2e per employee, per USD m revenue and per tonne of product (synthetic company profile).
+
+## 8. Limitations & assumptions
 - Activity data is synthetic and only demonstrates the method.
 - DESNZ factors reflect UK conditions. Landfill, commuting and spend factors are proxies for Nigeria and likely **understate** local emissions (open dumpsites, older vehicle fleet).
 - Scope 2 is location-based only. Market-based reporting is not yet included.
 - Spend-based Scope 3 is highly uncertain. It should be replaced by supplier-specific data over time.
+- Lever capex, opex and reduction percentages are documented **assumptions**, not quotes. Fuel prices and FX are volatile, so use the dashboard inputs and the notebook's sensitivity table.
+- Abatement is held constant over lever lifetimes. There is no grid decarbonisation, solar degradation or lever ramp-up.
 - Some Scope 3 categories (e.g. Cat 4 transport, Cat 11 use of sold products) are excluded for now.
