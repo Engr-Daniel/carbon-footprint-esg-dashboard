@@ -97,7 +97,7 @@ with tab_fp:
     with st.expander("Emission factors used"):
         st.dataframe(factors, width="stretch")
         st.info("Sources: DESNZ 2026 conversion factors, Ember 2025 (Nigeria grid), US EPA Supply Chain Factors v1.3. "
-                "Factors marked 'Secondary source' should be confirmed in the official workbook.")
+                "DESNZ values are verified against the official 2026 workbook - see the cell reference in the 'verification' column.")
 
 # --------------------------------------------------------------------------- Scenarios
 with tab_scen:

@@ -2,7 +2,7 @@
 
 End-to-end **Scope 1, 2 & 3 greenhouse gas (GHG) emissions analysis** and an **interactive ESG dashboard**, built on the [GHG Protocol Corporate Standard](https://ghgprotocol.org/corporate-standard). The case study is set in Nigeria.
 
-> ⚠️ **Demo data:** The activity dataset is **synthetic** and belongs to a fictional company, *EcoNaija Manufacturing Ltd* (3 sites, 2023–2025). The **emission factors are real**: **DESNZ 2026** (fuels, travel, waste, refrigerants), **Ember 2025** (Nigeria grid) and **US EPA Supply Chain Factors v1.3** (spend-based). Each factor's source, year and verification status are listed in [`emission_factors.csv`](data/reference/emission_factors.csv).
+> ⚠️ **Demo data:** The activity dataset is **synthetic** and belongs to a fictional company, *EcoNaija Manufacturing Ltd* (3 sites, 2023–2025). The **emission factors are real**: **DESNZ 2026** (fuels, travel, waste, refrigerants), **Ember 2025** (Nigeria grid) and **US EPA Supply Chain Factors v1.3** (spend-based). All DESNZ values are **verified cell-by-cell against the official 2026 workbook**. Each factor's source, year and workbook cell reference are listed in [`emission_factors.csv`](data/reference/emission_factors.csv).
 
 ![Dashboard](reports/figures/dashboard_screenshot.png)
 
@@ -73,8 +73,8 @@ The full method is in [`docs/methodology.md`](docs/methodology.md).
 ## 📊 Key Findings (synthetic activity data, 2023–2025)
 | Metric | Value |
 |---|---|
-| Total footprint (3 yrs) | **12,270 tCO2e** |
-| 2025 footprint | **3,881 tCO2e** |
+| Total footprint (3 yrs) | **12,281 tCO2e** |
+| 2025 footprint | **3,884 tCO2e** |
 | Scope split | Scope 1: 29% · Scope 2: 25% · Scope 3: 45% |
 | Change, 2025 vs 2023 baseline | **−9.6%** |
 | Highest-emitting site | Port Harcourt Plant (56% of total) |
