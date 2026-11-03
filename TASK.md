@@ -21,7 +21,7 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [x] Export key charts to `reports/figures/` and embed them in the README
 - [x] Add a dashboard screenshot to the README
 - [x] Update the SQL schema to support multiple factor years; check SQL total = Python total
-- [ ] Open the official DESNZ 2026 workbook and confirm the factors marked "Secondary source" *(needs a browser; **you**)*
+- [x] Verify all DESNZ factors against the official 2026 workbook (cell refs in the CSV); waste factor corrected to commercial & industrial (520.58)
 - [ ] Map purchased-goods spend to NAICS categories and use commodity-specific EPA factors (split the synthetic spend into e.g. raw materials, packaging, IT and services)
 
 ## ✅ Phase 3: Strategy & insight (done, 2026-11-04)
