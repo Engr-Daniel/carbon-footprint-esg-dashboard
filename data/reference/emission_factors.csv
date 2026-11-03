@@ -1,0 +1,12 @@
+activity_type,scope,category,unit,kgco2e_per_unit,source,notes
+diesel,1,Stationary & mobile combustion,litre,2.66,DEFRA/DESNZ GHG Conversion Factors (indicative),Generators and fleet vehicles - VERIFY against latest release
+petrol,1,Mobile combustion,litre,2.31,DEFRA/DESNZ GHG Conversion Factors (indicative),Company cars - VERIFY against latest release
+natural_gas,1,Stationary combustion,m3,2.04,DEFRA/DESNZ GHG Conversion Factors (indicative),Boilers / gas turbines - VERIFY
+lpg,1,Stationary combustion,litre,1.56,DEFRA/DESNZ GHG Conversion Factors (indicative),Kitchens / heating - VERIFY
+refrigerant_r410a,1,Fugitive emissions,kg,2088,IPCC AR5 GWP100 (indicative),Refrigerant leakage from AC units - VERIFY
+grid_electricity_ng,2,Purchased electricity,kWh,0.43,Placeholder - Nigeria grid average (indicative),Replace with latest country grid factor (e.g. IFI / IEA)
+business_travel_air_shorthaul,3,Cat 6 - Business travel,passenger_km,0.15,DEFRA/DESNZ GHG Conversion Factors (indicative),Domestic / regional flights - VERIFY
+business_travel_air_longhaul,3,Cat 6 - Business travel,passenger_km,0.19,DEFRA/DESNZ GHG Conversion Factors (indicative),International flights - VERIFY
+employee_commute_car,3,Cat 7 - Employee commuting,km,0.17,DEFRA/DESNZ GHG Conversion Factors (indicative),Average car - VERIFY
+waste_landfill,3,Cat 5 - Waste generated in operations,tonne,467,DEFRA/DESNZ GHG Conversion Factors (indicative),Mixed commercial waste to landfill - VERIFY
+purchased_goods_spend,3,Cat 1 - Purchased goods & services,USD,0.35,Placeholder spend-based factor (indicative),Replace with EEIO factor (e.g. EXIOBASE / USEEIO)
