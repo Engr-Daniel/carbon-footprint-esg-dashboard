@@ -12,13 +12,16 @@ A GHG Protocol-based carbon accounting pipeline plus a Streamlit ESG dashboard. 
 pip install -r requirements.txt
 pytest -q                               # run tests (must pass before committing)
 streamlit run app/streamlit_app.py      # run the dashboard
-jupyter nbconvert --to notebook --execute --inplace notebooks/01_exploratory_analysis.ipynb
+jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb
+python src/carbon/report_figures.py     # regenerate README charts
 ```
 
 ## Code map
 | Path | Purpose |
 |---|---|
 | `src/carbon/emissions.py` | Calculation engine. All emissions maths lives here. |
+| `src/carbon/scenarios.py` | Levers, MACC costs, pathways, intensity metrics, dual Scope 2 |
+| `data/reference/reduction_levers.csv`, `cost_assumptions.csv` | Scenario inputs. Every assumption needs a source or "Assumption" label |
 | `src/carbon/report_figures.py` | Exports README/report charts to `reports/figures/` (re-run after changing data or factors) |
 | `app/streamlit_app.py` | Dashboard UI only. It must not contain calculation logic. |
 | `data/reference/emission_factors.csv` | Emission factor library (single source of truth) |

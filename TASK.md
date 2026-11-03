@@ -24,12 +24,16 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [ ] Open the official DESNZ 2026 workbook and confirm the factors marked "Secondary source" *(needs a browser; **you**)*
 - [ ] Map purchased-goods spend to NAICS categories and use commodity-specific EPA factors (split the synthetic spend into e.g. raw materials, packaging, IT and services)
 
-## 📈 Phase 3: Strategy & insight
-- [ ] Scenario modelling notebook (`02_decarbonisation_scenarios.ipynb`): solar hybrid, efficiency, travel policy, supplier engagement
-- [ ] Marginal abatement cost curve (MACC): cost per tCO2e for each lever
-- [ ] Intensity metrics: tCO2e per employee and per USD million revenue
-- [ ] Net-zero pathway chart (SBTi-aligned ~4.2%/yr linear reduction)
-- [ ] Market-based Scope 2 (RECs / solar PPA)
+## ✅ Phase 3: Strategy & insight (done, 2026-11-04)
+- [x] Scenario engine (`src/carbon/scenarios.py`) with 9 sourced and costed levers
+- [x] Scenario notebook `02_decarbonisation_scenarios.ipynb` (levers, MACC, pathway, diesel-price sensitivity, recommendations)
+- [x] Marginal abatement cost curve (static + interactive)
+- [x] Intensity metrics: tCO2e per employee, per USD m revenue, per tonne of product
+- [x] SBTi-aligned pathway (S1+2 4.2%/yr, S3 2.5%/yr) vs BAU and with-lever scenarios to 2035
+- [x] Market-based Scope 2 (PPA / I-RECs) with dual reporting
+- [x] Dashboard tabs: Scenarios (editable prices/FX/levers) and Intensity & Scope 2
+- [ ] Second-wave levers (fleet CNG/EV, larger supplier programme, more solar) to close the 2035 gap
+- [ ] Add lever ramp-up, solar degradation and grid decarbonisation to the pathway
 
 ## 🚀 Phase 4: Deploy & publish
 - [ ] Load data into SQLite through `sql/schema.sql` and show SQL queries in a notebook

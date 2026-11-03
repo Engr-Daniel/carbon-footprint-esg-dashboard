@@ -1,0 +1,11 @@
+parameter,value,unit,source,source_url,notes
+fx_ngn_per_usd,1350,NGN per USD,Assumption based on NAFEM / market rates Sep 2026 (~N1320/$) and NESG 2026 projection (~N1480/$),https://www.channelstv.com/?p=998462,Highly volatile - adjust in dashboard sidebar
+diesel_price_ngn_per_litre,1900,NGN per litre,Lagos depot N1850-1900/L (19-23 Oct 2026); Dangote gantry N1800/L from 10 Oct 2026,https://www.finelib.com/knowledge/prices/products/Finelib-Prices-Diesel-AGO-Nigeria-Reference-v1.html,Delivered bulk price assumption
+petrol_price_ngn_per_litre,1400,NGN per litre,Median depot PMS ~N1353/L (15 Sep 2026); NBS pump average N1596/L (May 2026),https://awajis.com/fuel-price-in-nigeria-today/,Fleet fuel price assumption
+grid_tariff_ngn_per_kwh,209.5,NGN per kWh,NERC Band A tariff N209.50/kWh (MYTO supplementary order),https://guardian.ng/nerc-raises-tariff-for-band-a-by-1-3-amid-calls-for-reduction,Commercial Band A customers; excludes VAT and fixed charges
+flight_domestic_usd_per_pkm,0.21,USD per passenger-km,Assumption: ~USD110 one-way Lagos-Abuja (~520 km),,Illustrative fare assumption
+flight_longhaul_usd_per_pkm,0.09,USD per passenger-km,Assumption: ~USD900 economy return Lagos-London (~10000 km),,Illustrative fare assumption
+refrigerant_usd_per_kg,25,USD per kg,Assumption: R-410A recharge cost,,Illustrative
+landfill_gate_fee_usd_per_tonne,25,USD per tonne,Assumption: private waste collection and disposal fee,,Illustrative
+discount_rate,0.12,fraction,Assumption: real USD cost of capital for Nigerian C&I energy projects,,Used to annualise capex (capital recovery factor)
+bau_growth_rate,0.02,fraction per year,Assumption: business-as-usual activity growth from 2025,,Applied to all activity in the pathway model
