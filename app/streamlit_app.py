@@ -13,6 +13,7 @@ from carbon import calculate_emissions, load_activity, load_factors, reduction_v
 
 st.set_page_config(page_title="Carbon Footprint & ESG Dashboard", page_icon="🌍", layout="wide")
 st.title("🌍 Carbon Footprint & ESG Dashboard")
+SCOPE_COLORS = {"Scope 1": "#2a6f97", "Scope 2": "#f4a261", "Scope 3": "#2a9d8f"}
 st.caption("Scope 1, 2 & 3 GHG emissions (GHG Protocol). Demo uses SYNTHETIC data for a fictional company.")
 
 
@@ -42,22 +43,27 @@ c1, c2, c3, c4 = st.columns(4)
 c1.metric("Total emissions", f"{total:,.0f} tCO2e")
 for col, scope in zip((c2, c3, c4), (1, 2, 3)):
     v = f.loc[f["scope"] == scope, "tco2e"].sum()
-    col.metric(f"Scope {scope}", f"{v:,.0f} tCO2e", f"{v / total:.0%} of total", delta_color="off")
+    col.metric(f"Scope {scope}", f"{v:,.0f} tCO2e")
+    col.caption(f"{v / total:.0%} of total")
 
 left, right = st.columns(2)
 by_scope_year = summarise(f, ["year", "scope"])
 by_scope_year["scope"] = "Scope " + by_scope_year["scope"].astype(str)
 left.plotly_chart(
     px.bar(by_scope_year, x="year", y="tco2e", color="scope", title="Emissions by scope and year",
+           color_discrete_map=SCOPE_COLORS,
+           category_orders={"scope": ["Scope 1", "Scope 2", "Scope 3"]},
            labels={"tco2e": "tCO2e", "year": "Year"}),
     width="stretch",
 )
-by_cat = summarise(f, ["category"]).sort_values("tco2e")
-right.plotly_chart(
-    px.bar(by_cat, x="tco2e", y="category", orientation="h", title="Emissions hotspots by category",
-           labels={"tco2e": "tCO2e", "category": ""}),
-    width="stretch",
-)
+by_cat = summarise(f, ["category", "scope"]).sort_values("tco2e")
+by_cat["scope"] = "Scope " + by_cat["scope"].astype(str)
+hot_fig = px.bar(by_cat, x="tco2e", y="category", orientation="h", title="Emissions hotspots by category",
+                 color="scope", color_discrete_map=SCOPE_COLORS,
+                 category_orders={"scope": ["Scope 1", "Scope 2", "Scope 3"]},
+                 labels={"tco2e": "tCO2e", "category": ""})
+hot_fig.update_yaxes(categoryorder="total ascending")
+right.plotly_chart(hot_fig, width="stretch")
 
 monthly = summarise(f, ["period", "site"])
 st.plotly_chart(
@@ -74,11 +80,13 @@ progress = reduction_vs_baseline(site_f, base_year)
 target_value = progress.loc[progress["year"] == base_year, "tco2e"].iloc[0] * (1 - target_pct / 100)
 fig = px.line(progress, x="year", y="tco2e", markers=True, labels={"tco2e": "tCO2e", "year": "Year"},
               title=f"Actual vs {target_pct}% reduction target (baseline {base_year})")
-fig.add_hline(y=target_value, line_dash="dash", annotation_text="Target")
+fig.add_hline(y=target_value, line_dash="dash", annotation_text="Target", line_color="#e76f51")
+fig.update_xaxes(dtick=1)
 st.plotly_chart(fig, width="stretch")
 st.dataframe(progress.style.format({"tco2e": "{:,.1f}", "pct_change_vs_baseline": "{:+.1f}%"}),
              width="stretch")
 
 with st.expander("Emission factors used"):
     st.dataframe(load_factors(), width="stretch")
-    st.info("Factors are indicative. Verify against the latest DEFRA/DESNZ, IPCC and national grid sources.")
+    st.info("Sources: DESNZ 2026 conversion factors, Ember 2025 (Nigeria grid), US EPA Supply Chain Factors v1.3. "
+            "See the 'verification' column - factors marked 'Secondary source' should be confirmed in the official workbook.")
