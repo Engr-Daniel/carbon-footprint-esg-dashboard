@@ -33,11 +33,46 @@ def load_activity(path: Path | str = SAMPLE_PATH) -> pd.DataFrame:
     return df
 
 
-def calculate_emissions(activity: pd.DataFrame, factors: pd.DataFrame) -> pd.DataFrame:
+FACTOR_COLS = ["activity_type", "scope", "category", "unit", "kgco2e_per_unit"]
+
+
+def select_factors(factors: pd.DataFrame, years: list[int], policy: str = "latest") -> pd.DataFrame:
+    """Pick one factor per activity type and reporting year.
+
+    policy="latest"   -> apply the most recent factor set to every year (like-for-like trend;
+                         the GHG Protocol recalculates the base year when methodology changes).
+    policy="matching" -> use the factor_year matching each reporting year; if none, fall back
+                         to the latest factor_year <= that year, else the earliest available.
+    Tables without a factor_year column are applied to all years unchanged.
+    """
+    if policy not in {"latest", "matching"}:
+        raise ValueError("policy must be 'latest' or 'matching'.")
+    if "factor_year" not in factors.columns:
+        return pd.concat([factors[FACTOR_COLS].assign(year=y) for y in years], ignore_index=True)
+
+    picked = []
+    for activity_type, grp in factors.groupby("activity_type"):
+        grp = grp.sort_values("factor_year")
+        for y in years:
+            if policy == "latest":
+                row = grp.iloc[-1]
+            else:
+                eligible = grp[grp["factor_year"] <= y]
+                row = eligible.iloc[-1] if not eligible.empty else grp.iloc[0]
+            picked.append({**row[FACTOR_COLS + ["factor_year"]].to_dict(), "year": y})
+    return pd.DataFrame(picked)
+
+
+def calculate_emissions(
+    activity: pd.DataFrame, factors: pd.DataFrame, policy: str = "latest"
+) -> pd.DataFrame:
     """Join activity data to factors and compute kgCO2e and tCO2e per row."""
+    if "year" not in activity.columns:
+        activity = activity.assign(year=pd.to_datetime(activity["period"]).dt.year)
+    selected = select_factors(factors, sorted(activity["year"].unique()), policy)
     merged = activity.merge(
-        factors[["activity_type", "scope", "category", "unit", "kgco2e_per_unit"]],
-        on="activity_type",
+        selected,
+        on=["activity_type", "year"],
         how="left",
         suffixes=("", "_factor"),
     )
