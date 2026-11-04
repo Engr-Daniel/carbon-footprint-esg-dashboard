@@ -59,6 +59,7 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 - Should we replace synthetic data with a real public company's disclosed data (e.g. a Nigerian listed company's sustainability report)?
 
 ## Lessons learned
+- Streamlit Cloud installs `requirements.txt`, so keep it to runtime packages only (heavy dev deps such as Jupyter stall the build). Dev and CI use `requirements-dev.txt`.
 - EEIO factors are per base-year dollar. Deflate nominal spend first, and make units ("USD" vs "USD2022") incompatible so it can't be forgotten.
 - ReportLab's built-in fonts have no ₦ glyph (it renders as a black box). Use "NGN" in PDFs.
 - Generate notebook findings text from code (IPython Markdown) so the numbers can't go stale.

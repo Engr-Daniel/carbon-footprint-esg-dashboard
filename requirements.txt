@@ -1,7 +1,6 @@
+# Runtime dependencies for the Streamlit dashboard (used by Streamlit Community Cloud).
+# Keep this list minimal - development tools live in requirements-dev.txt.
 pandas>=2.1
 numpy>=1.26
 plotly>=5.18
 streamlit>=1.50
-jupyter>=1.0
-matplotlib>=3.8
-pytest>=8.0
