@@ -41,6 +41,17 @@ def get_data():
 
 
 activity, factors, df = get_data()
+
+
+@st.cache_data(show_spinner="Running scenario model…")
+def run_scenarios(assumption_items: tuple, chosen: tuple):
+    """Cached: levers, phased pathway with uncertainty bands, and sensitivity analysis."""
+    a = dict(assumption_items)
+    levers = load_levers()
+    sel = levers[levers.lever_id.isin(chosen)]
+    base = baseline_activity(activity, 2025)
+    res, _ = apply_levers(base, sel, factors, a, 2025)
+    return res, pathway_range(df, base, sel, factors, a), sensitivity_analysis(activity, df, sel, factors, a)
 years = sorted(df["year"].unique())
 sites = sorted(df["site"].unique())
 
@@ -121,10 +132,7 @@ with tab_scen:
     if not chosen:
         st.warning("Select at least one lever.")
     else:
-        sel = levers_all[levers_all.lever_id.isin(chosen)]
-        base = baseline_activity(activity, 2025)
-        res, _ = apply_levers(base, sel, factors, A, 2025)
-        path = pathway_range(df, base, sel, factors, A)
+        res, path, sens = run_scenarios(tuple(sorted(A.items())), tuple(chosen))
         base_2025 = df.loc[df.year == 2025, "tco2e"].sum()
         loc_ab = res.loc[res.accounting == "location", "abatement_tco2e"].sum()
         y30 = path[path.year == 2030].iloc[0]
@@ -173,7 +181,6 @@ with tab_scen:
                            "cost_per_tco2e_usd": "{:,.0f}", "simple_payback_years": "{:.1f}"}, na_rep="–"),
             width="stretch", hide_index=True)
         with st.expander("Sensitivity analysis (one input at a time)"):
-            sens = sensitivity_analysis(activity, df, sel, factors, A)
             st.dataframe(sens.rename(columns={"net_saving_low": "Net saving (low input)", "net_saving_high": "Net saving (high input)",
                                               "gap_low": "2030 gap (low)", "gap_high": "2030 gap (high)"})
                          .drop(columns="saving_swing").style.format(precision=0, thousands=","), width="stretch", hide_index=True)

@@ -67,7 +67,8 @@ carbon-footprint-esg-dashboard/
 ├── AGENTS.md                     # Guide for AI coding agents / collaborators
 ├── MEMORY.md                     # Project decisions & context log
 ├── TASK.md                       # Roadmap & task tracker
-└── requirements.txt
+├── requirements.txt              # Dashboard runtime only (Streamlit Cloud)
+└── requirements-dev.txt          # Tests, notebooks, report generation
 ```
 
 ## 🧮 Methodology (summary)
@@ -147,7 +148,7 @@ Nine reduction levers were sized against the 2025 baseline and costed with **202
 git clone https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard.git
 cd carbon-footprint-esg-dashboard
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt   # dashboard only: requirements.txt
 
 # Run the dashboard
 streamlit run app/streamlit_app.py
