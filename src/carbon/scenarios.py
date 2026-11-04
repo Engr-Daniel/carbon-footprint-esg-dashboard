@@ -52,9 +52,9 @@ def unit_costs_usd(a: dict[str, float]) -> dict[str, float]:
         "business_travel_air_longhaul": a["flight_longhaul_usd_per_pkm"],
         "refrigerant_r410a": a["refrigerant_usd_per_kg"],
         "waste_landfill": a["landfill_gate_fee_usd_per_tonne"],
-        # Commuting is paid by employees; supplier engagement does not reduce spend.
+        # Commuting is paid by employees; supplier engagement lowers emissions per dollar, not spend.
+        # Any activity not listed here (e.g. purchased_* spend) has zero direct cost saving.
         "employee_commute_car": 0.0,
-        "purchased_goods_spend": 0.0,
     }
 
 

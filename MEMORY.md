@@ -13,21 +13,21 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 - Sites: Lagos HQ, Abuja Office, Port Harcourt Plant (the plant is the largest emitter and the only site using natural gas)
 - Data: monthly activity data for 2023–2025, synthetic and generated with a fixed random seed (42), with a built-in downward trend (2024: −4%, 2025: −9%)
 
-## Current results snapshot (Phase 4: scope-correct grid factor + Cat 3)
-- Total 2023–2025: **13,525 tCO2e** (S1 3,572 · S2 2,848 · S3 7,105). Scope 3 is 53% and includes Cat 3 (~11%)
-- 2025: 4,283 tCO2e, **−9.4% vs 2023**
-- Top hotspot: Cat 1 purchased goods (29%), then grid electricity (21%) and diesel (~18%). Port Harcourt = 56%
-- The Python engine and the SQL view give identical totals (tested in CI)
+## Current results snapshot (category-specific Scope 3, 2022-USD deflated)
+- Total 2023–2025: **17,313 tCO2e** (S1 3,572 · S2 2,848 · S3 10,892). Scope 3 is 63%; Cat 1 is 41% (steel 18%, resin 12%)
+- 2025: 5,384 tCO2e, **−12.3% vs 2023** in real terms (synthetic nominal spend fell while prices rose)
+- Port Harcourt = 56%. SQL view = Python engine (tested in CI, deflation included)
 
 ## Scenario results snapshot
-- Physical abatement ~887 tCO2e/yr (−21% vs 2025); with renewable contracts, ~1,114
-- Capex $424k; net annualised saving ~$124k/yr (min ~$52k/yr across sensitivities); 4 cost-negative levers deliver 52% of abatement
-- L2 Port Harcourt solar hybrid: ~266 t/yr, ~2-yr payback
-- 2030 (phased): market-based gap −135 t (range −367 to +153 t); location-based +115 t ❌. 2035: both miss
+- Physical abatement ~968 tCO2e/yr (−18% vs 2025); with renewable contracts, ~1,194 (−22%)
+- Capex $424k; net annualised saving ~$124k/yr (min ~$52k across sensitivities); 4 cost-negative levers deliver 49% of abatement
+- L8 supplier engagement now ~201 t/yr at ~$149/t. L2 solar hybrid ~266 t/yr, ~2-yr payback
+- 2030 (phased): market-based gap −174 t (range −450 to +159); location-based +77 t ❌. 2035: both miss
 
 ## Decision log
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-11-04 | Scope 3 spend split into 10 categories mapped to EPA v1.3 NAICS factors (with margins), including Cat 4 freight; spend deflated to 2022 USD with US CPI-U | Review finding #2. Generic 0.2819 averaged unrelated industries; spend-weighted factor is now 0.593. Total rose 13,525 → 17,313 |
 | 2026-11-04 | External review (6 findings) addressed in Phase 4 | Grid scope split, instrument checks, ramp/uncertainty, CI, docs. Scope 3 category mapping is pending the EPA CSV |
 | 2026-11-04 | Nigeria grid factor **derived**: S2 0.417 (gas share 67.3% × DESNZ gas 0.20434/kWh NCV ÷ 33% efficiency); Cat 3 WTT 0.075, T&D 0.039 | Ember is lifecycle (mixes scopes); IEA is paid; DESNZ dropped overseas factors. Total 0.530 ≈ Ember 0.456 within uncertainty |
 | 2026-11-04 | Factors keyed by activity_type + **component** (primary / wtt / td_losses); WTT added for all fuels | Cat 3 reported consistently; one activity → several scopes |
@@ -59,6 +59,7 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 - Should we replace synthetic data with a real public company's disclosed data (e.g. a Nigerian listed company's sustainability report)?
 
 ## Lessons learned
+- EEIO factors are per base-year dollar. Deflate nominal spend first, and make units ("USD" vs "USD2022") incompatible so it can't be forgotten.
 - ReportLab's built-in fonts have no ₦ glyph (it renders as a black box). Use "NGN" in PDFs.
 - Generate notebook findings text from code (IPython Markdown) so the numbers can't go stale.
 - Secondary-source reproductions can map to the wrong row (household vs commercial waste). Always verify against the primary workbook and record the cell reference.

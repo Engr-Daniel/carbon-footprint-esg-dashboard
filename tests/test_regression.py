@@ -14,14 +14,14 @@ from carbon.scenarios import (apply_levers, baseline_activity, load_cost_assumpt
                               pathway_range)
 
 EXPECTED = {
-    "total_2023_2025": 13524.6,
+    "total_2023_2025": 17312.7,
     "scope1": 3572.4,
     "scope2": 2848.1,
-    "scope3": 7104.1,
-    "y2025": 4283.5,
-    "physical_abatement": 887.0,
+    "scope3": 10892.2,
+    "y2025": 5383.8,
+    "physical_abatement": 967.5,
     "net_saving_usd": 124152.0,
-    "gap_2030_market": -135.0,
+    "gap_2030_market": -173.5,
 }
 REL = 0.005  # 0.5% tolerance
 
