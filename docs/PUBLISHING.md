@@ -50,7 +50,7 @@ Steps to take the project from private repo to public portfolio piece. Items mar
 >
 > Under the hood: Python carbon engine (GHG Protocol), DESNZ 2026 factors verified against the official workbook, a derived Scope 2 factor for the Nigerian grid, a marginal abatement cost curve, an SBTi pathway with uncertainty bands, and a Streamlit dashboard where you can change the assumptions yourself.
 >
-> 📊 Live dashboard: <APP_URL>
+> 📊 Live dashboard: https://carbon-footprint-esg-dashboard.streamlit.app/
 > 💻 Code & methodology: https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard
 >
 > Feedback from ESG and energy practitioners very welcome, especially on Nigerian grid and Scope 3 data sources.

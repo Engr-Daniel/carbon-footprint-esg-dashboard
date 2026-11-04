@@ -3,7 +3,7 @@
 [![tests](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-📄 **[Executive summary (PDF, 2 pages)](reports/executive_summary.pdf)** · 📊 Live dashboard: *coming soon*
+📄 **[Executive summary (PDF, 2 pages)](reports/executive_summary.pdf)** · 📊 **[Live dashboard](https://carbon-footprint-esg-dashboard.streamlit.app/)** [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://carbon-footprint-esg-dashboard.streamlit.app/)
 
 End-to-end **Scope 1, 2 & 3 greenhouse gas (GHG) emissions analysis** and an **interactive ESG dashboard**, built on the [GHG Protocol Corporate Standard](https://ghgprotocol.org/corporate-standard). The case study is set in Nigeria.
 
