@@ -1,0 +1,5 @@
+year,cpi_u,factor_vs_2022,source
+2022,292.655,1.0,"BLS CPI-U U.S. city average, annual average (1982-84=100)"
+2023,304.702,1.04116,BLS CPI-U annual average
+2024,313.689,1.07187,BLS CPI-U annual average
+2025,321.845,1.09974,2024 BLS annual average x 1.026 (BLS/FRED CPIAUCNS 2025 annual change +2.6%)

@@ -15,6 +15,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[2]
 FACTORS_PATH = ROOT / "data" / "reference" / "emission_factors.csv"
 SAMPLE_PATH = ROOT / "data" / "sample" / "activity_data_sample.csv"
+DEFLATORS_PATH = ROOT / "data" / "reference" / "usd_deflators.csv"
 
 REQUIRED_ACTIVITY_COLS = {"period", "site", "activity_type", "quantity", "unit"}
 
@@ -30,8 +31,33 @@ def _with_component(factors: pd.DataFrame) -> pd.DataFrame:
     return factors.assign(component=factors["component"].fillna("primary"))
 
 
-def load_activity(path: Path | str = SAMPLE_PATH) -> pd.DataFrame:
-    """Load and validate activity data."""
+def load_deflators(path: Path | str = DEFLATORS_PATH) -> pd.DataFrame:
+    return pd.read_csv(path)
+
+
+def to_constant_usd(activity: pd.DataFrame, deflators: pd.DataFrame, base_year: int = 2022) -> pd.DataFrame:
+    """Convert nominal 'USD' spend rows to constant base-year dollars (unit 'USD<base_year>').
+
+    Spend-based (EEIO) factors are expressed per base-year dollar (US EPA v1.3: 2022 USD), so
+    nominal spend must be deflated first or emissions are overstated by inflation.
+    """
+    usd = activity["unit"] == "USD"
+    if not usd.any():
+        return activity
+    idx = deflators.set_index("year")["cpi_u"]
+    if base_year not in idx:
+        raise ValueError(f"Deflator table has no base year {base_year}.")
+    missing = set(activity.loc[usd, "year"]) - set(idx.index)
+    if missing:
+        raise ValueError(f"No USD deflator for years: {sorted(missing)}")
+    out = activity.copy()
+    out.loc[usd, "quantity"] = out.loc[usd, "quantity"] * idx[base_year] / out.loc[usd, "year"].map(idx)
+    out.loc[usd, "unit"] = f"USD{base_year}"
+    return out
+
+
+def load_activity(path: Path | str = SAMPLE_PATH, deflate: bool = True) -> pd.DataFrame:
+    """Load and validate activity data (nominal USD spend is deflated to 2022 USD by default)."""
     df = pd.read_csv(path)
     missing = REQUIRED_ACTIVITY_COLS - set(df.columns)
     if missing:
@@ -40,7 +66,7 @@ def load_activity(path: Path | str = SAMPLE_PATH) -> pd.DataFrame:
         raise ValueError("Activity quantities must be non-negative.")
     df["period"] = pd.to_datetime(df["period"], format="%Y-%m")
     df["year"] = df["period"].dt.year
-    return df
+    return to_constant_usd(df, load_deflators()) if deflate else df
 
 
 FACTOR_COLS = ["activity_type", "component", "scope", "category", "unit", "kgco2e_per_unit"]
