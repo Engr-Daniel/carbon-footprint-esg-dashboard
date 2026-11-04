@@ -20,6 +20,7 @@ def test_sql_view_matches_python_engine():
     sites["site_id"] = range(1, len(sites) + 1)
     sites.to_sql("sites", con, if_exists="append", index=False)
     factors.to_sql("emission_factors", con, if_exists="append", index=False)
+    pd.read_csv(ROOT / "data" / "reference" / "usd_deflators.csv").to_sql("usd_deflators", con, if_exists="append", index=False)
     act = act.merge(sites, left_on="site", right_on="site_name").assign(period=lambda d: d.period + "-01")
     act[["period", "site_id", "activity_type", "quantity", "unit"]].to_sql("activity_data", con, if_exists="append", index=False)
     sql_total = con.execute("SELECT SUM(tco2e) FROM v_emissions").fetchone()[0]

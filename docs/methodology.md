@@ -21,7 +21,8 @@ This project follows the **GHG Protocol Corporate Accounting and Reporting Stand
 | 1 | Fugitive emissions | refrigerant_r410a | kg | Mass-balance (leakage × GWP) |
 | 2 | Purchased electricity | grid_electricity_ng (`primary`) | kWh | Location-based (combustion-only) + market-based |
 | 3 | Cat 3 – Fuel- & energy-related activities | diesel, petrol, natural_gas, lpg, grid (`wtt`, `td_losses`) | as activity | Upstream (WTT) + T&D losses |
-| 3 | Cat 1 – Purchased goods & services | purchased_goods_spend | USD | Spend-based (EEIO) |
+| 3 | Cat 1 – Purchased goods & services | purchased_steel, _plastic_resin, _corrugated_packaging, _plastic_film, _chemicals, _machinery_repair, _it_services, _consulting, _cleaning_services | USD → 2022 USD | Spend-based (EEIO), category-specific |
+| 3 | Cat 4 – Upstream transportation | upstream_freight_trucking | USD → 2022 USD | Spend-based (EEIO) |
 | 3 | Cat 5 – Waste | waste_landfill | tonne | Waste-type specific |
 | 3 | Cat 6 – Business travel | air short/long-haul | passenger_km | Distance-based |
 | 3 | Cat 7 – Employee commuting | employee_commute_car | km | Distance-based |
@@ -56,7 +57,10 @@ Stored in `data/reference/emission_factors.csv`. Each row is keyed by `activity_
 | Long-haul economy flight (with RF) | 0.11704 | kgCO2e/passenger-km | DESNZ 2026 |
 | Average petrol car | 0.16152 | kgCO2e/km | DESNZ 2026 |
 | Commercial & industrial waste to landfill | 520.58 | kgCO2e/tonne | DESNZ 2026 |
-| Purchased goods (generic spend proxy) | 0.2819 | kgCO2e/USD (2022) | US EPA Supply Chain Factors v1.3 |
+| Steel (NAICS 331110) / plastic resin (325211) | 0.787 / 1.045 | kgCO2e per 2022 USD | US EPA Supply Chain Factors v1.3 (with margins) |
+| Corrugated boxes (322211) / plastic film (326112) / chemicals (325998) | 0.479 / 0.544 / 0.500 | kgCO2e per 2022 USD | US EPA v1.3 |
+| Machinery repair (811310) / IT services (541512) / consulting (541611) / cleaning (561720) | 0.136 / 0.089 / 0.078 / 0.214 | kgCO2e per 2022 USD | US EPA v1.3 |
+| Freight trucking, Cat 4 (484121) | 0.595 | kgCO2e per 2022 USD | US EPA v1.3 |
 
 ### Key factor choices
 - **100% mineral fuel factors** are used for diesel and petrol, not the UK pump "average biofuel blend". Nigerian AGO and PMS carry no biofuel blend.
@@ -67,13 +71,15 @@ Stored in `data/reference/emission_factors.csv`. Each row is keyed by `activity_
   - The components total **0.530**, which is consistent with Ember's lifecycle 0.456 given the uncertainty. The efficiency range of 28–38% gives a Scope 2 factor of 0.362–0.491. A test checks that the CSV values equal the derivation.
 - **Cat 3 for fuels:** DESNZ WTT factors are added for every Scope 1 fuel, so upstream emissions are reported consistently for fuels and electricity.
 - **Flights** include radiative forcing (RF), following DESNZ's recommendation. The DESNZ "domestic" factor stands in for short Nigerian domestic flights (e.g. Lagos–Abuja, ~520 km).
-- **Spend-based Cat 1** uses the mean of non-zero US commodity factors as a generic proxy. It is US-economy and USD-2022 based, so it is the **most uncertain** line.
+- **Spend-based Cat 1 and Cat 4 are category-specific.** Spend is split into 10 categories, each mapped to a NAICS-6 commodity in the official **US EPA Supply Chain GHG Emission Factors v1.3** CSV. The factors are *with margins* (purchaser price, cradle-to-shelf). The spend-weighted factor is **0.593** kgCO2e/USD, more than double the previous generic proxy (0.2819, the mean of all non-zero commodity factors). Materials (steel, resin) dominate.
+- **Deflation:** EPA factors are per **2022 USD**, so nominal spend is converted with US CPI-U annual averages (`usd_deflators.csv`: 2023 ×1/1.041, 2024 ×1/1.072, 2025 ×1/1.100) before the factors are applied. The engine refuses to combine nominal `USD` with `USD2022` factors (unit check). The SQL view applies the same deflation.
+- **Caveat:** these are US-economy factors applied to Nigerian purchases. They are a common screening practice, but supplier-specific or regional EEIO data (e.g. EXIOBASE Rest-of-Africa) would be more representative.
 
 ### Factor-year policy
 `calculate_emissions(..., policy="latest")` (the default) applies the most recent factor set to **all** years. This gives a like-for-like trend, consistent with the GHG Protocol's guidance to recalculate the base year when methodology changes. `policy="matching"` uses the factor year that matches each reporting year, falling back to the closest earlier year (this mirrors statutory year-by-year reporting).
 
 ### Verification status
-All DESNZ factors were **verified cell-by-cell against the official `ghg-conversion-factors-2026-full-set.xlsx`** on 2026-11-04. The `verification` column records each cell reference (e.g. `Fuels!D76`). This check corrected one factor: waste moved from *household residual waste* (497.29) to **commercial and industrial waste → landfill (520.58)**, which is the right category for a company. The Nigeria grid factor is not in DESNZ (UK-only), so it is derived from verified DESNZ inputs plus NERC data (above). The spend-based factor remains a documented proxy.
+All DESNZ factors were **verified cell-by-cell against the official `ghg-conversion-factors-2026-full-set.xlsx`** on 2026-11-04. The `verification` column records each cell reference (e.g. `Fuels!D76`). This check corrected one factor: waste moved from *household residual waste* (497.29) to **commercial and industrial waste → landfill (520.58)**, which is the right category for a company. The Nigeria grid factor is not in DESNZ (UK-only), so it is derived from verified DESNZ inputs plus NERC data (above). The spend-based factors were verified against the official EPA v1.3 CSV (NAICS code recorded in the `verification` column).
 
 **Optional refinement:** DESNZ also publishes *International, to/from non-UK* flight factors (economy with RF: 0.10916, `Business travel- air!E33`). These may suit Nigerian international routes that don't touch the UK better than the *long-haul to/from UK* factor used here.
 
@@ -95,7 +101,7 @@ Code: `src/carbon/scenarios.py`. Inputs: `data/reference/reduction_levers.csv` a
 - DESNZ factors reflect UK conditions. Landfill, commuting and spend factors are proxies for Nigeria and likely **understate** local emissions (open dumpsites, older vehicle fleet).
 - Market-based Scope 2 is implemented with quality checks, but there is no Nigerian residual mix, so the grid-average fallback may double count attributes sold to others.
 - The Nigeria grid factor depends on an assumed fleet efficiency (33%, range 28–38%) and only transmission (not distribution) losses.
-- Spend-based Scope 3 is highly uncertain. It should be replaced by supplier-specific data over time.
+- Spend-based Scope 3 (Cat 1 and Cat 4) uses US-economy factors and US CPI deflation. It is category-specific but still uncertain, and should be replaced by supplier-specific data over time.
 - Lever capex, opex and reduction percentages are documented **assumptions**, not quotes. Fuel prices and FX are volatile, so use the dashboard inputs and the notebook's sensitivity table.
 - Levers ramp up linearly and then hold constant. There is no grid decarbonisation or solar degradation. Uncertainty ranges are one-at-a-time, not a joint (Monte Carlo) distribution.
-- Some Scope 3 categories (e.g. Cat 4 transport, Cat 11 use of sold products) are excluded for now.
+- Some Scope 3 categories (e.g. Cat 2 capital goods, Cat 9 downstream transport, Cat 11 use of sold products) are excluded for now.
