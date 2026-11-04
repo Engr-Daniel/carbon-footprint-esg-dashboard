@@ -68,6 +68,7 @@ Stored in `data/reference/emission_factors.csv`. Each row is keyed by `activity_
   - Scope 2 = gas share of generation **67.3%** (NERC 2025: 26,386 of 39,194 GWh, via NRGI 2026) × DESNZ 2026 natural-gas combustion **0.20434 kgCO2e/kWh NCV** (`Fuels!D45`) ÷ fleet efficiency **33%** (OCGT-dominated fleet; Nigerian studies report 25–39%) = **0.417**
   - Cat 3 WTT = gas share × DESNZ WTT natural gas **0.03347** (`WTT- fuels!D44`) ÷ efficiency, grossed up for losses = **0.075**
   - Cat 3 T&D = Scope 2 × TLF/(1−TLF), using NERC's transmission loss factor of **8.48%** = **0.039** (distribution losses aren't published, so this is likely understated)
+  - **This is an estimate, not an official national factor.** Replace it with an official Nigerian (NCCC/DNA) or IEA combustion factor if one becomes available.
   - The components total **0.530**, which is consistent with Ember's lifecycle 0.456 given the uncertainty. The efficiency range of 28–38% gives a Scope 2 factor of 0.362–0.491. A test checks that the CSV values equal the derivation.
 - **Cat 3 for fuels:** DESNZ WTT factors are added for every Scope 1 fuel, so upstream emissions are reported consistently for fuels and electricity.
 - **Flights** include radiative forcing (RF), following DESNZ's recommendation. The DESNZ "domestic" factor stands in for short Nigerian domestic flights (e.g. Lagos–Abuja, ~520 km).
@@ -92,13 +93,17 @@ Code: `src/carbon/scenarios.py`. Inputs: `data/reference/reduction_levers.csv` a
 - **Costs:** annualised cost = capex × CRF(r, n) + opex − savings, where CRF = r(1+r)ⁿ / ((1+r)ⁿ − 1) and r = 12% real USD. Savings = avoided activity × unit price (diesel, petrol, grid, flights, refrigerant, landfill fees). Commuting and supplier levers carry no company savings.
 - **Pathway:** BAU grows +2%/yr from 2025. Each lever **phases in linearly** over `ramp_years` from its `start_year` (e.g. supplier engagement takes 3 years). Abatement is scaled by growth.
 - **Uncertainty:** each lever has `reduction_pct_low` / `reduction_pct_high`. `pathway_range()` produces low/high bands. `sensitivity_analysis()` runs one-at-a-time tests (diesel ±30%, FX ±25%, tariff ±30%, discount rate 8%/18%, capex ±25%, effectiveness low/high, growth 0%/4%) on the net annual saving and the 2030 target gap.
-- **Targets:** SBTi Absolute Contraction Approach minimums from the 2023 base year: **Scope 1+2 −4.2%/yr** (1.5°C) and **Scope 3 −2.5%/yr** (well-below 2°C, required because Scope 3 is ≥40% of the total).
+- **Target benchmark (not a validated target):** the pathway is compared with a line modelled at the SBTi Absolute Contraction Approach minimum rates from the 2023 base year: **Scope 1+2 −4.2%/yr** (1.5°C) and **Scope 3 −2.5%/yr** (well-below 2°C, required because Scope 3 is ≥40% of the total).
 - **Dual Scope 2 with instrument quality checks:** `validate_instruments()` applies the **GHG Protocol Scope 2 Quality Criteria** before any instrument gets a zero factor. The instrument must (1) convey the energy-attribute claim (a bare PPA without certificates does not), (2) be retired/cancelled on behalf of the company, (3) be tracked in a registry, (4) have a vintage matching the reporting year, (5) come from the same market (Nigeria), and (6) not be double counted. Only eligible MWh reduce market-based Scope 2. Nigeria has no residual-mix factor, so uncovered kWh use the grid average (the Scope 2 Guidance fallback), and this is disclosed. Sample instruments are synthetic and include deliberate failures to show the checks working. Lever L9 assumes that future contracts meet these criteria.
 - **Intensity:** tCO2e per employee, per USD m revenue and per tonne of product (synthetic company profile).
 
-## 8. Limitations & assumptions
+## 8. Restatements
+Activity data is unchanged across versions. All changes in totals come from methodology, so all years (including the 2023 base year) are recalculated, per GHG Protocol base-year recalculation guidance: 12,270 → 12,281 (waste factor fix) → 13,525 (grid scope split + Cat 3) → **17,313 tCO2e** (category-specific spend + deflation). Grid-efficiency sensitivity (28–38%): 3-year total 17,959 to 16,836 tCO2e.
+
+## 9. Limitations & assumptions
 - Activity data is synthetic and only demonstrates the method.
 - DESNZ factors reflect UK conditions. Landfill, commuting and spend factors are proxies for Nigeria and likely **understate** local emissions (open dumpsites, older vehicle fleet).
+- The target line is a benchmark at SBTi minimum rates. EcoNaija (fictional) has **no SBTi-validated target**.
 - Market-based Scope 2 is implemented with quality checks, but there is no Nigerian residual mix, so the grid-average fallback may double count attributes sold to others.
 - The Nigeria grid factor depends on an assumed fleet efficiency (33%, range 28–38%) and only transmission (not distribution) losses.
 - Spend-based Scope 3 (Cat 1 and Cat 4) uses US-economy factors and US CPI deflation. It is category-specific but still uncertain, and should be replaced by supplier-specific data over time.

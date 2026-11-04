@@ -76,7 +76,7 @@ def build(out: Path = OUT) -> Path:
         Paragraph("Headline", H2),
     ]
     kpis = [
-        ["2023-25 footprint", "2025 emissions", "Change vs 2023", "Modelled abatement", "Net saving", "2030 SBTi gap*"],
+        ["2023-25 footprint", "2025 emissions", "Change vs 2023", "Modelled abatement", "Net saving", "2030 gap vs SBTi rates*"],
         [f"{d['total']:,.0f} t", f"{d['y25']:,.0f} t", f"{d['chg']:+.1%}", f"{phys.abatement_tco2e.sum():,.0f} t/yr",
          f"${-res.annualised_cost_usd.sum()/1000:,.0f}k/yr", f"{gap:+,.0f} t"],
     ]
@@ -88,7 +88,7 @@ def build(out: Path = OUT) -> Path:
         ("BOX", (0, 0), (-1, -1), 0.5, colors.HexColor("#d1d5db")), ("TOPPADDING", (0, 0), (-1, -1), 4),
         ("BOTTOMPADDING", (0, 1), (-1, 1), 6),
     ]))
-    story += [t, Paragraph("tCO2e. *Market-based, central case, vs SBTi-aligned target (Scope 1+2 −4.2%/yr, Scope 3 −2.5%/yr from 2023); negative = on track.", SM)]
+    story += [t, Paragraph("tCO2e. *Market-based, central case, vs a path at SBTi minimum rates (Scope 1+2 −4.2%/yr, Scope 3 −2.5%/yr from 2023); negative = on track. A benchmark, not an SBTi-validated target.", SM)]
 
     story += [Paragraph("What the footprint shows", H2)]
     for txt in [
@@ -154,8 +154,8 @@ def build(out: Path = OUT) -> Path:
         "GHG Protocol Corporate &amp; Scope 3 Standards; operational control; 2023 base year; AR5 GWP100.",
         "Scope 1 &amp; travel/waste factors: <b>DESNZ 2026</b>, verified cell-by-cell against the official workbook. "
         "100% mineral fuel factors (no biofuel blend in Nigerian AGO/PMS).",
-        "Nigeria grid: <b>Scope 2 combustion-only factor derived</b> from the NERC 2025 generation mix (67% gas), DESNZ "
-        "gas combustion factor and a 33% fleet efficiency (range 28-38%). Upstream fuel supply and T&amp;D losses are reported "
+        "Nigeria grid: <b>Scope 2 combustion-only factor estimated</b> (not an official national factor) from the NERC 2025 generation mix (67% gas), DESNZ "
+        "gas combustion factor and an assumed 33% fleet efficiency. The 28-38% range moves the 3-year total by +3.7% / -2.8%. Upstream fuel supply and T&amp;D losses are reported "
         "separately in Scope 3 Category 3.",
         "Scope 3 spend: 10 categories mapped to <b>US EPA Supply Chain Factors v1.3</b> (NAICS-6, with margins), with nominal "
         "spend deflated to 2022 USD using US CPI-U. Freight is reported as Category 4.",
@@ -163,6 +163,8 @@ def build(out: Path = OUT) -> Path:
         "has no residual mix, so the grid average is the fallback.",
         "Scenario costs use Oct 2026 Nigerian prices (diesel NGN 1,900/L, Band A NGN 209.5/kWh, NGN 1,350/USD, 12% discount "
         "rate). Lever capex/opex are documented assumptions, phased in over 1-3 years with low/high effectiveness ranges.",
+        "Restatements: activity data unchanged; totals rose 12,270 to 17,313 t only through method improvements (all years "
+        "recalculated, incl. 2023 base year).",
         "Limitations: synthetic activity data; spend-based Scope 3 uses US-economy factors; UK-based proxies for landfill and car "
         "factors likely understate Nigerian conditions; no grid decarbonisation assumed.",
     ]:
