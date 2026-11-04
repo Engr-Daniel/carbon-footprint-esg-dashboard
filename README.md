@@ -113,7 +113,9 @@ Nine reduction levers were sized against the 2025 baseline and costed with **202
 | Total capex | **$424k** |
 | Net annualised saving | **~$124k/yr** (cash-positive in every sensitivity case, min ~$52k/yr) |
 | Port Harcourt solar-battery hybrid | ~266 tCO2e/yr, **~2-year payback** |
-| 2030 vs SBTi-aligned target | ✅ Met **only with renewable contracts** (−174 t, range −450 to +159 t); ❌ missed on a location basis (+77 t) |
+| 2030 vs pathway at SBTi minimum rates* | ✅ Met **only with renewable contracts** (−174 t, range −450 to +159 t); ❌ missed on a location basis (+77 t) |
+
+\* *The target line is a **benchmark modelled at SBTi's minimum near-term reduction rates** (Scope 1+2 −4.2%/yr, Scope 3 −2.5%/yr from 2023). It is **not an SBTi-validated target**: validation requires a formal submission to the Science Based Targets initiative.*
 
 ![MACC](reports/figures/05_macc_curve.png)
 ![Pathway](reports/figures/06_decarbonisation_pathway.png)
@@ -124,7 +126,7 @@ Nine reduction levers were sized against the 2025 baseline and costed with **202
 ## 🔬 Methodological rigour
 | Issue | How it's handled |
 |---|---|
-| Lifecycle grid factors mix scopes | Nigeria grid factor **derived** ([`grid_factor.py`](src/carbon/grid_factor.py)): Scope 2 = combustion only (0.417); upstream (0.075) and T&D losses (0.039) go to **Scope 3 Cat 3**. A test checks the CSV against the derivation |
+| Lifecycle grid factors mix scopes | Nigeria grid factor **estimated** (not an official national factor) ([`grid_factor.py`](src/carbon/grid_factor.py)): Scope 2 = combustion only (0.417); upstream (0.075) and T&D losses (0.039) go to **Scope 3 Cat 3**. A test checks the CSV against the derivation |
 | Upstream fuel emissions | DESNZ WTT factors for every Scope 1 fuel (Cat 3) |
 | Generic spend factor averages unrelated industries | Spend split into **10 NAICS-mapped categories** using the official EPA v1.3 CSV, with **CPI deflation to 2022 USD** (enforced by a unit check) |
 | Market-based Scope 2 claims | `validate_instruments()` applies the **GHG Protocol Scope 2 Quality Criteria** (attribute claim, retirement, registry, vintage, market, uniqueness) before any zero factor |
@@ -135,13 +137,25 @@ Nine reduction levers were sized against the 2025 baseline and costed with **202
 
 **Known limitations:** synthetic activity data; spend-based Scope 3 uses US-economy EPA factors (category-specific, deflated to 2022 USD); UK proxies for landfill and car factors; no Nigerian residual mix. See [methodology §8](docs/methodology.md).
 
+## 🔄 Restatements (methodology changes)
+Activity data has stayed the same since Phase 1. Every change in the total comes from **methodology improvements**, so per the GHG Protocol the 2023 base year and all years were recalculated each time, keeping the trend like-for-like.
+
+| Version | Change | 2023–25 total (tCO2e) |
+|---|---|---|
+| Phase 2 | DESNZ 2026 factors; Ember lifecycle grid factor (0.456); generic spend factor | 12,270 |
+| Verification | Waste factor corrected: household → commercial & industrial landfill | 12,281 |
+| Phase 4a | Grid factor split by scope (Scope 2 combustion 0.417 + Cat 3 upstream/T&D); WTT added for fuels | 13,525 |
+| Phase 4b | Spend mapped to 10 EPA NAICS categories (incl. Cat 4 freight), deflated to 2022 USD | **17,313** |
+
+**Grid-factor uncertainty:** the Scope 2 factor is an *estimate* derived from the NERC generation mix and an assumed **33%** gas-fleet efficiency. The documented range of **28–38%** moves the factor from 0.491 to 0.362 kgCO2e/kWh and the 3-year total from **17,959 to 16,836 tCO2e (+3.7% / −2.8%)**. See the *Method & data* tab or `grid_factor.footprint_sensitivity()`.
+
 ## 💡 Recommendations
 0. **Fund the cost-negative levers first:** travel policy, the Port Harcourt solar-battery hybrid, efficiency, rooftop solar (see [notebook 02](notebooks/02_decarbonisation_scenarios.ipynb)).
-1. **Supplier engagement:** collect primary data from the top suppliers. Move from a generic spend proxy to category-level (NAICS-mapped) factors, then to supplier-specific data.
+1. **Supplier engagement:** the inventory already uses category-level (NAICS-mapped) spend factors. The next step is **supplier-specific** emissions data, starting with steel and plastic resin, which together are ~29% of the footprint.
 2. **Solar + battery hybrid systems** at Port Harcourt Plant to cut diesel and grid dependence.
 3. **Energy efficiency:** HVAC upgrades and refrigerant leak management.
 4. **Travel policy:** virtual-first meetings and fewer long-haul flights.
-5. **Set a formal target** aligned with SBTi, and report annually using this pipeline.
+5. **Commit to and submit a science-based target** to SBTi for validation (the pathway here only benchmarks against its minimum rates), and report annually using this pipeline.
 
 ## 🚀 Getting Started
 ```bash

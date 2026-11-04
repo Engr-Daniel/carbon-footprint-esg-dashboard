@@ -144,7 +144,7 @@ def pathway_chart(path_df):
         ax.fill_between(path_df.year, path_df.with_levers_market_lower, path_df.with_levers_market_upper,
                         color="#2a9d8f", alpha=0.15, label="Market-based range (low/high lever effectiveness)")
     ax.plot(path_df.year, path_df.sbti_target, color="#e76f51", linestyle="--",
-            label="SBTi-aligned target (S1+2: 4.2%/yr, S3: 2.5%/yr)")
+            label="Path at SBTi minimum rates (S1+2 4.2%/yr, S3 2.5%/yr), not a validated target")
     ax.axvline(2030, color="lightgrey", linewidth=0.8)
     ax.set_ylim(0, path_df[["bau", "actual"]].max().max() * 1.1)
     ax.legend(frameon=False, fontsize=8, loc="lower left")

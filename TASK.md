@@ -22,7 +22,7 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [x] Add a dashboard screenshot to the README
 - [x] Update the SQL schema to support multiple factor years; check SQL total = Python total
 - [x] Verify all DESNZ factors against the official 2026 workbook (cell refs in the CSV); waste factor corrected to commercial & industrial (520.58)
-- [ ] Map purchased-goods spend to NAICS categories and use commodity-specific EPA factors (split the synthetic spend into e.g. raw materials, packaging, IT and services)
+- [x] Map purchased-goods spend to NAICS categories and use commodity-specific EPA factors *(done in Phase 4: 10 categories, see below)*
 
 ## ✅ Phase 3: Strategy & insight (done, 2026-11-04)
 - [x] Scenario engine (`src/carbon/scenarios.py`) with 9 sourced and costed levers
