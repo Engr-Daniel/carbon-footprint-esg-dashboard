@@ -43,7 +43,8 @@ def compute() -> dict:
     phys = res[res.accounting == "location"]
     return dict(em=em, res=res, path=path, sens=sens, yearly=yearly, scope=scope, cat=cat, p30=p30, phys=phys,
                 total=em.tco2e.sum(), y25=yearly.loc[2025], chg=yearly.loc[2025] / yearly.loc[2023] - 1,
-                site=summarise(em, ["site"]).set_index("site")["tco2e"])
+                site=summarise(em, ["site"]).set_index("site")["tco2e"],
+                act_share=summarise(em, ["activity_type"]).set_index("activity_type")["tco2e"] / em.tco2e.sum())
 
 
 def build(out: Path = OUT) -> Path:
@@ -92,10 +93,12 @@ def build(out: Path = OUT) -> Path:
     story += [Paragraph("What the footprint shows", H2)]
     for txt in [
         f"<b>Scope 3 dominates ({s[3]/d['total']:.0%}).</b> {top.category} is the largest single source "
-        f"({top.tco2e/d['total']:.0%}), so supplier data quality is the biggest driver of accuracy and of future reductions.",
+        f"({top.tco2e/d['total']:.0%}), led by steel ({d['act_share']['purchased_steel']:.0%}) and plastic resin "
+        f"({d['act_share']['purchased_plastic_resin']:.0%}). Supplier data on these materials is the biggest driver of "
+        "accuracy and of future reductions.",
         f"<b>Energy is the controllable core.</b> Grid electricity (Scope 2, {s[2]/d['total']:.0%}) and diesel generation "
         f"(Scope 1) concentrate at Port Harcourt Plant, which is {d['site']['Port Harcourt Plant']/d['total']:.0%} of the total.",
-        f"<b>Emissions fell {abs(d['chg']):.1%} from 2023 to 2025</b>, slightly ahead of a straight-line path, but without "
+        f"<b>Emissions fell {abs(d['chg']):.1%} from 2023 to 2025</b> (real terms), ahead of a straight-line path, but without "
         "new measures 2%/yr business growth would push them back up.",
     ]:
         story.append(Paragraph(txt, BUL, bulletText="•"))
@@ -135,7 +138,7 @@ def build(out: Path = OUT) -> Path:
         f"<b>3. Plan a second wave by ~2029.</b> If levers underperform, 2030 slips to {gap_hi:+,.0f} t, and growth erodes "
         "gains toward 2035. Candidates: deeper supplier engagement, fleet conversion (CNG/EV), expanded on-site solar.",
         "<b>4. Invest in data before targets are published.</b> Collect supplier-specific emissions data for the top "
-        "spend categories and meter diesel use by generator. These are the largest sources of uncertainty.",
+        "spend categories (steel, resin) and meter diesel use by generator. These are the largest sources of uncertainty.",
     ]:
         story.append(Paragraph(txt, B))
     story.append(Table([[Image(str(FIG / "05_macc_curve.png"), width=104 * mm, height=55 * mm),
@@ -154,11 +157,13 @@ def build(out: Path = OUT) -> Path:
         "Nigeria grid: <b>Scope 2 combustion-only factor derived</b> from the NERC 2025 generation mix (67% gas), DESNZ "
         "gas combustion factor and a 33% fleet efficiency (range 28-38%). Upstream fuel supply and T&amp;D losses are reported "
         "separately in Scope 3 Category 3.",
+        "Scope 3 spend: 10 categories mapped to <b>US EPA Supply Chain Factors v1.3</b> (NAICS-6, with margins), with nominal "
+        "spend deflated to 2022 USD using US CPI-U. Freight is reported as Category 4.",
         "Market-based Scope 2 only counts contractual instruments that pass the GHG Protocol Scope 2 Quality Criteria; Nigeria "
         "has no residual mix, so the grid average is the fallback.",
         "Scenario costs use Oct 2026 Nigerian prices (diesel NGN 1,900/L, Band A NGN 209.5/kWh, NGN 1,350/USD, 12% discount "
         "rate). Lever capex/opex are documented assumptions, phased in over 1-3 years with low/high effectiveness ranges.",
-        "Limitations: synthetic activity data; spend-based Scope 3 is uncertain; UK-based proxies for landfill and car "
+        "Limitations: synthetic activity data; spend-based Scope 3 uses US-economy factors; UK-based proxies for landfill and car "
         "factors likely understate Nigerian conditions; no grid decarbonisation assumed.",
     ]:
         story.append(Paragraph(txt, ParagraphStyle("li", parent=SM, fontSize=7.6, leading=9.6), bulletText="•"))

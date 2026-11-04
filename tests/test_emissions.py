@@ -121,6 +121,24 @@ def test_grid_factor_csv_matches_derivation():
         assert f[("grid_electricity_ng", comp)] == pytest.approx(d[comp], abs=1e-5)
 
 
+def test_spend_is_deflated_to_2022_usd():
+    from carbon.emissions import to_constant_usd
+    defl = pd.DataFrame({"year": [2022, 2024], "cpi_u": [100.0, 110.0]})
+    act = make_activity([["2024-03", "A", "purchased_steel", 1100, "USD"], ["2024-03", "A", "diesel", 5, "litre"]])
+    out = to_constant_usd(act, defl)
+    assert out["quantity"].tolist() == pytest.approx([1000.0, 5.0])
+    assert out["unit"].tolist() == ["USD2022", "litre"]
+    with pytest.raises(ValueError, match="deflator"):
+        to_constant_usd(make_activity([["2030-01", "A", "x", 1, "USD"]]), defl)
+
+
+def test_nominal_usd_cannot_meet_2022_usd_factor():
+    factors = pd.DataFrame({"activity_type": ["purchased_steel"], "scope": [3], "category": ["Cat 1"],
+                            "unit": ["USD2022"], "kgco2e_per_unit": [0.787]})
+    with pytest.raises(ValueError, match="Unit mismatch"):
+        calculate_emissions(make_activity([["2024-01", "A", "purchased_steel", 100, "USD"]]), factors)
+
+
 def test_sample_data_runs_end_to_end():
     out = calculate_emissions(load_activity(), load_factors())
     assert out["tco2e"].sum() > 0

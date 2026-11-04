@@ -43,7 +43,7 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [x] Scope 2 contractual instrument quality checks (GHG Protocol Scope 2 Quality Criteria)
 - [x] Lever ramp-up, low/high effectiveness bands, one-at-a-time sensitivity (+ tornado chart)
 - [x] Methodology limitations updated (market-based is implemented)
-- [ ] Map purchased-goods spend to category-specific EPA factors *(waiting for the EPA v1.3 CSV upload)*
+- [x] Map purchased-goods spend to 10 category-specific EPA v1.3 factors (incl. Cat 4 freight), CPI-deflated to 2022 USD
 ### Delivery
 - [x] GitHub Actions CI: unit + regression + SQL-parity tests, dashboard smoke test, notebook execution
 - [x] Executive summary PDF generated from live numbers (`reports/executive_summary.pdf`)
