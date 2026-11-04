@@ -48,6 +48,7 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [x] GitHub Actions CI: unit + regression + SQL-parity tests, dashboard smoke test, notebook execution
 - [x] Executive summary PDF generated from live numbers (`reports/executive_summary.pdf`)
 - [x] Publishing checklist + LinkedIn draft (`docs/PUBLISHING.md`)
+- [x] Dashboard redesign (overview tab, theme, KPI cards, downloads, method & data tab)
 - [x] Make the repo **public** (pin it on your profile: *you*)
 - [x] Deploy to Streamlit Community Cloud (https://carbon-footprint-esg-dashboard.streamlit.app/) and add the URL to the README
 - [ ] Post on LinkedIn *(you)*
