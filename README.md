@@ -3,7 +3,7 @@
 [![tests](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/actions/workflows/tests.yml)
 ![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
 
-📄 **[Executive summary (PDF, 2 pages)](reports/executive_summary.pdf)** · 📊 Live dashboard: *coming soon*
+📄 **[Executive summary (PDF, 2 pages)](reports/executive_summary.pdf)** · 📊 **[Live dashboard](https://carbon-footprint-esg-dashboard.streamlit.app/)** [![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://carbon-footprint-esg-dashboard.streamlit.app/)
 
 End-to-end **Scope 1, 2 & 3 greenhouse gas (GHG) emissions analysis** and an **interactive ESG dashboard**, built on the [GHG Protocol Corporate Standard](https://ghgprotocol.org/corporate-standard). The case study is set in Nigeria.
 
@@ -67,7 +67,8 @@ carbon-footprint-esg-dashboard/
 ├── AGENTS.md                     # Guide for AI coding agents / collaborators
 ├── MEMORY.md                     # Project decisions & context log
 ├── TASK.md                       # Roadmap & task tracker
-└── requirements.txt
+├── requirements.txt              # Dashboard runtime only (Streamlit Cloud)
+└── requirements-dev.txt          # Tests, notebooks, report generation
 ```
 
 ## 🧮 Methodology (summary)
@@ -147,7 +148,7 @@ Nine reduction levers were sized against the 2025 baseline and costed with **202
 git clone https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard.git
 cd carbon-footprint-esg-dashboard
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
+pip install -r requirements-dev.txt   # dashboard only: requirements.txt
 
 # Run the dashboard
 streamlit run app/streamlit_app.py

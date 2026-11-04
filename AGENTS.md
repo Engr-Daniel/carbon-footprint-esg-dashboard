@@ -9,7 +9,7 @@ A GHG Protocol-based carbon accounting pipeline plus a Streamlit ESG dashboard. 
 
 ## Setup & commands
 ```bash
-pip install -r requirements.txt
+pip install -r requirements-dev.txt   # dashboard only: requirements.txt
 pytest -q                               # run tests (must pass before committing)
 streamlit run app/streamlit_app.py      # run the dashboard
 jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb
