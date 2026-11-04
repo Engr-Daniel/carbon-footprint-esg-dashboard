@@ -27,6 +27,7 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 ## Decision log
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-11-04 | Second review: target line relabelled "path at SBTi minimum rates" (not a validated target); grid factor labelled an *estimate* with a footprint sensitivity table (28–38% → +3.7%/−2.8%); restatement log added | Professional reporting accuracy and transparency |
 | 2026-11-04 | Dashboard redesign: 5 tabs (Overview, Footprint, Scenarios, Scope 2 & intensity, Method & data), custom theme, KPI cards, validated scope palette (blue/orange/aqua), legends below charts, data tables + CSV/PDF downloads | Recruiter-facing polish; palette passes CVD checks via the dataviz validator |
 | 2026-11-04 | Scope 3 spend split into 10 categories mapped to EPA v1.3 NAICS factors (with margins), including Cat 4 freight; spend deflated to 2022 USD with US CPI-U | Review finding #2. Generic 0.2819 averaged unrelated industries; spend-weighted factor is now 0.593. Total rose 13,525 → 17,313 |
 | 2026-11-04 | External review (6 findings) addressed in Phase 4 | Grid scope split, instrument checks, ramp/uncertainty, CI, docs. Scope 3 category mapping is pending the EPA CSV |

@@ -156,7 +156,8 @@ with st.sidebar:
     st.markdown("**Standard:** GHG Protocol Corporate & Scope 3 · AR5 GWP100 · operational control")
     st.divider()
     st.markdown("**Emission factors**")
-    st.caption("DESNZ 2026 (verified cell-by-cell) · Nigeria grid derived from NERC 2025 generation mix · "
+    st.caption("DESNZ 2026 (verified cell-by-cell) · Nigeria grid **estimated** from NERC 2025 generation mix "
+               "(33% fleet efficiency, range 28–38%) · "
                "US EPA Supply Chain v1.3 (2022 USD)")
     st.markdown("**Scenario prices (Oct 2026)**")
     st.caption("Diesel ₦1,900/L · Band A ₦209.5/kWh · ₦1,350/USD · 12% discount rate")
@@ -172,8 +173,8 @@ with st.sidebar:
 st.markdown(f"""
 <div class="hero">
   <h1>Carbon Footprint &amp; Decarbonisation Strategy</h1>
-  <p>Where EcoNaija's emissions come from, what it would cost to cut them, and whether the plan meets an
-     SBTi-aligned target.</p>
+  <p>Where EcoNaija's emissions come from, what it would cost to cut them, and whether the plan keeps pace with
+     SBTi's minimum reduction rates.</p>
   <span class="badge warn">⚠️ Synthetic activity data, real 2026 factors &amp; prices</span>
   <span class="badge">GHG Protocol · Scopes 1–3</span><span class="badge">DESNZ 2026 verified</span>
   <span class="badge">Tested in CI</span>
@@ -198,7 +199,7 @@ with t_over:
     kpi(c[2], "Value chain share", f"{s3_share:.0%}", "Scope 3", "led by steel & resin")
     kpi(c[3], "Lever plan pays back", f"${-res0.annualised_cost_usd.sum()/1000:,.0f}k", "/ yr",
         f"net, on ${res0.capex_usd.sum()/1000:,.0f}k capex")
-    kpi(c[4], "2030 SBTi target", f"{gap:+,.0f}", "tCO₂e", "gap with renewable contracts",
+    kpi(c[4], "2030 vs SBTi-rate path", f"{gap:+,.0f}", "tCO₂e", "gap with renewable contracts",
         ("✓ On track", "good") if gap <= 0 else ("✕ Shortfall", "bad"))
     st.write("")
 
@@ -223,7 +224,7 @@ with t_over:
                    hovertemplate="BAU %{x}: %{y:,.0f}<extra></extra>")
     pf.add_scatter(mode="lines", x=path0.year, y=path0.with_levers_market, name="With lever plan", line=dict(color="#1baf7a", width=2.5),
                    hovertemplate="Plan %{x}: %{y:,.0f}<extra></extra>")
-    pf.add_scatter(mode="lines", x=path0.year, y=path0.sbti_target, name="SBTi-aligned target", line=dict(color=TARGET, width=2, dash="dash"),
+    pf.add_scatter(mode="lines", x=path0.year, y=path0.sbti_target, name="Path at SBTi minimum rates", line=dict(color=TARGET, width=2, dash="dash"),
                    hovertemplate="Target %{x}: %{y:,.0f}<extra></extra>")
     pf.add_scatter(x=path0.year, y=path0.actual, name="Actual", mode="lines+markers",
                    line=dict(color=INK, width=2.5), marker=dict(size=9, line=dict(color=SURFACE, width=2)),
@@ -234,7 +235,9 @@ with t_over:
                       bgcolor="white", bordercolor=BORDER, borderpad=4)
     pf.update_yaxes(rangemode="tozero")
     pf.update_layout(hovermode="x unified")
-    show(right, style(pf, "Pathway to 2035 vs target (tCO₂e)", height=400))
+    show(right, style(pf, "Pathway to 2035 vs SBTi-rate benchmark (tCO₂e)", height=400))
+    right.caption("Benchmark modelled at SBTi minimum rates (Scope 1+2 −4.2%/yr, Scope 3 −2.5%/yr). "
+                  "Not an SBTi-validated target.")
 
     st.markdown("#### What this means")
     i1, i2, i3 = st.columns(3, gap="medium")
@@ -361,7 +364,7 @@ with t_scen:
         kpi(c[1], "Capex", f"${res.capex_usd.sum()/1000:,.0f}k", "", f"{len(res)} levers")
         kpi(c[2], "Net annual saving" if net >= 0 else "Net annual cost", f"${abs(net)/1000:,.0f}k", "/ yr",
             "annualised capex + opex − energy savings")
-        kpi(c[3], "2030 gap to target", f"{g:+,.0f}", "tCO₂e",
+        kpi(c[3], "2030 gap vs SBTi-rate path", f"{g:+,.0f}", "tCO₂e",
             f"range {y30.with_levers_market_lower - y30.sbti_target:+,.0f} to {y30.with_levers_market_upper - y30.sbti_target:+,.0f}",
             ("✓ On track", "good") if g <= 0 else ("✕ Shortfall", "bad"))
         st.write("")
@@ -393,7 +396,7 @@ with t_scen:
         pf.add_scatter(mode="lines", x=path.year, y=path.bau, name="Business as usual", line=dict(color=INK3, width=2, dash="dot"))
         pf.add_scatter(mode="lines", x=path.year, y=path.with_levers_location, name="Plan (location-based)", line=dict(color="#2a78d6", width=2))
         pf.add_scatter(mode="lines", x=path.year, y=path.with_levers_market, name="Plan + renewable contracts", line=dict(color="#1baf7a", width=2.5))
-        pf.add_scatter(mode="lines", x=path.year, y=path.sbti_target, name="SBTi target", line=dict(color=TARGET, width=2, dash="dash"))
+        pf.add_scatter(mode="lines", x=path.year, y=path.sbti_target, name="Path at SBTi minimum rates", line=dict(color=TARGET, width=2, dash="dash"))
         pf.add_scatter(x=path.year, y=path.actual, name="Actual", mode="lines+markers", line=dict(color=INK, width=2.5),
                        marker=dict(size=9, line=dict(color=SURFACE, width=2)))
         pf.update_yaxes(rangemode="tozero")
@@ -479,11 +482,12 @@ with t_meth:
 #### How the numbers are built
 - **Emissions** = activity × emission factor, per GHG Protocol. One activity can carry several factor components:
   diesel → Scope 1 combustion **+** Scope 3 Cat 3 upstream supply.
-- **Nigeria grid (Scope 2)** = 67% gas share (NERC 2025) × DESNZ gas combustion factor ÷ 33% fleet efficiency
-  = **0.417 kgCO₂e/kWh**. Upstream gas and grid losses go to Scope 3 Cat 3.
+- **Nigeria grid (Scope 2), an estimate, not an official national factor** = 67% gas share (NERC 2025) × DESNZ
+  gas combustion factor ÷ 33% assumed fleet efficiency = **0.417 kgCO₂e/kWh**. Upstream gas and grid losses go to Scope 3 Cat 3.
 - **Purchased goods**: 10 spend categories mapped to US EPA v1.3 NAICS factors, deflated to 2022 USD.
 - **Scenarios**: levers phase in over 1–3 years, with low/high effectiveness bands; annualised cost uses a 12% discount rate.
-- **Target**: SBTi minimum rates from 2023 (Scope 1+2 −4.2%/yr, Scope 3 −2.5%/yr).
+- **Target benchmark**: a path at SBTi minimum rates from 2023 (Scope 1+2 −4.2%/yr, Scope 3 −2.5%/yr), *not an SBTi-validated target*.
+- **Restatements**: activity data is unchanged; totals moved 12,270 → 17,313 t only through method improvements (all years recalculated).
 """)
     b.markdown("""
 #### Limitations
@@ -495,6 +499,20 @@ with t_meth:
 
 [Full methodology →](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/blob/master/docs/methodology.md)
 """)
+    st.markdown("#### How sensitive is the estimated grid factor?")
+    from carbon.grid_factor import footprint_sensitivity
+    gs = footprint_sensitivity(activity, factors)
+    central_total = gs.loc[gs.fleet_efficiency == 0.33, "total_tco2e"].iloc[0]
+    gs["vs_central"] = gs.total_tco2e / central_total - 1
+    st.dataframe(gs, hide_index=True, width="stretch", column_config={
+        "fleet_efficiency": st.column_config.NumberColumn("Assumed gas-fleet efficiency", format="percent"),
+        "scope2_factor_kg_per_kwh": st.column_config.NumberColumn("Scope 2 factor (kgCO₂e/kWh)", format="%.3f"),
+        "scope2_tco2e": st.column_config.NumberColumn("Scope 2, 2023–25 (tCO₂e)", format="%,.0f"),
+        "total_tco2e": st.column_config.NumberColumn("Total, 2023–25 (tCO₂e)", format="%,.0f"),
+        "vs_central": st.column_config.NumberColumn("vs central", format="percent")})
+    st.caption("Nigerian open-cycle gas plants are reported at 25–39% efficiency. 33% is the central assumption. "
+               "Replace with an official national or IEA factor when available.")
+
     st.markdown("#### Emission factor library")
     q = st.text_input("Search factors", placeholder="e.g. diesel, steel, grid…")
     ft = factors.copy()

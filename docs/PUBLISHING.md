@@ -38,21 +38,28 @@ Steps to take the project from private repo to public portfolio piece. Items mar
 - Post on LinkedIn (draft below) with the dashboard link and 2–3 images: `05_macc_curve.png`, `06_decarbonisation_pathway.png`, `dashboard_scenarios.png`.
 
 ### LinkedIn post draft
-> **What would it take for a Nigerian manufacturer to get on a science-based emissions pathway, and would it pay?**
+> **Could a Nigerian manufacturer cut emissions in line with science-based rates and save money doing it?**
 >
-> I built an end-to-end carbon accounting and decarbonisation model to find out, using a fictional company (EcoNaija Manufacturing Ltd, 3 sites) with real 2026 emission factors and Nigerian energy prices.
+> I built an end-to-end carbon accounting and decarbonisation model to find out. It uses a fictional manufacturer (EcoNaija, 3 sites) with synthetic activity data, but **real** 2026 emission factors and Nigerian energy prices.
 >
 > What the model shows:
-> 🔹 Scope 3 is over half the footprint, so supplier data is the biggest accuracy lever
-> 🔹 4 of 9 reduction levers are *cost-negative*. A solar-battery hybrid replacing diesel generators pays back in ~2 years at today's diesel prices
-> 🔹 Physical measures alone cut ~21%, which isn't enough for an SBTi-aligned 2030 target without quality-assured renewable electricity contracts
-> 🔹 The portfolio stays cash-positive in every sensitivity case I tested (FX, diesel, tariffs, capex, effectiveness)
+> 🔹 **63% of the footprint is in the value chain (Scope 3)**. Steel and plastic resin alone are ~29%, so supplier data matters more than anything on site
+> 🔹 **4 of 9 reduction levers save money**. A solar-battery hybrid replacing diesel generators pays back in ~2 years at today's diesel prices
+> 🔹 The plan stays **cash-positive in every sensitivity case** I tested (FX, diesel, tariffs, capex, lever performance)
+> 🔹 Physical measures cut ~18%. Keeping pace with SBTi's minimum reduction rates by 2030 also needs **quality-assured renewable electricity contracts**
 >
-> Under the hood: Python carbon engine (GHG Protocol), DESNZ 2026 factors verified against the official workbook, a derived Scope 2 factor for the Nigerian grid, a marginal abatement cost curve, an SBTi pathway with uncertainty bands, and a Streamlit dashboard where you can change the assumptions yourself.
+> What I care about most is that the numbers hold up:
+> ✅ DESNZ 2026 factors verified cell-by-cell against the official workbook
+> ✅ A scope-correct Nigerian grid factor (estimated, with its uncertainty range shown)
+> ✅ Spend mapped to 10 US EPA categories and inflation-adjusted
+> ✅ Market-based Scope 2 claims screened against GHG Protocol quality criteria
+> ✅ Every restatement documented, plus 37 automated tests on each change
 >
 > 📊 Live dashboard: https://carbon-footprint-esg-dashboard.streamlit.app/
-> 💻 Code & methodology: https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard
+> 💻 Code, methodology & 2-page executive summary: https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard
 >
-> Feedback from ESG and energy practitioners very welcome, especially on Nigerian grid and Scope 3 data sources.
+> Built with Python, SQL, Streamlit and the GHG Protocol. Feedback from ESG and energy practitioners is very welcome, especially on Nigerian grid and supplier emissions data.
+>
+> *Illustrative case study. The pathway benchmarks against SBTi minimum rates and is not a validated target.*
 >
 > #ESG #Sustainability #CarbonAccounting #DataAnalytics #NetZero #Nigeria #ClimateAction #Petgrave

@@ -43,3 +43,25 @@ def sensitivity(effs: tuple[float, ...] = (0.28, 0.33, 0.38)) -> dict[float, dic
 if __name__ == "__main__":
     for e, d in sensitivity().items():
         print(f"efficiency {e:.0%}: " + ", ".join(f"{k}={v:.5f}" for k, v in d.items()))
+
+
+def footprint_sensitivity(activity, factors, effs: tuple[float, ...] = (0.28, 0.33, 0.38)):
+    """How the assumed fleet efficiency moves the Nigeria grid factor and the total footprint.
+
+    Returns one row per efficiency: Scope 2 factor (kgCO2e/kWh), total and Scope 2 tCO2e (all years).
+    """
+    import pandas as pd
+
+    from .emissions import calculate_emissions
+
+    rows = []
+    for e in effs:
+        d = derive(GridInputs(efficiency=e))
+        f = factors.copy()
+        for comp in ("primary", "wtt", "td_losses"):
+            m = (f["activity_type"] == "grid_electricity_ng") & (f["component"] == comp)
+            f.loc[m, "kgco2e_per_unit"] = d[comp]
+        em = calculate_emissions(activity, f)
+        rows.append({"fleet_efficiency": e, "scope2_factor_kg_per_kwh": d["primary"],
+                     "scope2_tco2e": em.loc[em.scope == 2, "tco2e"].sum(), "total_tco2e": em["tco2e"].sum()})
+    return pd.DataFrame(rows)

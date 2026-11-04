@@ -143,3 +143,11 @@ def test_sample_data_runs_end_to_end():
     out = calculate_emissions(load_activity(), load_factors())
     assert out["tco2e"].sum() > 0
     assert set(out["scope"]) == {1, 2, 3}
+
+
+def test_grid_efficiency_sensitivity_brackets_central():
+    from carbon.grid_factor import footprint_sensitivity
+    s = footprint_sensitivity(load_activity(), load_factors())
+    central = calculate_emissions(load_activity(), load_factors())["tco2e"].sum()
+    assert s.total_tco2e.iloc[0] > central > s.total_tco2e.iloc[-1]  # lower efficiency -> higher emissions
+    assert s.total_tco2e.iloc[1] == pytest.approx(central, rel=1e-5)  # CSV rounds to 5 dp
