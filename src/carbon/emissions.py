@@ -1,6 +1,10 @@
 """Core GHG emissions calculation engine (GHG Protocol, activity-based method).
 
 emissions (kgCO2e) = activity quantity x emission factor (kgCO2e per unit)
+
+One activity can carry several factor *components*, each with its own scope/category, e.g.
+diesel -> "primary" combustion (Scope 1) + "wtt" upstream supply (Scope 3 Cat 3), or
+grid electricity -> "primary" generation (Scope 2) + "wtt" + "td_losses" (both Scope 3 Cat 3).
 """
 from __future__ import annotations
 
@@ -16,8 +20,14 @@ REQUIRED_ACTIVITY_COLS = {"period", "site", "activity_type", "quantity", "unit"}
 
 
 def load_factors(path: Path | str = FACTORS_PATH) -> pd.DataFrame:
-    """Load the emission factor reference table."""
-    return pd.read_csv(path)
+    """Load the emission factor reference table (adds component="primary" if absent)."""
+    return _with_component(pd.read_csv(path))
+
+
+def _with_component(factors: pd.DataFrame) -> pd.DataFrame:
+    if "component" not in factors.columns:
+        return factors.assign(component="primary")
+    return factors.assign(component=factors["component"].fillna("primary"))
 
 
 def load_activity(path: Path | str = SAMPLE_PATH) -> pd.DataFrame:
@@ -33,11 +43,11 @@ def load_activity(path: Path | str = SAMPLE_PATH) -> pd.DataFrame:
     return df
 
 
-FACTOR_COLS = ["activity_type", "scope", "category", "unit", "kgco2e_per_unit"]
+FACTOR_COLS = ["activity_type", "component", "scope", "category", "unit", "kgco2e_per_unit"]
 
 
 def select_factors(factors: pd.DataFrame, years: list[int], policy: str = "latest") -> pd.DataFrame:
-    """Pick one factor per activity type and reporting year.
+    """Pick one factor per activity type, component and reporting year.
 
     policy="latest"   -> apply the most recent factor set to every year (like-for-like trend;
                          the GHG Protocol recalculates the base year when methodology changes).
@@ -47,11 +57,12 @@ def select_factors(factors: pd.DataFrame, years: list[int], policy: str = "lates
     """
     if policy not in {"latest", "matching"}:
         raise ValueError("policy must be 'latest' or 'matching'.")
+    factors = _with_component(factors)
     if "factor_year" not in factors.columns:
         return pd.concat([factors[FACTOR_COLS].assign(year=y) for y in years], ignore_index=True)
 
     picked = []
-    for activity_type, grp in factors.groupby("activity_type"):
+    for _, grp in factors.groupby(["activity_type", "component"]):
         grp = grp.sort_values("factor_year")
         for y in years:
             if policy == "latest":

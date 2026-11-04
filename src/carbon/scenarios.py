@@ -21,6 +21,7 @@ from .emissions import ROOT, select_factors, summarise
 LEVERS_PATH = ROOT / "data" / "reference" / "reduction_levers.csv"
 COSTS_PATH = ROOT / "data" / "reference" / "cost_assumptions.csv"
 PROFILE_PATH = ROOT / "data" / "sample" / "company_profile.csv"
+INSTRUMENTS_PATH = ROOT / "data" / "sample" / "contractual_instruments.csv"
 
 # SBTi Corporate Near-Term Criteria (Absolute Contraction Approach), minimum linear annual rates:
 SBTI_RATE_S12 = 0.042  # Scope 1+2, 1.5C-aligned
@@ -75,7 +76,7 @@ def baseline_activity(activity: pd.DataFrame, year: int) -> pd.DataFrame:
 
 
 def _factor_map(factors: pd.DataFrame, year: int) -> pd.DataFrame:
-    return select_factors(factors, [year])[["activity_type", "scope", "kgco2e_per_unit"]]
+    return select_factors(factors, [year])[["activity_type", "component", "scope", "kgco2e_per_unit"]]
 
 
 def apply_levers(
@@ -85,11 +86,17 @@ def apply_levers(
     assumptions: dict[str, float],
     year: int,
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """Apply levers sequentially. Returns (lever results, residual activity)."""
+    """Apply levers sequentially. Returns (lever results, residual activity).
+
+    Abatement counts every factor component of the avoided activity (e.g. avoided diesel cuts
+    Scope 1 combustion *and* Scope 3 Cat 3 upstream). Market-based levers only remove the
+    Scope 2 component, because contractual instruments do not change physical supply chains.
+    """
     fmap = _factor_map(factors, year)
-    residual = baseline.merge(fmap, on="activity_type", how="left")
-    if residual["kgco2e_per_unit"].isna().any():
-        raise ValueError("Baseline contains activity types without emission factors.")
+    missing = set(baseline["activity_type"]) - set(fmap["activity_type"])
+    if missing:
+        raise ValueError(f"Baseline contains activity types without emission factors: {sorted(missing)}")
+    residual = baseline.copy()
     costs = unit_costs_usd(assumptions)
     rate = assumptions["discount_rate"]
     rows = []
@@ -100,23 +107,33 @@ def apply_levers(
             mask &= residual["site"].isin(str(lev.sites).split(";"))
         if not mask.any():
             raise ValueError(f"Lever {lev.lever_id} matches no baseline activity.")
-        avoided = residual.loc[mask, "quantity"] * lev.reduction_pct
-        abatement_t = float((avoided * residual.loc[mask, "kgco2e_per_unit"]).sum() / 1000)
-        if lev.accounting == "location":
-            savings = float(sum(q * costs.get(t, 0.0) for q, t in zip(avoided, residual.loc[mask, "activity_type"])))
-            residual.loc[mask, "quantity"] -= avoided
-        elif lev.accounting == "market":
-            savings = 0.0  # contractual instrument: activity unchanged, premium sits in opex
-        else:
+        avoided = residual.loc[mask, ["activity_type"]].assign(qty=residual.loc[mask, "quantity"] * lev.reduction_pct)
+        comp = avoided.merge(fmap, on="activity_type")
+        if lev.accounting == "market":
+            comp = comp[comp["scope"] == 2]
+        elif lev.accounting != "location":
             raise ValueError(f"Unknown accounting type '{lev.accounting}' for {lev.lever_id}.")
+        comp_t = comp["qty"] * comp["kgco2e_per_unit"] / 1000
+        ab_s12 = float(comp_t[comp["scope"].isin([1, 2])].sum())
+        ab_s3 = float(comp_t[comp["scope"] == 3].sum())
+        if lev.accounting == "location":
+            savings = float(sum(q * costs.get(t, 0.0) for q, t in zip(avoided["qty"], avoided["activity_type"])))
+            residual.loc[mask, "quantity"] -= avoided["qty"]
+        else:
+            savings = 0.0  # contractual instrument: activity unchanged, premium sits in opex
+        abatement_t = ab_s12 + ab_s3
+        primary_scope = int(fmap.loc[fmap["activity_type"].isin(types) & (fmap["component"] == "primary"), "scope"].min())
         annualised = lev.capex_usd * crf(rate, int(lev.lifetime_years)) + lev.annual_opex_usd - savings
         rows.append({
             "lever_id": lev.lever_id,
             "lever": lev.lever,
             "accounting": lev.accounting,
             "start_year": int(lev.start_year),
-            "scope": int(residual.loc[mask, "scope"].iloc[0]),
+            "ramp_years": int(getattr(lev, "ramp_years", 1) or 1),
+            "scope": primary_scope,
             "abatement_tco2e": abatement_t,
+            "abatement_s12": ab_s12,
+            "abatement_s3": ab_s3,
             "capex_usd": float(lev.capex_usd),
             "annual_savings_usd": savings,
             "annualised_cost_usd": annualised,
@@ -139,24 +156,27 @@ def pathway(
 
     base_year:     target base year (e.g. 2023)
     baseline_year: last actual year that projections start from (e.g. 2025)
+    Levers phase in linearly over `ramp_years` from `start_year` (1 = full effect immediately).
     Columns are given for the total and for Scope 1+2 ("_s12") and Scope 3 ("_s3").
     """
     em = emissions.assign(group=emissions["scope"].map({1: "s12", 2: "s12", 3: "s3"}))
     hist = em.groupby(["year", "group"])["tco2e"].sum().unstack()
-    lr = lever_results.assign(group=lever_results["scope"].map({1: "s12", 2: "s12", 3: "s3"}))
+    lr = lever_results
     rates = {"s12": SBTI_RATE_S12, "s3": SBTI_RATE_S3}
     rows = []
     for y in range(base_year, end_year + 1):
         row = {"year": y}
         g = (1 + growth) ** (y - baseline_year)
         active = lr[lr["start_year"] <= y]
+        ramp = ramp_fraction(active, y)
         for grp in ("s12", "s3"):
             row[f"actual_{grp}"] = hist[grp].get(y, float("nan"))
             row[f"sbti_target_{grp}"] = hist.loc[base_year, grp] * max(0.0, 1 - rates[grp] * (y - base_year))
             if y >= baseline_year:
-                a = active[active["group"] == grp]
-                loc = a.loc[a["accounting"] == "location", "abatement_tco2e"].sum() * g
-                mkt = a.loc[a["accounting"] == "market", "abatement_tco2e"].sum() * g
+                col = f"abatement_{grp}"
+                eff = active[col] * ramp
+                loc = eff[active["accounting"] == "location"].sum() * g
+                mkt = eff[active["accounting"] == "market"].sum() * g
                 start = hist.loc[baseline_year, grp]
                 row[f"bau_{grp}"] = start * g
                 row[f"with_levers_location_{grp}"] = start * g - loc
@@ -169,6 +189,83 @@ def pathway(
     return out
 
 
+def ramp_fraction(lever_results: pd.DataFrame, year: int) -> pd.Series:
+    """Share of each lever's full abatement achieved in `year` (linear ramp-up)."""
+    ramp = lever_results.get("ramp_years", pd.Series(1, index=lever_results.index)).clip(lower=1)
+    return ((year - lever_results["start_year"] + 1) / ramp).clip(lower=0, upper=1)
+
+
+def pathway_range(
+    emissions: pd.DataFrame,
+    baseline: pd.DataFrame,
+    levers: pd.DataFrame,
+    factors: pd.DataFrame,
+    assumptions: dict[str, float],
+    base_year: int = 2023,
+    baseline_year: int = 2025,
+    end_year: int = 2035,
+) -> pd.DataFrame:
+    """Central pathway plus low/high bands from each lever's reduction_pct_low/high."""
+    out = None
+    for case, col in (("central", "reduction_pct"), ("low", "reduction_pct_low"), ("high", "reduction_pct_high")):
+        lev = levers.assign(reduction_pct=levers[col]) if col in levers else levers
+        res, _ = apply_levers(baseline, lev, factors, assumptions, baseline_year)
+        p = pathway(emissions, res, base_year, baseline_year, end_year, assumptions["bau_growth_rate"])
+        if out is None:
+            out = p.copy()
+        else:
+            for c in ("with_levers_location", "with_levers_market"):
+                # "low" abatement case gives the HIGHER emissions bound
+                out[f"{c}_{'upper' if case == 'low' else 'lower'}"] = p[c]
+    return out
+
+
+def sensitivity_analysis(
+    activity: pd.DataFrame,
+    emissions: pd.DataFrame,
+    levers: pd.DataFrame,
+    factors: pd.DataFrame,
+    assumptions: dict[str, float],
+    baseline_year: int = 2025,
+    target_year: int = 2030,
+    capex_range: float = 0.25,
+) -> pd.DataFrame:
+    """One-at-a-time (tornado) sensitivity of net annual saving and target-year gap."""
+    base = baseline_activity(activity, baseline_year)
+
+    def run(a=assumptions, lev=levers):
+        res, _ = apply_levers(base, lev, factors, a, baseline_year)
+        p = pathway(emissions, res, 2023, baseline_year, target_year, a["bau_growth_rate"])
+        row = p[p.year == target_year].iloc[0]
+        return -res["annualised_cost_usd"].sum(), row.with_levers_market - row.sbti_target
+
+    cases = {
+        "Diesel price ±30%": ("diesel_price_ngn_per_litre", 0.7, 1.3),
+        "FX (₦/USD) ±25%": ("fx_ngn_per_usd", 0.75, 1.25),
+        "Grid tariff ±30%": ("grid_tariff_ngn_per_kwh", 0.7, 1.3),
+        "Discount rate 8% / 18%": ("discount_rate", 0.08 / assumptions["discount_rate"], 0.18 / assumptions["discount_rate"]),
+        "BAU growth 0% / 4%": ("bau_growth_rate", 0.0, 2.0),
+    }
+    rows = []
+    for name, (key, lo, hi) in cases.items():
+        s_lo, g_lo = run({**assumptions, key: assumptions[key] * lo})
+        s_hi, g_hi = run({**assumptions, key: assumptions[key] * hi})
+        rows.append({"parameter": name, "net_saving_low": s_lo, "net_saving_high": s_hi, "gap_low": g_lo, "gap_high": g_hi})
+    for name, lev in (("Lever capex ±25%", None), ("Lever effectiveness low / high", "eff")):
+        if lev is None:
+            lo_l = levers.assign(capex_usd=levers.capex_usd * (1 - capex_range))
+            hi_l = levers.assign(capex_usd=levers.capex_usd * (1 + capex_range))
+        else:
+            lo_l = levers.assign(reduction_pct=levers.get("reduction_pct_low", levers.reduction_pct))
+            hi_l = levers.assign(reduction_pct=levers.get("reduction_pct_high", levers.reduction_pct))
+        s_lo, g_lo = run(lev=lo_l)
+        s_hi, g_hi = run(lev=hi_l)
+        rows.append({"parameter": name, "net_saving_low": s_lo, "net_saving_high": s_hi, "gap_low": g_lo, "gap_high": g_hi})
+    out = pd.DataFrame(rows)
+    out["saving_swing"] = (out.net_saving_high - out.net_saving_low).abs()
+    return out.sort_values("saving_swing", ascending=False).reset_index(drop=True)
+
+
 def intensity_metrics(emissions: pd.DataFrame, profile: pd.DataFrame) -> pd.DataFrame:
     """tCO2e per employee, per USD million revenue and kgCO2e per tonne of product."""
     yearly = summarise(emissions, ["year"]).merge(profile, on="year", how="inner")
@@ -178,6 +275,52 @@ def intensity_metrics(emissions: pd.DataFrame, profile: pd.DataFrame) -> pd.Data
     return yearly
 
 
+def load_instruments(path: Path | str = INSTRUMENTS_PATH) -> pd.DataFrame:
+    return pd.read_csv(path, dtype={"registry": str}, keep_default_na=False)
+
+
+def validate_instruments(
+    instruments: pd.DataFrame, consumption_country: str = "NG", vintage_tolerance_years: int = 0
+) -> pd.DataFrame:
+    """Check contractual instruments against GHG Protocol Scope 2 Quality Criteria.
+
+    An instrument may only carry a zero (or supplier-specific) factor in market-based Scope 2 if it:
+      1. conveys the energy-attribute claim (certificates bundled or unbundled; a bare PPA does not)
+      2. is uniquely claimed: retired/cancelled on behalf of the reporting company
+      3. is tracked and redeemed in a recognised registry
+      4. has a generation vintage matching the reporting year (within the tolerance)
+      5. comes from the same market (grid/country) as the consumption
+      6. is not double counted (unique instrument ID)
+    Returns the table with a pass/fail per criterion, an `eligible` flag and the failure reasons.
+    """
+    df = instruments.copy()
+    truthy = lambda c: df[c].astype(str).str.lower().isin(["true", "1", "yes"])  # noqa: E731
+    checks = {
+        "conveys_attributes_ok": truthy("conveys_attributes"),
+        "retired_ok": truthy("retired_for_company"),
+        "registry_ok": df["registry"].astype(str).str.strip().ne(""),
+        "vintage_ok": (df["reporting_year_claimed"] - df["generation_year"]).abs() <= vintage_tolerance_years,
+        "market_ok": df["generation_country"].eq(consumption_country),
+        "unique_ok": ~df["instrument_id"].duplicated(keep="first"),
+    }
+    reasons = {
+        "conveys_attributes_ok": "no attribute claim", "retired_ok": "not retired for company",
+        "registry_ok": "no registry", "vintage_ok": "vintage mismatch", "market_ok": "different market",
+        "unique_ok": "duplicate ID",
+    }
+    for k, v in checks.items():
+        df[k] = v
+    df["eligible"] = pd.concat(checks.values(), axis=1).all(axis=1)
+    df["failure_reasons"] = df.apply(lambda r: "; ".join(reasons[k] for k in checks if not r[k]), axis=1)
+    return df
+
+
+def eligible_kwh_by_year(validated: pd.DataFrame) -> dict[int, float]:
+    """Eligible contractual kWh per reporting year (from validate_instruments output)."""
+    ok = validated[validated["eligible"]]
+    return (ok.groupby("reporting_year_claimed")["mwh"].sum() * 1000).to_dict()
+
+
 def scope2_dual(
     emissions: pd.DataFrame,
     contractual_kwh: dict[int, float] | None = None,
@@ -185,8 +328,10 @@ def scope2_dual(
 ) -> pd.DataFrame:
     """Location- vs market-based Scope 2 by year (GHG Protocol Scope 2 Guidance).
 
-    Contractual kWh (PPAs, I-RECs) get a zero factor. Uncovered kWh use the residual mix;
-    Nigeria has no published residual mix, so the grid average is the fallback.
+    Pass only *validated* contractual kWh (see validate_instruments / eligible_kwh_by_year):
+    these get a zero factor. Uncovered kWh use the residual mix; Nigeria has no published
+    residual mix, so the grid average is the fallback (this overstates nothing but may
+    double count attributes already sold - disclose it).
     """
     s2 = emissions[emissions["scope"] == 2]
     out = s2.groupby("year").agg(kwh=("quantity", "sum"), location_tco2e=("tco2e", "sum")).reset_index()

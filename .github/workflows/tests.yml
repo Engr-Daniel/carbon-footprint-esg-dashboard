@@ -1,0 +1,34 @@
+name: tests
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Unit + regression tests
+        run: pytest -q
+      - name: Dashboard smoke test
+        run: |
+          python - <<'EOF'
+          from streamlit.testing.v1 import AppTest
+          at = AppTest.from_file("app/streamlit_app.py", default_timeout=120).run()
+          assert not at.exception, at.exception
+          print("dashboard OK:", [m.value for m in at.metric][:4])
+          EOF
+      - name: Notebooks execute
+        run: jupyter nbconvert --to notebook --execute --output-dir /tmp notebooks/*.ipynb

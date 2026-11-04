@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS sites (
 
 CREATE TABLE IF NOT EXISTS emission_factors (
     activity_type     VARCHAR(60) NOT NULL,
+    component         VARCHAR(20) NOT NULL DEFAULT 'primary',  -- primary | wtt | td_losses
     scope             SMALLINT NOT NULL CHECK (scope IN (1, 2, 3)),
     category          VARCHAR(100) NOT NULL,
     unit              VARCHAR(30) NOT NULL,
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS emission_factors (
     source_url        VARCHAR(300),
     verification      VARCHAR(60),
     notes             TEXT,
-    PRIMARY KEY (activity_type, factor_year)
+    PRIMARY KEY (activity_type, component, factor_year)
 );
 
 CREATE TABLE IF NOT EXISTS activity_data (
@@ -39,14 +40,17 @@ SELECT
     f.scope,
     f.category,
     a.activity_type,
+    f.component,
     a.quantity,
     a.unit,
     a.quantity * f.kgco2e_per_unit / 1000.0 AS tco2e
 FROM activity_data a
 JOIN sites s            ON s.site_id = a.site_id
 -- "latest" factor policy: apply the most recent factor_year to every period
+-- one activity row joins ALL its factor components (e.g. combustion + WTT upstream)
 JOIN emission_factors f ON f.activity_type = a.activity_type
- AND f.factor_year = (SELECT MAX(factor_year) FROM emission_factors x WHERE x.activity_type = a.activity_type);
+ AND f.factor_year = (SELECT MAX(factor_year) FROM emission_factors x
+                      WHERE x.activity_type = a.activity_type AND x.component = f.component);
 
 -- Example analysis queries
 -- 1) Total emissions by scope and year

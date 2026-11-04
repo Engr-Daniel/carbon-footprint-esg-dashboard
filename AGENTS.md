@@ -14,13 +14,17 @@ pytest -q                               # run tests (must pass before committing
 streamlit run app/streamlit_app.py      # run the dashboard
 jupyter nbconvert --to notebook --execute --inplace notebooks/*.ipynb
 python src/carbon/report_figures.py     # regenerate README charts
+python src/carbon/exec_report.py        # regenerate the executive summary PDF
 ```
 
 ## Code map
 | Path | Purpose |
 |---|---|
 | `src/carbon/emissions.py` | Calculation engine. All emissions maths lives here. |
-| `src/carbon/scenarios.py` | Levers, MACC costs, pathways, intensity metrics, dual Scope 2 |
+| `src/carbon/scenarios.py` | Levers, MACC costs, phased pathways + uncertainty, sensitivity, intensity, dual Scope 2 with instrument quality checks |
+| `src/carbon/grid_factor.py` | Derivation of the scope-split Nigeria grid factor (CSV must match; a test enforces it) |
+| `src/carbon/exec_report.py` | Builds `reports/executive_summary.pdf` from live model numbers |
+| `tests/test_regression.py` | Pinned headline numbers. Update them deliberately, together with README/MEMORY/PDF |
 | `data/reference/reduction_levers.csv`, `cost_assumptions.csv` | Scenario inputs. Every assumption needs a source or "Assumption" label |
 | `src/carbon/report_figures.py` | Exports README/report charts to `reports/figures/` (re-run after changing data or factors) |
 | `app/streamlit_app.py` | Dashboard UI only. It must not contain calculation logic. |
@@ -31,7 +35,7 @@ python src/carbon/report_figures.py     # regenerate README charts
 | `docs/methodology.md` | Scopes, boundaries, assumptions |
 
 ## Rules
-1. **Accuracy first.** Every emission factor needs a `source` and `unit`. Never invent factors. If you're unsure, mark it `VERIFY` in `notes`.
+1. **Accuracy first.** Every emission factor needs a `source` and `unit`. Factors are keyed by `activity_type` + `component` (`primary` / `wtt` / `td_losses`), and each component must sit in the correct scope. Never invent factors. If you're unsure, mark it `VERIFY` in `notes`.
 2. **Units must match** between activity data and factors. The engine raises an error otherwise, so don't bypass that check.
 3. **Keep logic in `src/`.** Notebooks and the app import from `carbon` and never re-implement formulas.
 4. **Test what you add.** New calculation functions need tests in `tests/`.
