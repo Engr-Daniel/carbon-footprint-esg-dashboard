@@ -25,6 +25,12 @@ Steps to take the project from private repo to public portfolio piece. Items mar
 4. Click **Deploy**. The first build takes a few minutes while it installs `requirements.txt`.
 5. Copy the app URL and send it to Claude. It will be added to the README badge and the repo website field.
 
+### If the app keeps loading ("in the oven" / spinning)
+1. On the app page, open **Manage app** (bottom-right) to see the build log.
+2. Check that `requirements.txt` contains only the 4 runtime packages (pandas, numpy, plotly, streamlit). Dev tools live in `requirements-dev.txt`.
+3. **⋮ → Reboot app** after any requirements change. The first build takes a few minutes.
+4. Free apps sleep after inactivity. Click **"Yes, get this app back up"** to wake one; it takes ~30 s.
+
 > Private repos can also be deployed, but recruiters can't see the code then, so make the repo public first.
 
 ## 4. Share it (you)
@@ -44,7 +50,7 @@ Steps to take the project from private repo to public portfolio piece. Items mar
 >
 > Under the hood: Python carbon engine (GHG Protocol), DESNZ 2026 factors verified against the official workbook, a derived Scope 2 factor for the Nigerian grid, a marginal abatement cost curve, an SBTi pathway with uncertainty bands, and a Streamlit dashboard where you can change the assumptions yourself.
 >
-> 📊 Live dashboard: <APP_URL>
+> 📊 Live dashboard: https://carbon-footprint-esg-dashboard.streamlit.app/
 > 💻 Code & methodology: https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard
 >
 > Feedback from ESG and energy practitioners very welcome, especially on Nigerian grid and Scope 3 data sources.
