@@ -1,0 +1,6 @@
+instrument_id,instrument_type,generation_year,mwh,generation_country,technology,registry,conveys_attributes,retired_for_company,reporting_year_claimed,notes
+IREC-2025-001,I-REC (unbundled certificate),2025,250,NG,Hydro,I-TRACK (I-REC Standard),True,True,2025,Valid example: same market and vintage; retired on behalf of EcoNaija
+IREC-2025-002,I-REC (unbundled certificate),2025,120,NG,Solar,I-TRACK (I-REC Standard),True,False,2025,Not retired/cancelled for the company - cannot be claimed
+IREC-2023-003,I-REC (unbundled certificate),2023,100,NG,Hydro,I-TRACK (I-REC Standard),True,True,2025,Vintage 2023 does not match 2025 consumption
+IREC-2025-004,I-REC (unbundled certificate),2025,80,GH,Hydro,I-TRACK (I-REC Standard),True,True,2025,Ghana certificate - different market from Nigerian consumption
+PPA-2025-005,Physical PPA (no certificates),2025,150,NG,Solar,,False,False,2025,PPA without bundled certificates conveys no attribute claim

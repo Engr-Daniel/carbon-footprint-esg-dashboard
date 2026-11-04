@@ -1,8 +1,13 @@
 # 🌍 Carbon Footprint & ESG Dashboard
 
+[![tests](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/actions/workflows/tests.yml/badge.svg)](https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/actions/workflows/tests.yml)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue) ![License](https://img.shields.io/badge/license-MIT-green)
+
+📄 **[Executive summary (PDF, 2 pages)](reports/executive_summary.pdf)** · 📊 Live dashboard: *coming soon*
+
 End-to-end **Scope 1, 2 & 3 greenhouse gas (GHG) emissions analysis** and an **interactive ESG dashboard**, built on the [GHG Protocol Corporate Standard](https://ghgprotocol.org/corporate-standard). The case study is set in Nigeria.
 
-> ⚠️ **Demo data:** The activity dataset is **synthetic** and belongs to a fictional company, *EcoNaija Manufacturing Ltd* (3 sites, 2023–2025). The **emission factors are real**: **DESNZ 2026** (fuels, travel, waste, refrigerants), **Ember 2025** (Nigeria grid) and **US EPA Supply Chain Factors v1.3** (spend-based). All DESNZ values are **verified cell-by-cell against the official 2026 workbook**. Each factor's source, year and workbook cell reference are listed in [`emission_factors.csv`](data/reference/emission_factors.csv).
+> ⚠️ **Demo data:** The activity dataset is **synthetic** and belongs to a fictional company, *EcoNaija Manufacturing Ltd* (3 sites, 2023–2025). The **emission factors are real**: **DESNZ 2026** (fuels, upstream WTT, travel, waste, refrigerants), verified cell-by-cell against the official workbook; a **scope-correct Nigeria grid factor** derived from NERC 2025 generation data; and **US EPA Supply Chain Factors v1.3** (spend-based). Each factor's source, year and workbook cell reference are listed in [`emission_factors.csv`](data/reference/emission_factors.csv).
 
 ![Dashboard](reports/figures/dashboard_screenshot.png)
 
@@ -37,9 +42,12 @@ carbon-footprint-esg-dashboard/
 │   │   └── cost_assumptions.csv  # Fuel prices, tariff, FX, discount rate (sourced)
 │   └── sample/
 │       ├── activity_data_sample.csv  # Synthetic activity data
-│       └── company_profile.csv       # Synthetic employees / revenue / production
+│       ├── company_profile.csv       # Synthetic employees / revenue / production
+│       └── contractual_instruments.csv  # Synthetic PPA / I-REC examples for Scope 2 checks
+├── .github/workflows/tests.yml    # CI: tests, dashboard smoke test, notebooks
 ├── docs/
-│   └── methodology.md            # Boundaries, scopes, assumptions
+│   ├── methodology.md            # Boundaries, scopes, assumptions
+│   └── PUBLISHING.md             # Deploy / go-public checklist + LinkedIn draft
 ├── notebooks/
 │   ├── 01_exploratory_analysis.ipynb
 │   └── 02_decarbonisation_scenarios.ipynb   # MACC, pathway, sensitivity
@@ -47,7 +55,9 @@ carbon-footprint-esg-dashboard/
 ├── sql/
 │   └── schema.sql                # Relational data model + views
 ├── src/carbon/
-│   ├── emissions.py              # Calculation engine
+│   ├── emissions.py              # Calculation engine (multi-component factors)
+│   ├── grid_factor.py            # Scope-correct Nigeria grid factor derivation
+│   ├── exec_report.py            # Builds reports/executive_summary.pdf
 │   ├── scenarios.py              # Levers, MACC, pathway, intensity, dual Scope 2
 │   └── report_figures.py         # Exports report charts
 ├── tests/
@@ -63,8 +73,8 @@ carbon-footprint-esg-dashboard/
 | Scope | What it covers | Activities in this project |
 |---|---|---|
 | **Scope 1** | Direct emissions from owned or controlled sources | Diesel generators, fleet fuel, natural gas, LPG, refrigerant leaks |
-| **Scope 2** | Indirect emissions from purchased energy | Grid electricity (Nigeria grid factor) |
-| **Scope 3** | Other value-chain emissions | Purchased goods (spend-based), business travel, commuting, waste |
+| **Scope 2** | Indirect emissions from purchased energy | Grid electricity: combustion-only factor; location- and market-based (with instrument quality checks) |
+| **Scope 3** | Other value-chain emissions | Purchased goods (spend-based), **Cat 3 upstream fuels and grid losses**, business travel, commuting, waste |
 
 **Formula:** `tCO2e = activity quantity × emission factor (kgCO2e/unit) ÷ 1000`
 
@@ -73,17 +83,18 @@ The full method is in [`docs/methodology.md`](docs/methodology.md).
 ## 📊 Key Findings (synthetic activity data, 2023–2025)
 | Metric | Value |
 |---|---|
-| Total footprint (3 yrs) | **12,281 tCO2e** |
-| 2025 footprint | **3,884 tCO2e** |
-| Scope split | Scope 1: 29% · Scope 2: 25% · Scope 3: 45% |
-| Change, 2025 vs 2023 baseline | **−9.6%** |
+| Total footprint (3 yrs) | **13,525 tCO2e** |
+| 2025 footprint | **4,283 tCO2e** |
+| Scope split | Scope 1: 26% · Scope 2: 21% · Scope 3: 53% |
+| Change, 2025 vs 2023 baseline | **−9.4%** |
 | Highest-emitting site | Port Harcourt Plant (56% of total) |
 
 ![Emissions by scope](reports/figures/01_emissions_by_scope_year.png)
 
-- **Purchased goods & services (Scope 3 Cat 1) is the #1 hotspot at 32%.** It uses a generic spend-based proxy, so it is also the **most uncertain** number. Better supplier data is the top data-strategy priority.
-- **Grid electricity (25%)** and **diesel generators (20%)** come next. Nigeria's grid intensity (0.456 kgCO2e/kWh) is about 3.5× the UK's, which makes on-site solar especially valuable.
-- **Progress:** −9.6% by 2025 is slightly **ahead** of the straight-line path to −30% by 2030 (−8.6% by 2025). The remaining 20 percentage points still need structural changes, not just efficiency gains.
+- **Purchased goods & services (Scope 3 Cat 1) is the #1 hotspot at 29%.** It is spend-based, so it is also the **most uncertain** number. Better supplier data is the top data-strategy priority.
+- **Grid electricity (Scope 2, 21%)** and **diesel generators (Scope 1, ~18%)** come next. Nigeria's grid generation factor (0.417 kgCO2e/kWh) is about 3× the UK's, which makes on-site solar especially valuable.
+- **Upstream fuel supply and grid losses (Scope 3 Cat 3, 11%)** are reported separately, so Scope 2 is combustion-only, as the GHG Protocol requires.
+- **Progress:** −9.4% by 2025 is slightly **ahead** of the straight-line path to −30% by 2030 (−8.6% by 2025). The remaining reduction still needs structural changes.
 
 <p float="left">
   <img src="reports/figures/02_emission_hotspots.png" width="49%" />
@@ -95,17 +106,31 @@ Nine reduction levers were sized against the 2025 baseline and costed with **202
 
 | Result | Value |
 |---|---|
-| Physical abatement (8 levers) | **~800 tCO2e/yr (−21% vs 2025)** |
-| + Renewable PPA (market-based) | ~1,050 tCO2e/yr (−27%) |
+| Physical abatement (8 levers) | **~887 tCO2e/yr (−21% vs 2025)** |
+| + Renewable PPA / I-RECs (market-based, quality-checked) | ~1,114 tCO2e/yr (−26%) |
 | Total capex | **$424k** |
-| Net annualised saving | **~$124k/yr** (the portfolio pays for itself) |
-| Port Harcourt solar-battery hybrid | ~215 tCO2e/yr, **~2-year payback** |
-| 2030 vs SBTi-aligned target | ✅ Met **only with the PPA** (market-based); ❌ missed on a location basis |
+| Net annualised saving | **~$124k/yr** (cash-positive in every sensitivity case, min ~$52k/yr) |
+| Port Harcourt solar-battery hybrid | ~266 tCO2e/yr, **~2-year payback** |
+| 2030 vs SBTi-aligned target | ✅ Met **only with renewable contracts** (−135 t, range −367 to +153 t); ❌ missed on a location basis (+115 t) |
 
 ![MACC](reports/figures/05_macc_curve.png)
 ![Pathway](reports/figures/06_decarbonisation_pathway.png)
+![Sensitivity](reports/figures/07_sensitivity_tornado.png)
 
-**So what?** The first wave of levers is cost-negative and should be funded now. Growth of +2%/yr erodes the gains after 2027, though, so a **second wave** is needed by ~2029 to stay on an SBTi path to 2035: deeper supplier engagement, fleet conversion and more on-site solar. Explore it interactively in the dashboard's **Scenarios** tab, where you can change the diesel price, FX, discount rate, growth and lever selection.
+**So what?** The first wave of levers is cost-negative and should be funded now. Levers phase in over 1–3 years, and if they underperform, 2030 slips past the target. Growth of +2%/yr also erodes the gains after 2027, so a **second wave** is needed by ~2029 to stay on an SBTi path to 2035: deeper supplier engagement, fleet conversion and more on-site solar. Explore it interactively in the dashboard's **Scenarios** tab, where you can change the diesel price, FX, discount rate, growth and lever selection.
+
+## 🔬 Methodological rigour
+| Issue | How it's handled |
+|---|---|
+| Lifecycle grid factors mix scopes | Nigeria grid factor **derived** ([`grid_factor.py`](src/carbon/grid_factor.py)): Scope 2 = combustion only (0.417); upstream (0.075) and T&D losses (0.039) go to **Scope 3 Cat 3**. A test checks the CSV against the derivation |
+| Upstream fuel emissions | DESNZ WTT factors for every Scope 1 fuel (Cat 3) |
+| Market-based Scope 2 claims | `validate_instruments()` applies the **GHG Protocol Scope 2 Quality Criteria** (attribute claim, retirement, registry, vintage, market, uniqueness) before any zero factor |
+| Unrealistic instant abatement | Levers **ramp up** over 1–3 years, with **low/high effectiveness bands** |
+| Fragile assumptions | **Sensitivity analysis** on FX, diesel, tariff, discount rate, capex, effectiveness and growth |
+| Silent drift / broken code | **GitHub Actions CI**: unit, regression and SQL-parity tests, dashboard smoke test, notebook execution |
+| Traceability | Every DESNZ factor carries its workbook **cell reference**; decisions are logged in [`MEMORY.md`](MEMORY.md) |
+
+**Known limitations:** synthetic activity data; Scope 3 Cat 1 relies on a generic spend factor (category mapping in progress); UK proxies for landfill and car factors; no Nigerian residual mix. See [methodology §8](docs/methodology.md).
 
 ## 💡 Recommendations
 0. **Fund the cost-negative levers first:** travel policy, the Port Harcourt solar-battery hybrid, efficiency, rooftop solar (see [notebook 02](notebooks/02_decarbonisation_scenarios.ipynb)).
@@ -128,17 +153,19 @@ streamlit run app/streamlit_app.py
 # Run tests
 pytest -q
 
-# Regenerate report charts
-python src/carbon/report_figures.py
+# Regenerate report charts and the executive summary PDF
+python src/carbon/report_figures.py && python src/carbon/exec_report.py
 ```
 
 ## 🛠️ Tech Stack
-Python (pandas, plotly, matplotlib) · Streamlit · SQL · Jupyter · pytest
+Python (pandas, plotly, matplotlib, reportlab) · Streamlit · SQL (SQLite/PostgreSQL) · Jupyter · pytest · GitHub Actions
 
 ## 📚 Data Sources & References
 - [GHG Protocol](https://ghgprotocol.org/) – Corporate Standard & Scope 3 Standard
 - [UK DESNZ – GHG Conversion Factors 2026](https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2026) (published June 2026, AR5 GWP100)
-- [Ember – Yearly Electricity Data](https://ember-energy.org/data/yearly-electricity-data/) (Nigeria grid intensity 2025, CC BY 4.0)
+- [NRGI (2026) – Nigeria's gas-to-power ambitions](https://resourcegovernance.org/sites/default/files/2026-07/Nigeria_gas_power_limits_opportunities_alternatives.pdf) (NERC 2025 generation mix) · [NERC Q1 2024 report](https://nerc.gov.ng/wp-content/uploads/2024/07/2024_Q1-Report_v1YA.pdf) (transmission loss factor)
+- [Ember – Yearly Electricity Data](https://ember-energy.org/data/yearly-electricity-data/) (lifecycle cross-check, CC BY 4.0)
+- [GHG Protocol Scope 2 Guidance](https://ghgprotocol.org/scope-2-guidance) (quality criteria, dual reporting)
 - [US EPA – Supply Chain GHG Emission Factors v1.3](https://doi.org/10.23719/1531143) (USD 2022)
 - [SBTi Corporate Near-Term Criteria](https://sciencebasedtargets.org/) – 4.2%/yr (Scope 1+2), 2.5%/yr (Scope 3) minimum rates
 - Cost data: NBS / depot diesel and petrol prices (2026), NERC Band A tariff, 2026 Nigerian solar market pricing

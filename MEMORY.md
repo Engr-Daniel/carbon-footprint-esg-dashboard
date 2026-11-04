@@ -13,22 +13,27 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 - Sites: Lagos HQ, Abuja Office, Port Harcourt Plant (the plant is the largest emitter and the only site using natural gas)
 - Data: monthly activity data for 2023–2025, synthetic and generated with a fixed random seed (42), with a built-in downward trend (2024: −4%, 2025: −9%)
 
-## Current results snapshot (synthetic activity data, real factors as of Phase 2)
-- Total 2023–2025: **12,281 tCO2e** (S1 ≈ 3,572 · S2 ≈ 3,116 · S3 ≈ 5,593)
-- 2025: 3,884 tCO2e, **−9.6% vs the 2023 baseline**, slightly ahead of the linear −30%-by-2030 path (−8.6% by 2025)
-- Top hotspot: Scope 3 Cat 1 purchased goods (32%), then grid electricity (25%) and diesel (20%)
-- Port Harcourt Plant = 56% of the total
-- The Python engine and the SQL view give identical totals (12,280.8 tCO2e after the waste-factor fix)
+## Current results snapshot (Phase 4: scope-correct grid factor + Cat 3)
+- Total 2023–2025: **13,525 tCO2e** (S1 3,572 · S2 2,848 · S3 7,105). Scope 3 is 53% and includes Cat 3 (~11%)
+- 2025: 4,283 tCO2e, **−9.4% vs 2023**
+- Top hotspot: Cat 1 purchased goods (29%), then grid electricity (21%) and diesel (~18%). Port Harcourt = 56%
+- The Python engine and the SQL view give identical totals (tested in CI)
 
-## Scenario results snapshot (Phase 3)
-- 9 levers: physical abatement ~801 tCO2e/yr (−21% vs 2025); with the PPA, ~1,049 (−27%)
-- Capex $424k; net annualised saving ~$124k/yr; 4 cost-negative levers deliver 48% of abatement
-- L2 Port Harcourt solar hybrid: ~215 t/yr, ~2-yr payback (3.2 yrs even at ₦1,200/L diesel)
-- 2030: market-based 3,130 vs SBTi target 3,267 ✅; location-based 3,404 ❌. 2035: both miss (growth +2%/yr)
+## Scenario results snapshot
+- Physical abatement ~887 tCO2e/yr (−21% vs 2025); with renewable contracts, ~1,114
+- Capex $424k; net annualised saving ~$124k/yr (min ~$52k/yr across sensitivities); 4 cost-negative levers deliver 52% of abatement
+- L2 Port Harcourt solar hybrid: ~266 t/yr, ~2-yr payback
+- 2030 (phased): market-based gap −135 t (range −367 to +153 t); location-based +115 t ❌. 2035: both miss
 
 ## Decision log
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-11-04 | External review (6 findings) addressed in Phase 4 | Grid scope split, instrument checks, ramp/uncertainty, CI, docs. Scope 3 category mapping is pending the EPA CSV |
+| 2026-11-04 | Nigeria grid factor **derived**: S2 0.417 (gas share 67.3% × DESNZ gas 0.20434/kWh NCV ÷ 33% efficiency); Cat 3 WTT 0.075, T&D 0.039 | Ember is lifecycle (mixes scopes); IEA is paid; DESNZ dropped overseas factors. Total 0.530 ≈ Ember 0.456 within uncertainty |
+| 2026-11-04 | Factors keyed by activity_type + **component** (primary / wtt / td_losses); WTT added for all fuels | Cat 3 reported consistently; one activity → several scopes |
+| 2026-11-04 | Market-based Scope 2 only counts instruments passing GHG Protocol Scope 2 Quality Criteria | Prevents unsupported zero-emission claims |
+| 2026-11-04 | Levers ramp up linearly (`ramp_years`) with low/high effectiveness ranges; one-at-a-time sensitivity | Realism and transparency on uncertainty |
+| 2026-11-04 | Regression test pins headline numbers; CI runs tests, dashboard smoke test and notebooks | Catch silent drift before publication |
 | 2026-11-04 | All DESNZ factors verified cell-by-cell against the official 2026 full-set workbook (uploaded by Daniel). Waste corrected 497.29 → **520.58** kgCO2e/t | 497.29 was *household residual* waste; a company should use *Commercial and industrial waste* → Landfill (Waste disposal!I52). Total +11 tCO2e; no conclusion changed |
 | 2026-11-04 | Levers applied sequentially to residual activity | Avoids double-counting overlapping levers (efficiency, then solar) |
 | 2026-11-04 | SBTi target split: S1+2 4.2%/yr, S3 2.5%/yr from 2023 | SBTi near-term criteria; S3 ≥40% of the total, so a S3 target is required |
@@ -54,6 +59,8 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 - Should we replace synthetic data with a real public company's disclosed data (e.g. a Nigerian listed company's sustainability report)?
 
 ## Lessons learned
+- ReportLab's built-in fonts have no ₦ glyph (it renders as a black box). Use "NGN" in PDFs.
+- Generate notebook findings text from code (IPython Markdown) so the numbers can't go stale.
 - Secondary-source reproductions can map to the wrong row (household vs commercial waste). Always verify against the primary workbook and record the cell reference.
 - An earlier README claimed the company was "off track". With a linear pathway it is actually slightly ahead. Always check claims against the chart.
 - Plotly hotspot bars coloured by scope need `update_yaxes(categoryorder="total ascending")` to stay sorted.

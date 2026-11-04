@@ -9,6 +9,7 @@ import sys
 from pathlib import Path
 
 import matplotlib
+import matplotlib.ticker
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
@@ -26,7 +27,7 @@ from carbon.emissions import (  # noqa: E402
 FIG_DIR = ROOT / "reports" / "figures"
 SCOPE_COLORS = {1: "#2a6f97", 2: "#f4a261", 3: "#2a9d8f"}
 SCEN_NOTE = "Lever costs are modelled assumptions (see data/reference/*.csv). "
-FOOTNOTE = "Synthetic data: EcoNaija Manufacturing Ltd (fictional). Factors: DESNZ 2026, Ember 2025, US EPA v1.3."
+FOOTNOTE = "Synthetic data: EcoNaija Manufacturing Ltd (fictional). Factors: DESNZ 2026, derived Nigeria grid (NERC 2025), US EPA v1.3."
 
 
 def _style(ax, title: str, ylabel: str = "tCO2e"):
@@ -139,12 +140,15 @@ def pathway_chart(path_df):
     ax.plot(path_df.year, path_df.bau, color="grey", linestyle=":", label="Business as usual (+2%/yr)")
     ax.plot(path_df.year, path_df.with_levers_location, color="#2a6f97", label="With levers (location-based)")
     ax.plot(path_df.year, path_df.with_levers_market, color="#2a9d8f", label="With levers + PPA (market-based)")
+    if "with_levers_market_lower" in path_df:
+        ax.fill_between(path_df.year, path_df.with_levers_market_lower, path_df.with_levers_market_upper,
+                        color="#2a9d8f", alpha=0.15, label="Market-based range (low/high lever effectiveness)")
     ax.plot(path_df.year, path_df.sbti_target, color="#e76f51", linestyle="--",
             label="SBTi-aligned target (S1+2: 4.2%/yr, S3: 2.5%/yr)")
     ax.axvline(2030, color="lightgrey", linewidth=0.8)
     ax.set_ylim(0, path_df[["bau", "actual"]].max().max() * 1.1)
     ax.legend(frameon=False, fontsize=8, loc="lower left")
-    _style(ax, "Decarbonisation pathway to 2035")
+    _style(ax, "Decarbonisation pathway to 2035 (levers phased in)")
     fig.text(0.01, 0.01, SCEN_NOTE + FOOTNOTE, fontsize=7, color="grey")
     fig.tight_layout(rect=(0, 0.03, 1, 1))
     path = FIG_DIR / "06_decarbonisation_pathway.png"
@@ -153,8 +157,29 @@ def pathway_chart(path_df):
     return path
 
 
+def tornado(sens):
+    df = sens[sens.saving_swing > 0].iloc[::-1].reset_index(drop=True)
+    fig, ax = plt.subplots(figsize=(9, 4.2))
+    base = sens.attrs.get("central", None)
+    for i, r in df.iterrows():
+        lo, hi = sorted([r.net_saving_low, r.net_saving_high])
+        ax.barh(i, hi - lo, left=lo, color="#2a6f97", alpha=0.85)
+        ax.text(hi, i, f"  \\${lo/1000:,.0f}k – \\${hi/1000:,.0f}k", va="center", fontsize=8)
+    if base is not None:
+        ax.axvline(base, color="black", linewidth=0.8, linestyle="--")
+    ax.set_yticks(range(len(df)), df.parameter)
+    ax.set_xlabel("Net annualised saving of lever portfolio (USD/yr); dashed = central case")
+    ax.xaxis.set_major_formatter(matplotlib.ticker.FuncFormatter(lambda v, _: f"{v/1000:,.0f}k"))
+    ax.set_xlim(0, df[["net_saving_low", "net_saving_high"]].max().max() * 1.35)
+    _style(ax, "Sensitivity: what moves the business case?", "")
+    ax.grid(axis="x", alpha=0.3)
+    ax.grid(axis="y", visible=False)
+    return _save(fig, "07_sensitivity_tornado.png")
+
+
 def main():
-    from carbon.scenarios import apply_levers, baseline_activity, load_cost_assumptions, load_levers, pathway
+    from carbon.scenarios import (apply_levers, baseline_activity, load_cost_assumptions, load_levers,
+                                  pathway_range, sensitivity_analysis)
 
     FIG_DIR.mkdir(parents=True, exist_ok=True)
     act, factors = load_activity(), load_factors()
@@ -162,9 +187,14 @@ def main():
     for fn in (scope_by_year, hotspots, target_progress, site_breakdown):
         print("saved", fn(em).relative_to(ROOT))
     a = load_cost_assumptions()
-    res, _ = apply_levers(baseline_activity(act, 2025), load_levers(), factors, a, 2025)
+    levers = load_levers()
+    base = baseline_activity(act, 2025)
+    res, _ = apply_levers(base, levers, factors, a, 2025)
     print("saved", macc(res).relative_to(ROOT))
-    print("saved", pathway_chart(pathway(em, res, 2023, 2025, 2035, a["bau_growth_rate"])).relative_to(ROOT))
+    print("saved", pathway_chart(pathway_range(em, base, levers, factors, a)).relative_to(ROOT))
+    sens = sensitivity_analysis(act, em, levers, factors, a)
+    sens.attrs["central"] = -res["annualised_cost_usd"].sum()
+    print("saved", tornado(sens).relative_to(ROOT))
 
 
 if __name__ == "__main__":

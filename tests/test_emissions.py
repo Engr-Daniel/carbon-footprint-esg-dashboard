@@ -98,7 +98,27 @@ def test_every_factor_has_source_and_year():
     f = load_factors()
     assert f["source"].notna().all() and (f["source"].str.len() > 0).all()
     assert f["factor_year"].notna().all()
-    assert f["activity_type"].is_unique
+    assert not f.duplicated(["activity_type", "component"]).any()
+    assert (f.loc[f.component == "primary", "activity_type"].value_counts() == 1).all()
+
+
+def test_multi_component_factors_split_by_scope():
+    factors = pd.DataFrame({
+        "activity_type": ["diesel", "diesel"], "component": ["primary", "wtt"], "scope": [1, 3],
+        "category": ["Combustion", "Cat 3"], "unit": ["litre", "litre"], "kgco2e_per_unit": [2.0, 0.5],
+    })
+    act = make_activity([["2024-01", "A", "diesel", 1000, "litre"]])
+    out = calculate_emissions(act, factors)
+    assert len(out) == 2
+    assert out.groupby("scope")["tco2e"].sum().to_dict() == pytest.approx({1: 2.0, 3: 0.5})
+
+
+def test_grid_factor_csv_matches_derivation():
+    from carbon.grid_factor import derive
+    d = derive()
+    f = load_factors().set_index(["activity_type", "component"])["kgco2e_per_unit"]
+    for comp in ("primary", "wtt", "td_losses"):
+        assert f[("grid_electricity_ng", comp)] == pytest.approx(d[comp], abs=1e-5)
 
 
 def test_sample_data_runs_end_to_end():
