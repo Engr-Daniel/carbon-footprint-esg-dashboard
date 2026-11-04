@@ -27,6 +27,7 @@ Long-term project memory: context, decisions and lessons. Add new entries at the
 ## Decision log
 | Date | Decision | Reason |
 |---|---|---|
+| 2026-11-04 | Dashboard redesign: 5 tabs (Overview, Footprint, Scenarios, Scope 2 & intensity, Method & data), custom theme, KPI cards, validated scope palette (blue/orange/aqua), legends below charts, data tables + CSV/PDF downloads | Recruiter-facing polish; palette passes CVD checks via the dataviz validator |
 | 2026-11-04 | Scope 3 spend split into 10 categories mapped to EPA v1.3 NAICS factors (with margins), including Cat 4 freight; spend deflated to 2022 USD with US CPI-U | Review finding #2. Generic 0.2819 averaged unrelated industries; spend-weighted factor is now 0.593. Total rose 13,525 → 17,313 |
 | 2026-11-04 | External review (6 findings) addressed in Phase 4 | Grid scope split, instrument checks, ramp/uncertainty, CI, docs. Scope 3 category mapping is pending the EPA CSV |
 | 2026-11-04 | Nigeria grid factor **derived**: S2 0.417 (gas share 67.3% × DESNZ gas 0.20434/kWh NCV ÷ 33% efficiency); Cat 3 WTT 0.075, T&D 0.039 | Ember is lifecycle (mixes scopes); IEA is paid; DESNZ dropped overseas factors. Total 0.530 ≈ Ember 0.456 within uncertainty |
