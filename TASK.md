@@ -33,15 +33,24 @@ Roadmap and task tracker. Status: `[x]` done · `[ ]` to do · `[~]` in progress
 - [x] Market-based Scope 2 (PPA / I-RECs) with dual reporting
 - [x] Dashboard tabs: Scenarios (editable prices/FX/levers) and Intensity & Scope 2
 - [ ] Second-wave levers (fleet CNG/EV, larger supplier programme, more solar) to close the 2035 gap
-- [ ] Add lever ramp-up, solar degradation and grid decarbonisation to the pathway
+- [x] Add lever ramp-up to the pathway
+- [ ] Solar degradation, grid decarbonisation, Monte Carlo joint uncertainty (backlog)
 
-## 🚀 Phase 4: Deploy & publish
-- [ ] Load data into SQLite through `sql/schema.sql` and show SQL queries in a notebook
-- [ ] Add CSV upload to the dashboard so users can analyse their own data
-- [ ] Deploy to **Streamlit Community Cloud** and add the live link to the README
-- [ ] GitHub Actions CI: run `pytest` on every push
-- [ ] Write a 1–2 page **executive summary / ESG report** (PDF) in `reports/`
-- [ ] Make the repo **public**, pin it on your GitHub profile, and share a LinkedIn post
+## 🚀 Phase 4: Review fixes, deploy & publish
+### External review fixes
+- [x] Scope-correct Nigeria grid factor (S2 combustion-only; WTT + T&D → Cat 3) with derivation module + test
+- [x] Cat 3 upstream (WTT) factors for all Scope 1 fuels
+- [x] Scope 2 contractual instrument quality checks (GHG Protocol Scope 2 Quality Criteria)
+- [x] Lever ramp-up, low/high effectiveness bands, one-at-a-time sensitivity (+ tornado chart)
+- [x] Methodology limitations updated (market-based is implemented)
+- [ ] Map purchased-goods spend to category-specific EPA factors *(waiting for the EPA v1.3 CSV upload)*
+### Delivery
+- [x] GitHub Actions CI: unit + regression + SQL-parity tests, dashboard smoke test, notebook execution
+- [x] Executive summary PDF generated from live numbers (`reports/executive_summary.pdf`)
+- [x] Publishing checklist + LinkedIn draft (`docs/PUBLISHING.md`)
+- [ ] Make the repo **public** and pin it *(you)*
+- [ ] Deploy to Streamlit Community Cloud and add the URL to the README *(you, ~3 min; see PUBLISHING.md)*
+- [ ] Post on LinkedIn *(you)*
 
 ## 💭 Ideas / backlog
 - Power BI version of the dashboard
