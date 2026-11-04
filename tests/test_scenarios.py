@@ -111,3 +111,56 @@ def test_full_model_runs_and_pathway_is_consistent():
     assert (later.with_levers_location < later.bau).all()
     ints = intensity_metrics(em, load_profile())
     assert (ints.tco2e_per_employee > 0).all()
+
+
+def test_lever_counts_all_components_but_market_only_scope2():
+    factors = pd.DataFrame({
+        "activity_type": ["grid_electricity_ng", "grid_electricity_ng"], "component": ["primary", "wtt"],
+        "scope": [2, 3], "category": ["Electricity", "Cat 3"], "unit": ["kWh", "kWh"], "kgco2e_per_unit": [0.4, 0.1],
+    })
+    base = BASELINE[BASELINE.activity_type == "grid_electricity_ng"]
+    phys = pd.DataFrame([lever(activity_types="grid_electricity_ng", reduction_pct=0.5)])
+    mkt = pd.DataFrame([lever(activity_types="grid_electricity_ng", reduction_pct=0.5, accounting="market")])
+    r_phys, _ = apply_levers(base, phys, factors, ASSUMPTIONS, 2025)
+    r_mkt, _ = apply_levers(base, mkt, factors, ASSUMPTIONS, 2025)
+    assert (r_phys.abatement_s12.iloc[0], r_phys.abatement_s3.iloc[0]) == pytest.approx((4.0, 1.0))
+    assert (r_mkt.abatement_s12.iloc[0], r_mkt.abatement_s3.iloc[0]) == pytest.approx((4.0, 0.0))
+
+
+def test_instrument_quality_criteria():
+    from carbon.scenarios import eligible_kwh_by_year, load_instruments, validate_instruments
+    v = validate_instruments(load_instruments()).set_index("instrument_id")
+    assert v.loc["IREC-2025-001", "eligible"]
+    assert "not retired" in v.loc["IREC-2025-002", "failure_reasons"]
+    assert "vintage" in v.loc["IREC-2023-003", "failure_reasons"]
+    assert "different market" in v.loc["IREC-2025-004", "failure_reasons"]
+    assert "no attribute claim" in v.loc["PPA-2025-005", "failure_reasons"]
+    assert eligible_kwh_by_year(v.reset_index()) == {2025: 250_000}
+
+
+def test_duplicate_instrument_is_rejected():
+    from carbon.scenarios import load_instruments, validate_instruments
+    inst = load_instruments()
+    dup = pd.concat([inst.iloc[[0]], inst.iloc[[0]]], ignore_index=True)
+    v = validate_instruments(dup)
+    assert v["eligible"].tolist() == [True, False]
+
+
+def test_ramp_fraction():
+    from carbon.scenarios import ramp_fraction
+    lr = pd.DataFrame({"start_year": [2026, 2026, 2030], "ramp_years": [1, 3, 1]})
+    assert ramp_fraction(lr, 2026).tolist() == pytest.approx([1.0, 1 / 3, 0.0])
+    assert ramp_fraction(lr, 2028).tolist() == pytest.approx([1.0, 1.0, 0.0])
+
+
+def test_pathway_range_brackets_central_and_sensitivity_runs():
+    from carbon.scenarios import pathway_range, sensitivity_analysis
+    act, f = load_activity(), load_factors()
+    em = calculate_emissions(act, f)
+    a, lev = load_cost_assumptions(), load_levers()
+    pr = pathway_range(em, baseline_activity(act, 2025), lev, f, a)
+    later = pr[pr.year >= 2028]
+    assert (later.with_levers_market_lower <= later.with_levers_market + 1e-9).all()
+    assert (later.with_levers_market <= later.with_levers_market_upper + 1e-9).all()
+    sens = sensitivity_analysis(act, em, lev, f, a)
+    assert len(sens) == 7 and (sens.saving_swing >= 0).all()

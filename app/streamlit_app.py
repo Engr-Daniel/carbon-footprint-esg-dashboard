@@ -14,19 +14,24 @@ from carbon import calculate_emissions, load_activity, load_factors, reduction_v
 from carbon.scenarios import (  # noqa: E402
     apply_levers,
     baseline_activity,
+    eligible_kwh_by_year,
     intensity_metrics,
     load_cost_assumptions,
+    load_instruments,
     load_levers,
     load_profile,
-    pathway,
+    pathway_range,
     scope2_dual,
+    sensitivity_analysis,
+    validate_instruments,
 )
 
 st.set_page_config(page_title="Carbon Footprint & ESG Dashboard", page_icon="🌍", layout="wide")
 st.title("🌍 Carbon Footprint & ESG Dashboard")
 SCOPE_COLORS = {"Scope 1": "#2a6f97", "Scope 2": "#f4a261", "Scope 3": "#2a9d8f"}
 st.caption("Scope 1, 2 & 3 GHG emissions (GHG Protocol). Demo uses SYNTHETIC activity data for a fictional "
-           "company (EcoNaija Manufacturing Ltd) with real DESNZ 2026 / Ember 2025 / US EPA emission factors.")
+           "company (EcoNaija Manufacturing Ltd) with DESNZ 2026 factors (verified), a derived Nigeria grid factor "
+           "(NERC 2025 mix) and US EPA spend factors.")
 
 
 @st.cache_data
@@ -116,9 +121,10 @@ with tab_scen:
     if not chosen:
         st.warning("Select at least one lever.")
     else:
-        res, _ = apply_levers(baseline_activity(activity, 2025), levers_all[levers_all.lever_id.isin(chosen)],
-                              factors, A, 2025)
-        path = pathway(df, res, 2023, 2025, 2035, A["bau_growth_rate"])
+        sel = levers_all[levers_all.lever_id.isin(chosen)]
+        base = baseline_activity(activity, 2025)
+        res, _ = apply_levers(base, sel, factors, A, 2025)
+        path = pathway_range(df, base, sel, factors, A)
         base_2025 = df.loc[df.year == 2025, "tco2e"].sum()
         loc_ab = res.loc[res.accounting == "location", "abatement_tco2e"].sum()
         y30 = path[path.year == 2030].iloc[0]
@@ -150,10 +156,14 @@ with tab_scen:
         pf.add_scatter(x=path.year, y=path.actual, name="Actual", mode="lines+markers", line=dict(color="#264653", width=3))
         pf.add_scatter(x=path.year, y=path.bau, name="Business as usual", line=dict(color="grey", dash="dot"))
         pf.add_scatter(x=path.year, y=path.with_levers_location, name="With levers (location-based)", line=dict(color="#2a6f97"))
+        pf.add_scatter(x=path.year, y=path.with_levers_market_upper, line=dict(width=0), showlegend=False, hoverinfo="skip")
+        pf.add_scatter(x=path.year, y=path.with_levers_market_lower, fill="tonexty", fillcolor="rgba(42,157,143,0.15)",
+                       line=dict(width=0), name="Market-based range (lever effectiveness)")
         pf.add_scatter(x=path.year, y=path.with_levers_market, name="With levers + PPA (market-based)", line=dict(color="#2a9d8f"))
         pf.add_scatter(x=path.year, y=path.sbti_target, name="SBTi target (S1+2 4.2%/yr, S3 2.5%/yr)",
                        line=dict(color="#e76f51", dash="dash"))
-        pf.update_layout(title="Decarbonisation pathway to 2035", yaxis_title="tCO2e", yaxis_rangemode="tozero")
+        pf.update_layout(title="Decarbonisation pathway to 2035 (levers phased in over ramp_years)", yaxis_title="tCO2e",
+                         yaxis_rangemode="tozero")
         st.plotly_chart(pf, width="stretch")
 
         st.dataframe(
@@ -162,6 +172,12 @@ with tab_scen:
             .style.format({"abatement_tco2e": "{:,.0f}", "capex_usd": "${:,.0f}", "annual_savings_usd": "${:,.0f}",
                            "cost_per_tco2e_usd": "{:,.0f}", "simple_payback_years": "{:.1f}"}, na_rep="–"),
             width="stretch", hide_index=True)
+        with st.expander("Sensitivity analysis (one input at a time)"):
+            sens = sensitivity_analysis(activity, df, sel, factors, A)
+            st.dataframe(sens.rename(columns={"net_saving_low": "Net saving (low input)", "net_saving_high": "Net saving (high input)",
+                                              "gap_low": "2030 gap (low)", "gap_high": "2030 gap (high)"})
+                         .drop(columns="saving_swing").style.format(precision=0, thousands=","), width="stretch", hide_index=True)
+            st.caption("Gap = market-based emissions minus SBTi-aligned target in 2030 (negative = on track).")
         with st.expander("Lever sizing notes & cost sources"):
             st.dataframe(levers_all[["lever_id", "sizing_notes", "cost_source"]], width="stretch", hide_index=True)
 
@@ -178,12 +194,16 @@ with tab_int:
     st.caption("Company profile (employees, revenue, production) is synthetic.")
 
     st.subheader("Scope 2: location-based vs market-based")
-    cover = st.slider("Share of 2025 grid kWh covered by renewable contracts (PPA / I-RECs)", 0, 100, 0, 5)
-    kwh25 = df.loc[(df.scope == 2) & (df.year == 2025), "quantity"].sum()
-    dual = scope2_dual(df, {2025: kwh25 * cover / 100})
+    st.markdown("Contractual instruments only count in the market-based method if they pass the **GHG Protocol "
+                "Scope 2 Quality Criteria**: they convey the attribute claim, are retired for the company in a registry, "
+                "have a matching vintage, come from the same market and are not double counted.")
+    validated = validate_instruments(load_instruments())
+    st.dataframe(validated[["instrument_id", "instrument_type", "generation_year", "generation_country", "mwh",
+                            "eligible", "failure_reasons"]], width="stretch", hide_index=True)
+    dual = scope2_dual(df, eligible_kwh_by_year(validated))
     d = dual.melt(id_vars="year", value_vars=["location_tco2e", "market_tco2e"], var_name="method", value_name="tCO2e")
     d["method"] = d["method"].map({"location_tco2e": "Location-based", "market_tco2e": "Market-based"})
     st.plotly_chart(px.bar(d, x="year", y="tCO2e", color="method", barmode="group",
                            color_discrete_sequence=["#f4a261", "#2a9d8f"]).update_xaxes(dtick=1), width="stretch")
-    st.info("Nigeria has no published residual-mix factor, so uncovered kWh in the market-based method fall back to "
-            "the grid average (GHG Protocol Scope 2 Guidance).")
+    st.info("Instruments are synthetic examples. Nigeria has no published residual-mix factor, so uncovered kWh in "
+            "the market-based method fall back to the grid average (GHG Protocol Scope 2 Guidance) - disclose this.")

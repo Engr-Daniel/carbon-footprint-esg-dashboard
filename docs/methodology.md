@@ -19,7 +19,8 @@ This project follows the **GHG Protocol Corporate Accounting and Reporting Stand
 | 1 | Mobile combustion | petrol | litre | Activity-based |
 | 1 | Stationary combustion | natural_gas, lpg | m3, litre | Activity-based |
 | 1 | Fugitive emissions | refrigerant_r410a | kg | Mass-balance (leakage × GWP) |
-| 2 | Purchased electricity | grid_electricity_ng | kWh | Location-based |
+| 2 | Purchased electricity | grid_electricity_ng (`primary`) | kWh | Location-based (combustion-only) + market-based |
+| 3 | Cat 3 – Fuel- & energy-related activities | diesel, petrol, natural_gas, lpg, grid (`wtt`, `td_losses`) | as activity | Upstream (WTT) + T&D losses |
 | 3 | Cat 1 – Purchased goods & services | purchased_goods_spend | USD | Spend-based (EEIO) |
 | 3 | Cat 5 – Waste | waste_landfill | tonne | Waste-type specific |
 | 3 | Cat 6 – Business travel | air short/long-haul | passenger_km | Distance-based |
@@ -30,13 +31,15 @@ This project follows the **GHG Protocol Corporate Accounting and Reporting Stand
 kgCO2e = quantity × emission_factor (kgCO2e per unit)
 tCO2e  = kgCO2e / 1000
 ```
+One activity can carry several factor **components**, each with its own scope and category. For example, a litre of diesel gives Scope 1 combustion (`primary`) **and** Scope 3 Cat 3 upstream supply (`wtt`). The engine joins one activity row to all of its components.
+
 The engine (`src/carbon/emissions.py`) **fails loudly** in these cases:
 - an activity type has no emission factor
 - the activity unit doesn't match the factor unit
 - quantities are negative
 
 ## 6. Emission factors
-Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `gwp_basis`, `source`, `source_url` and a `verification` status.
+Stored in `data/reference/emission_factors.csv`. Each row is keyed by `activity_type` + `component` and has a `factor_year`, `gwp_basis`, `source`, `source_url` and a `verification` status (with the DESNZ workbook cell reference).
 
 | Activity | Factor | Unit | Source |
 |---|---|---|---|
@@ -45,7 +48,10 @@ Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `
 | Natural gas (100% mineral blend) | 2.04987 | kgCO2e/m³ | DESNZ 2026 |
 | LPG | 1.55713 | kgCO2e/litre | DESNZ 2026 |
 | R-410A refrigerant | 1,924 | kgCO2e/kg | IPCC AR5 GWP100 (DESNZ 2026) |
-| Nigeria grid electricity | 0.456 | kgCO2e/kWh | Ember 2025 |
+| Nigeria grid electricity: Scope 2 (combustion) | 0.41686 | kgCO2e/kWh | Derived (see below) |
+| Nigeria grid: Cat 3 upstream (WTT) | 0.07461 | kgCO2e/kWh | Derived |
+| Nigeria grid: Cat 3 T&D losses | 0.03863 | kgCO2e/kWh | Derived |
+| WTT diesel / petrol / natural gas / LPG | 0.62409 / 0.60664 / 0.3366 / 0.18551 | per litre / litre / m³ / litre | DESNZ 2026 (WTT- fuels) |
 | Domestic flight (with RF) | 0.22928 | kgCO2e/passenger-km | DESNZ 2026 |
 | Long-haul economy flight (with RF) | 0.11704 | kgCO2e/passenger-km | DESNZ 2026 |
 | Average petrol car | 0.16152 | kgCO2e/km | DESNZ 2026 |
@@ -54,7 +60,12 @@ Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `
 
 ### Key factor choices
 - **100% mineral fuel factors** are used for diesel and petrol, not the UK pump "average biofuel blend". Nigerian AGO and PMS carry no biofuel blend.
-- **Nigeria grid:** Ember's intensity is *lifecycle* (it includes upstream emissions), so Scope 2 is slightly conservative (overstated). A combustion-only national factor is preferable once one is published.
+- **Nigeria grid (scope-correct split):** open factors such as Ember (0.456) are *lifecycle* and mix Scope 2 with upstream emissions. The IEA combustion-only factor is paid, and DESNZ no longer publishes overseas factors (its *Overseas electricity* tab says so). The factor is therefore **derived transparently** in `src/carbon/grid_factor.py`:
+  - Scope 2 = gas share of generation **67.3%** (NERC 2025: 26,386 of 39,194 GWh, via NRGI 2026) × DESNZ 2026 natural-gas combustion **0.20434 kgCO2e/kWh NCV** (`Fuels!D45`) ÷ fleet efficiency **33%** (OCGT-dominated fleet; Nigerian studies report 25–39%) = **0.417**
+  - Cat 3 WTT = gas share × DESNZ WTT natural gas **0.03347** (`WTT- fuels!D44`) ÷ efficiency, grossed up for losses = **0.075**
+  - Cat 3 T&D = Scope 2 × TLF/(1−TLF), using NERC's transmission loss factor of **8.48%** = **0.039** (distribution losses aren't published, so this is likely understated)
+  - The components total **0.530**, which is consistent with Ember's lifecycle 0.456 given the uncertainty. The efficiency range of 28–38% gives a Scope 2 factor of 0.362–0.491. A test checks that the CSV values equal the derivation.
+- **Cat 3 for fuels:** DESNZ WTT factors are added for every Scope 1 fuel, so upstream emissions are reported consistently for fuels and electricity.
 - **Flights** include radiative forcing (RF), following DESNZ's recommendation. The DESNZ "domestic" factor stands in for short Nigerian domestic flights (e.g. Lagos–Abuja, ~520 km).
 - **Spend-based Cat 1** uses the mean of non-zero US commodity factors as a generic proxy. It is US-economy and USD-2022 based, so it is the **most uncertain** line.
 
@@ -62,27 +73,29 @@ Stored in `data/reference/emission_factors.csv`. Each row has a `factor_year`, `
 `calculate_emissions(..., policy="latest")` (the default) applies the most recent factor set to **all** years. This gives a like-for-like trend, consistent with the GHG Protocol's guidance to recalculate the base year when methodology changes. `policy="matching"` uses the factor year that matches each reporting year, falling back to the closest earlier year (this mirrors statutory year-by-year reporting).
 
 ### Verification status
-All DESNZ factors were **verified cell-by-cell against the official `ghg-conversion-factors-2026-full-set.xlsx`** on 2026-11-04. The `verification` column records each cell reference (e.g. `Fuels!D76`). This check corrected one factor: waste moved from *household residual waste* (497.29) to **commercial and industrial waste → landfill (520.58)**, which is the right category for a company. The Nigeria grid factor is not in DESNZ (UK-only) and was cross-checked across 3 sources. The spend-based factor remains a documented proxy.
+All DESNZ factors were **verified cell-by-cell against the official `ghg-conversion-factors-2026-full-set.xlsx`** on 2026-11-04. The `verification` column records each cell reference (e.g. `Fuels!D76`). This check corrected one factor: waste moved from *household residual waste* (497.29) to **commercial and industrial waste → landfill (520.58)**, which is the right category for a company. The Nigeria grid factor is not in DESNZ (UK-only), so it is derived from verified DESNZ inputs plus NERC data (above). The spend-based factor remains a documented proxy.
 
 **Optional refinement:** DESNZ also publishes *International, to/from non-UK* flight factors (economy with RF: 0.10916, `Business travel- air!E33`). These may suit Nigerian international routes that don't touch the UK better than the *long-haul to/from UK* factor used here.
 
-## 7. Scenario modelling (Phase 3)
+## 7. Scenario modelling
 Code: `src/carbon/scenarios.py`. Inputs: `data/reference/reduction_levers.csv` and `data/reference/cost_assumptions.csv`.
 
 - **Baseline:** 2025 annual activity by site and activity type.
 - **Sequential application:** levers run in `order` on the *residual* activity, so efficiency (L1) reduces the load before rooftop solar (L3) is sized. Abatement is never double-counted.
-- **Location vs market levers:** physical levers reduce activity. Contractual instruments (PPA / I-RECs, L9) leave activity unchanged and reduce **market-based Scope 2 only**.
+- **Location vs market levers:** physical levers reduce activity, and their abatement counts **every factor component** (avoided diesel cuts Scope 1 *and* Cat 3 upstream). Contractual instruments (PPA / I-RECs, L9) leave activity unchanged and reduce **market-based Scope 2 only** (they don't change physical supply chains, so there is no Cat 3 effect).
 - **Costs:** annualised cost = capex × CRF(r, n) + opex − savings, where CRF = r(1+r)ⁿ / ((1+r)ⁿ − 1) and r = 12% real USD. Savings = avoided activity × unit price (diesel, petrol, grid, flights, refrigerant, landfill fees). Commuting and supplier levers carry no company savings.
-- **Pathway:** BAU grows +2%/yr from 2025. A lever's full abatement (scaled by growth) applies from its `start_year`.
+- **Pathway:** BAU grows +2%/yr from 2025. Each lever **phases in linearly** over `ramp_years` from its `start_year` (e.g. supplier engagement takes 3 years). Abatement is scaled by growth.
+- **Uncertainty:** each lever has `reduction_pct_low` / `reduction_pct_high`. `pathway_range()` produces low/high bands. `sensitivity_analysis()` runs one-at-a-time tests (diesel ±30%, FX ±25%, tariff ±30%, discount rate 8%/18%, capex ±25%, effectiveness low/high, growth 0%/4%) on the net annual saving and the 2030 target gap.
 - **Targets:** SBTi Absolute Contraction Approach minimums from the 2023 base year: **Scope 1+2 −4.2%/yr** (1.5°C) and **Scope 3 −2.5%/yr** (well-below 2°C, required because Scope 3 is ≥40% of the total).
-- **Dual Scope 2:** contractual kWh get zero emissions. Nigeria has no residual-mix factor, so uncovered kWh use the grid average, following the GHG Protocol Scope 2 Guidance fallback.
+- **Dual Scope 2 with instrument quality checks:** `validate_instruments()` applies the **GHG Protocol Scope 2 Quality Criteria** before any instrument gets a zero factor. The instrument must (1) convey the energy-attribute claim (a bare PPA without certificates does not), (2) be retired/cancelled on behalf of the company, (3) be tracked in a registry, (4) have a vintage matching the reporting year, (5) come from the same market (Nigeria), and (6) not be double counted. Only eligible MWh reduce market-based Scope 2. Nigeria has no residual-mix factor, so uncovered kWh use the grid average (the Scope 2 Guidance fallback), and this is disclosed. Sample instruments are synthetic and include deliberate failures to show the checks working. Lever L9 assumes that future contracts meet these criteria.
 - **Intensity:** tCO2e per employee, per USD m revenue and per tonne of product (synthetic company profile).
 
 ## 8. Limitations & assumptions
 - Activity data is synthetic and only demonstrates the method.
 - DESNZ factors reflect UK conditions. Landfill, commuting and spend factors are proxies for Nigeria and likely **understate** local emissions (open dumpsites, older vehicle fleet).
-- Scope 2 is location-based only. Market-based reporting is not yet included.
+- Market-based Scope 2 is implemented with quality checks, but there is no Nigerian residual mix, so the grid-average fallback may double count attributes sold to others.
+- The Nigeria grid factor depends on an assumed fleet efficiency (33%, range 28–38%) and only transmission (not distribution) losses.
 - Spend-based Scope 3 is highly uncertain. It should be replaced by supplier-specific data over time.
 - Lever capex, opex and reduction percentages are documented **assumptions**, not quotes. Fuel prices and FX are volatile, so use the dashboard inputs and the notebook's sensitivity table.
-- Abatement is held constant over lever lifetimes. There is no grid decarbonisation, solar degradation or lever ramp-up.
+- Levers ramp up linearly and then hold constant. There is no grid decarbonisation or solar degradation. Uncertainty ranges are one-at-a-time, not a joint (Monte Carlo) distribution.
 - Some Scope 3 categories (e.g. Cat 4 transport, Cat 11 use of sold products) are excluded for now.
