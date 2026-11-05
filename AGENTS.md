@@ -47,3 +47,6 @@ python src/carbon/exec_report.py        # regenerate the executive summary PDF
 
 ## Commit conventions
 Use conventional commits: `feat:`, `fix:`, `docs:`, `data:`, `test:`, `refactor:`, `chore:`.
+
+## Git attribution
+Never add `Co-Authored-By`, `Claude-Session` or other AI attribution lines to commits or PRs (see CLAUDE.md).
