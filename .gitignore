@@ -234,3 +234,6 @@ data/processed/*
 # OS
 .DS_Store
 Thumbs.db
+
+# GitHub Pages project website
+!site/

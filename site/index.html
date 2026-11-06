@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carbon Footprint &amp; ESG · Daniel Oyewale</title>
+<meta name="description" content="An end-to-end Scope 1, 2 and 3 emissions inventory built on the GHG Protocol, with real DESNZ 2026, EPA and Nigeria grid factors, a costed decarbonisation plan and an interactive ESG dashboard.">
+<meta name="author" content="Daniel Oyewale">
+<meta property="og:type" content="website"><meta property="og:url" content="https://engr-daniel.github.io/carbon-footprint-esg-dashboard/">
+<meta property="og:title" content="How big is a Nigerian manufacturer&#x27;s carbon footprint, and what will it cost to cut it?"><meta property="og:description" content="An end-to-end Scope 1, 2 and 3 emissions inventory built on the GHG Protocol, with real DESNZ 2026, EPA and Nigeria grid factors, a costed decarbonisation plan and an interactive ESG dashboard.">
+<meta property="og:image" content="https://engr-daniel.github.io/carbon-footprint-esg-dashboard/assets/dashboard_screenshot.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+<style>
+:root{--a:#0e7490;--a2:#155e75;--ink:#0b0b0b;--ink2:#52514e;--ink3:#8a8984;--line:#e7e5e0;--bg:#fcfcfb;--card:#fff}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;overflow-x:hidden;font-family:Inter,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.55}
+a{color:var(--a)} img{max-width:100%;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 22px}
+nav{position:sticky;top:0;z-index:10;background:rgba(252,252,251,.88);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+nav .brand{font-weight:700;color:var(--ink);text-decoration:none;white-space:nowrap}
+nav .links{display:flex;gap:20px;font-size:.92rem} nav .links a{color:var(--ink2);text-decoration:none} nav .links a:hover{color:var(--a)}
+header.hero{background:linear-gradient(125deg,var(--a2) 0%,var(--a) 70%);color:#fff;padding:64px 0 0;overflow:hidden}
+.hero .eyebrow{font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;opacity:.85}
+.hero h1{font-size:clamp(1.8rem,4.2vw,3rem);line-height:1.12;margin:12px 0 16px;max-width:900px;letter-spacing:-.01em}
+.hero p.lead{font-size:clamp(1rem,1.6vw,1.15rem);max-width:780px;opacity:.92;margin:0}
+.ctas{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 40px}
+.btn{display:inline-block;padding:11px 18px;border-radius:10px;font-weight:600;font-size:.95rem;text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.4)}
+.btn:hover{background:rgba(255,255,255,.12)} .btn.primary{background:#fff;color:var(--a2);border-color:#fff} .btn.primary:hover{background:#f1f1ee}
+.shots{position:relative;max-width:1000px;margin:0 auto}
+.shot{border-radius:14px 14px 0 0;box-shadow:0 -10px 40px rgba(0,0,0,.25);border:1px solid rgba(255,255,255,.25);border-bottom:0}
+.phone{position:absolute;right:-18px;bottom:0;width:22%;border-radius:18px 18px 0 0;border:6px solid #111;border-bottom:0;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.note{background:#fbf7ec;border:1px solid #efe3c2;color:var(--ink2);border-radius:12px;padding:12px 16px;font-size:.9rem;margin:28px 0 0}
+section{padding:56px 0 8px} h2{font-size:1.6rem;margin:0 0 6px;letter-spacing:-.01em} .sub{color:var(--ink2);margin:0 0 24px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:0 1px 2px rgba(16,24,40,.04)}
+.kpi .l{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink2);font-weight:700}
+.kpi .v{font-size:1.9rem;font-weight:750;margin-top:8px;font-variant-numeric:tabular-nums;line-height:1.1} .kpi .v span{font-size:.95rem;font-weight:500;color:var(--ink2);margin-left:3px}
+.kpi .s{font-size:.84rem;color:var(--ink2);margin-top:6px}
+ol.finds{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px}
+ol.finds li{display:flex;gap:14px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px}
+ol.finds .n{flex:0 0 30px;height:30px;border-radius:50%;background:var(--a);color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;font-size:.85rem}
+ol.finds h3{margin:0 0 4px;font-size:1rem} ol.finds p{margin:0;color:var(--ink2);font-size:.92rem}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(420px,100%),1fr));gap:18px}
+figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;overflow:hidden}
+figure img{border-radius:6px} figcaption{font-size:.88rem;color:var(--ink2);margin-top:10px}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;display:grid;gap:10px}
+ol.steps li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;column-gap:12px;align-items:baseline;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+ol.steps li:before{content:counter(s,decimal-leading-zero);grid-row:span 2;font-weight:800;color:var(--a);font-size:1.15rem}
+ol.steps b{display:block} ol.steps span{color:var(--ink2);font-size:.92rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px} .panel{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+.panel h3{margin:0 0 12px;font-size:1.02rem} .panel ul{margin:0;padding-left:18px;color:var(--ink2);font-size:.92rem} .panel li{margin-bottom:5px}
+.chip{display:inline-block;font-size:.82rem;padding:5px 11px;border-radius:999px;border:1px solid var(--line);margin:0 6px 8px 0;background:#faf9f6}
+.lim{color:var(--ink2);font-size:.92rem;margin:14px 0 0}
+.others{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));gap:14px}
+.other{display:flex;gap:14px;align-items:flex-start;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;transition:border-color .15s,transform .15s}
+.other:hover{border-color:var(--a);transform:translateY(-2px)} .oi{font-size:1.8rem;line-height:1} .other b{display:block} .other em{font-style:normal;color:var(--ink2);font-size:.9rem}
+footer{border-top:1px solid var(--line);margin-top:64px;padding:26px 0 40px;color:var(--ink3);font-size:.86rem} footer a{color:var(--ink2)}
+@media (max-width:1000px){ .kpis{grid-template-columns:repeat(3,1fr)} }
+@media (max-width:760px){
+  nav .links a.hide-m{display:none} header.hero{padding-top:40px} .ctas{margin-bottom:28px}
+  .phone{display:none} .figs{grid-template-columns:1fr} .two{grid-template-columns:1fr}
+  .kpis{grid-template-columns:repeat(2,1fr);gap:10px} .kpi{padding:14px} .kpi .v{font-size:1.35rem} .kpi .v span{font-size:.78rem}
+  .kpi:last-child:nth-child(odd){grid-column:span 2} nav .brand{font-size:.9rem;overflow:hidden;text-overflow:ellipsis} nav .links{gap:12px;font-size:.86rem;flex-shrink:0}
+  section{padding-top:40px}
+}
+</style></head>
+<body>
+<nav><div class="wrap"><a class="brand" href="#">🌍 Carbon Footprint &amp; ESG</a>
+<div class="links"><a href="#results">Results</a><a class="hide-m" href="#charts">Charts</a><a href="#method">Method</a>
+<a href="https://carbon-footprint-esg-dashboard.streamlit.app/" target="_blank" rel="noopener">App ↗</a><a class="hide-m" href="https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard" target="_blank" rel="noopener">Code</a></div></div></nav>
+<header class="hero"><div class="wrap">
+<div class="eyebrow">Carbon accounting · GHG Protocol · Nigeria</div><h1>How big is a Nigerian manufacturer&#x27;s carbon footprint, and what will it cost to cut it?</h1><p class="lead">An end-to-end Scope 1, 2 and 3 emissions inventory built on the GHG Protocol, with real DESNZ 2026, EPA and Nigeria grid factors, a costed decarbonisation plan and an interactive ESG dashboard.</p>
+<div class="ctas"><a class="btn primary" href="https://carbon-footprint-esg-dashboard.streamlit.app/" target="_blank" rel="noopener">Open the live app ↗</a><a class="btn" href="https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard" target="_blank" rel="noopener">View the code</a><a class="btn" href="https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard/blob/master/reports/executive_summary.pdf" target="_blank" rel="noopener">Executive summary (PDF)</a></div>
+<div class="shots"><img class="shot" src="assets/dashboard_screenshot.png" alt="Dashboard screenshot"></div></div></header>
+<main class="wrap">
+<div class="note">⚖️ Demo data: activity data is synthetic (fictional EcoNaija Manufacturing Ltd, 3 sites, 2023–2025). Emission factors and costs are real and sourced.</div>
+<section id="results"><h2>Key results</h2><p class="sub">The headline numbers.</p><div class="kpis"><div class="kpi"><div class="l">Footprint 2023–25</div><div class="v">17,313<span> tCO₂e</span></div><div class="s">5,384 t in 2025</div></div><div class="kpi"><div class="l">Scope 3 share</div><div class="v">63%<span></span></div><div class="s">Scope 1: 21% · Scope 2: 16%</div></div><div class="kpi"><div class="l">Change vs 2023</div><div class="v">−12.3%<span></span></div><div class="s">ahead of the −30% by 2030 path</div></div><div class="kpi"><div class="l">Abatement found</div><div class="v">~968<span> t/yr</span></div><div class="s">−18% with 8 physical levers</div></div><div class="kpi"><div class="l">Net saving</div><div class="v">~$124k<span>/yr</span></div><div class="s">on $424k capex</div></div></div></section>
+<section><h2>What the analysis shows</h2><p class="sub">Findings, and what they mean for decision-makers.</p><ol class="finds"><li><div class="n">1</div><div><h3>Purchased goods are the #1 hotspot (41%)</h3><p>Steel (18%) and plastic resin (12%) lead, so supplier data on these two materials is the top data-strategy priority.</p></div></li><li><div class="n">2</div><div><h3>Nigeria&#x27;s grid is ~3× more carbon-intensive than the UK&#x27;s</h3><p>A scope-correct grid factor of 0.417 kgCO₂e/kWh, derived from NERC 2025 generation data, makes on-site solar especially valuable.</p></div></li><li><div class="n">3</div><div><h3>Decarbonisation pays for itself</h3><p>Eight physical levers cut ~968 tCO₂e/yr and save ~$124k/yr net. The Port Harcourt solar-battery hybrid pays back in ~2 years.</p></div></li><li><div class="n">4</div><div><h3>The 2030 benchmark is met only with renewable contracts</h3><p>On a location basis the pathway misses by ~77 t, so a second wave of levers is needed by ~2029.</p></div></li></ol></section>
+<section id="charts"><h2>Charts</h2><p class="sub">Click any chart to open it full size.</p><div class="figs"><figure><a href="assets/01_emissions_by_scope_year.png" target="_blank"><img src="assets/01_emissions_by_scope_year.png" alt="Emissions by scope and year"></a><figcaption>Emissions by scope and year</figcaption></figure><figure><a href="assets/02_emission_hotspots.png" target="_blank"><img src="assets/02_emission_hotspots.png" alt="Emission hotspots"></a><figcaption>Emission hotspots</figcaption></figure><figure><a href="assets/03_target_progress.png" target="_blank"><img src="assets/03_target_progress.png" alt="Progress against the reduction target"></a><figcaption>Progress against the reduction target</figcaption></figure><figure><a href="assets/05_macc_curve.png" target="_blank"><img src="assets/05_macc_curve.png" alt="Marginal abatement cost curve (MACC)"></a><figcaption>Marginal abatement cost curve (MACC)</figcaption></figure><figure><a href="assets/06_decarbonisation_pathway.png" target="_blank"><img src="assets/06_decarbonisation_pathway.png" alt="Decarbonisation pathway to 2035"></a><figcaption>Decarbonisation pathway to 2035</figcaption></figure><figure><a href="assets/07_sensitivity_tornado.png" target="_blank"><img src="assets/07_sensitivity_tornado.png" alt="Sensitivity of the net saving"></a><figcaption>Sensitivity of the net saving</figcaption></figure></div></section>
+<section id="method"><h2>How it works</h2><p class="sub">Full methodology, tests and code are on <a href="https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard" target="_blank" rel="noopener">GitHub</a>.</p>
+<ol class="steps"><li><b>Activity data × emission factor</b><span>A reusable engine for multi-component factors, with a relational SQL model</span></li><li><b>Scope-correct factors</b><span>DESNZ 2026 (verified cell by cell), Nigeria grid factor split into Scope 2 and Scope 3 Cat 3, EPA v1.3 spend factors deflated to 2022 USD</span></li><li><b>Scope 2 quality checks</b><span>Market-based claims pass the GHG Protocol Scope 2 Quality Criteria before any zero factor</span></li><li><b>Costed levers</b><span>MACC with 2026 Nigerian prices, 1–3 year ramp-up, low/high effectiveness bands, sensitivity analysis</span></li><li><b>Tested and reproducible</b><span>pytest, SQL-parity tests, notebook execution and a dashboard smoke test in CI</span></li></ol>
+<div class="two" style="margin-top:18px"><div class="panel"><h3>Tech stack</h3><span class="chip">Python</span><span class="chip">pandas</span><span class="chip">Plotly</span><span class="chip">Streamlit</span><span class="chip">SQL</span><span class="chip">matplotlib</span><span class="chip">ReportLab</span><span class="chip">pytest</span><span class="chip">GitHub Actions</span></div>
+<div class="panel"><h3>Data &amp; references</h3><ul><li>GHG Protocol Corporate, Scope 2 &amp; Scope 3 Standards</li><li>UK DESNZ GHG Conversion Factors 2026</li><li>US EPA Supply Chain GHG Emission Factors v1.3</li><li>NERC / NRGI 2025 Nigeria generation mix</li><li>SBTi near-term criteria</li><li>IFRS S2</li></ul></div></div>
+<p class="lim"><b>Limitations:</b> Synthetic activity data · US-economy spend factors for Scope 3 · UK proxies for landfill and cars · estimated (not official) Nigeria grid factor, range ±4% on the total.</p></section>
+<section><h2>More projects</h2><p class="sub">Part of a data, strategy and sustainability portfolio.</p><div class="others"><a class="other" href="https://engr-daniel.github.io/solar-minigrid-site-suitability-nigeria/"><span class="oi">☀️</span><span><b>Solar Mini-Grid Siting</b><em>Where should Nigeria build its next solar mini-grids?</em></span></a><a class="other" href="https://engr-daniel.github.io/greenwashing-detector-esg-reports/"><span class="oi">🔎</span><span><b>Greenwashing Detector</b><em>Are a company&#x27;s climate claims specific enough to verify?</em></span></a></div></section>
+</main>
+<footer><div class="wrap">Built by <b>Daniel Oyewale</b>, Data Analyst · Data Strategist · Sustainability Researcher at
+<a href="https://petgrave.io" target="_blank" rel="noopener">Petgrave.io</a> · <a href="https://github.com/Engr-Daniel" target="_blank" rel="noopener">GitHub</a> ·
+<a href="https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard" target="_blank" rel="noopener">Source code</a> (MIT)</div></footer>
+</body></html>
