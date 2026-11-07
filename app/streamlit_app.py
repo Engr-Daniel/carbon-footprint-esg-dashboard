@@ -53,7 +53,7 @@ st.set_page_config(page_title="Carbon footprint and decarbonisation | EcoNaija",
 
 st.markdown(f"""
 <style>
-  .block-container {{padding-top: 2.4rem; padding-bottom: 3rem; max-width: 1280px;}}
+  .block-container {{padding-top: 4.6rem; padding-bottom: 3rem; max-width: 1280px;}}
   h1, h2, h3, h4 {{letter-spacing: -0.015em; font-stretch: 108%;}}
   .hero {{margin-bottom: 26px;}}
   .hero .who {{font-size: .9rem; color: {INK2}; margin: 0 0 14px;}}
@@ -84,7 +84,7 @@ st.markdown(f"""
   [data-testid="stSidebar"] a, [data-testid="stSidebar"] button {{color: #fff !important;}}
   .foot {{color:{INK2}; font-size:0.82rem; margin-top:36px; border-top:2px solid {INK}; padding-top:12px;}}
   @media (max-width: 768px) {{
-    .block-container {{padding: 3.4rem .9rem 2rem;}}
+    .block-container {{padding: 4rem .9rem 2rem;}}
     .hero h1 {{font-size: 1.7rem;}} .hero .tot b {{font-size: 1.9rem;}} .scopes {{height: 52px;}} .scopes div span {{display:none;}}
     .kpi {{min-height: 0; padding-bottom: 10px;}} .kpi .value {{font-size: 1.5rem;}}
     div[data-testid="stTabs"] [data-baseweb="tab-list"] {{overflow-x:auto; flex-wrap:nowrap; gap:14px;}}
