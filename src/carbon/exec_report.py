@@ -69,7 +69,7 @@ def build(out: Path = OUT) -> Path:
 
     story = [
         Paragraph("EcoNaija Manufacturing Ltd: Carbon Footprint &amp; Decarbonisation Strategy", H1),
-        Paragraph(f"Executive summary · {date.today():%d %B %Y} · Prepared by Daniel Oyewale, Petgrave.io", SM),
+        Paragraph(f"Executive summary · {date.today():%d %B %Y} · Prepared by Daniel Oyewale", SM),
         Paragraph("<b>Illustrative case study.</b> Activity data and company profile are synthetic; emission factors "
                   "(DESNZ 2026, verified) and 2026 Nigerian energy prices are real. Not a verified GHG inventory.", SM),
         Spacer(1, 4),
@@ -175,7 +175,7 @@ def build(out: Path = OUT) -> Path:
     out.parent.mkdir(parents=True, exist_ok=True)
     doc = SimpleDocTemplate(str(out), pagesize=A4, leftMargin=13 * mm, rightMargin=13 * mm, topMargin=11 * mm,
                             bottomMargin=10 * mm, title="EcoNaija Carbon Footprint & Decarbonisation Strategy",
-                            author="Daniel Oyewale (Petgrave.io)")
+                            author="Daniel Oyewale")
     doc.build(story)
     return out
 

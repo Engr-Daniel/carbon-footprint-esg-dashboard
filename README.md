@@ -190,7 +190,7 @@ Python (pandas, plotly, matplotlib, reportlab) · Streamlit · SQL (SQLite/Postg
 - IFRS S2 – Climate-related Disclosures
 
 ## 👤 Author
-**Daniel Oyewale**, Data Analyst · Data Strategist · Sustainability Researcher at [Petgrave.io](https://petgrave.io)
+**Daniel Oyewale**, data analyst, data strategist and sustainability researcher.
 
 ## 📄 License
 MIT. See [LICENSE](LICENSE).

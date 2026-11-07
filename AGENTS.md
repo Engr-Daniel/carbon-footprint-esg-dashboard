@@ -3,7 +3,7 @@
 Instructions for AI coding agents (Claude, Copilot, Codex, etc.) and human collaborators working in this repository.
 
 ## Project at a glance
-A GHG Protocol-based carbon accounting pipeline plus a Streamlit ESG dashboard. It is a portfolio project by Daniel Oyewale (Petgrave.io), aimed at data analysis, data strategy and sustainability roles.
+A GHG Protocol-based carbon accounting pipeline plus a Streamlit ESG dashboard. It is a personal portfolio project by Daniel Oyewale, aimed at data analysis, data strategy and sustainability roles.
 
 **Always read `MEMORY.md` (context & decisions) and `TASK.md` (current priorities) before starting work.**
 

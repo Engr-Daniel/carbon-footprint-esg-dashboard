@@ -62,4 +62,4 @@ Steps to take the project from private repo to public portfolio piece. Items mar
 >
 > *Illustrative case study. The pathway benchmarks against SBTi minimum rates and is not a validated target.*
 >
-> #ESG #Sustainability #CarbonAccounting #DataAnalytics #NetZero #Nigeria #ClimateAction #Petgrave
+> #ESG #Sustainability #CarbonAccounting #DataAnalytics #NetZero #Nigeria #ClimateAction

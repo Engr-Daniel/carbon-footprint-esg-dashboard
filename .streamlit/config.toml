@@ -1,10 +1,28 @@
 [theme]
 base = "light"
-primaryColor = "#2a78d6"
-backgroundColor = "#fcfcfb"
-secondaryBackgroundColor = "#f3f2ef"
-textColor = "#0b0b0b"
-font = "sans serif"
+primaryColor = "#1f4e45"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f2f5f4"
+textColor = "#1d2326"
+borderColor = "#d5dbdc"
+baseRadius = "none"
+font = "Archivo, sans-serif"
+headingFont = "Archivo, sans-serif"
+
+[[theme.fontFaces]]
+family = "Archivo"
+url = "app/static/archivo-latin-standard-normal.woff2"
+weight = "100 900"
+style = "normal"
+
+[theme.sidebar]
+backgroundColor = "#1f4e45"
+secondaryBackgroundColor = "#2a5f55"
+textColor = "#e4efeb"
+borderColor = "#3d6f65"
+
+[server]
+enableStaticServing = true
 
 [client]
 toolbarMode = "minimal"

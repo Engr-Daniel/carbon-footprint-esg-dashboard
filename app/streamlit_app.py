@@ -29,10 +29,10 @@ from carbon.scenarios import (  # noqa: E402
 )
 
 # ----------------------------------------------------------------------------- design tokens
-SURFACE, CARD, BORDER, GRID = "#fcfcfb", "#ffffff", "#e7e5e0", "#ecebe7"
-INK, INK2, INK3 = "#0b0b0b", "#52514e", "#8a8984"
-SCOPE = {"Scope 1": "#2a78d6", "Scope 2": "#eb6834", "Scope 3": "#1baf7a"}  # validated categorical slots 1-3
-SITE = {"Port Harcourt Plant": "#104281", "Lagos HQ": "#2a78d6", "Abuja Office": "#86b6ef"}  # one-hue ramp
+SURFACE, CARD, BORDER, GRID = "#ffffff", "#ffffff", "#d5dbdc", "#e8ecec"
+INK, INK2, INK3 = "#1d2326", "#5b6569", "#8a9397"
+SCOPE = {"Scope 1": "#1f4e45", "Scope 2": "#4f8a78", "Scope 3": "#8fb8a6"}  # matches the header scope bar
+SITE = {"Port Harcourt Plant": "#1d2326", "Lagos HQ": "#5b6569", "Abuja Office": "#a3acaf"}  # charcoal ramp
 GOOD, CRITICAL, WARN = "#0ca30c", "#d03b3b", "#fab219"
 TARGET = "#d03b3b"
 REPO = "https://github.com/Engr-Daniel/carbon-footprint-esg-dashboard"
@@ -48,36 +48,50 @@ NICE = {
     "purchased_cleaning_services": "Cleaning services", "upstream_freight_trucking": "Freight trucking",
 }
 
-st.set_page_config(page_title="EcoNaija · Carbon & ESG Dashboard", page_icon="🌍", layout="wide",
-                   initial_sidebar_state="expanded")
+st.set_page_config(page_title="Carbon footprint and decarbonisation | EcoNaija", page_icon=str(Path(__file__).parent / "static" / "favicon.png"), layout="wide",
+                   initial_sidebar_state="auto")
 
 st.markdown(f"""
 <style>
-  .block-container {{padding-top: 2.2rem; padding-bottom: 3rem; max-width: 1320px;}}
-  h1, h2, h3 {{letter-spacing: -0.01em;}}
-  .hero {{padding: 4px 0 14px 0; border-bottom: 1px solid {BORDER}; margin-bottom: 18px;}}
-  .hero h1 {{font-size: 1.9rem; margin: 0 0 4px 0; padding: 0;}}
-  .hero p {{color: {INK2}; margin: 0; font-size: 0.98rem;}}
-  .badge {{display:inline-block; font-size:0.74rem; padding:3px 9px; border-radius:999px; margin:8px 6px 0 0;
-           background:#eef4fc; color:#184f95; border:1px solid #d5e5f8;}}
-  .badge.warn {{background:#fff6e5; color:#7a5200; border-color:#f6e1b3;}}
-  .kpi {{background:{CARD}; border:1px solid {BORDER}; border-radius:14px; padding:16px 18px 14px; min-height:142px;}}
-  .kpi .label {{font-size:0.74rem; color:{INK2}; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;}}
-  .kpi .value {{font-size:1.75rem; font-weight:700; color:{INK}; line-height:1.25; margin-top:4px;}}
-  .kpi .unit {{font-size:0.95rem; font-weight:500; color:{INK2};}}
-  .kpi .sub {{font-size:0.8rem; color:{INK2}; margin-top:2px;}}
-  .chip {{display:inline-block; font-size:0.78rem; font-weight:600; padding:2px 9px; border-radius:999px; margin-top:6px;}}
-  .chip.good {{background:#e8f6e8; color:#0a6b0a;}}
-  .chip.bad {{background:#fbeaea; color:#9b2626;}}
-  .chip.neutral {{background:#f1f0ec; color:{INK2};}}
-  .insight {{background:{CARD}; border:1px solid {BORDER}; border-left:4px solid #2a78d6; border-radius:12px;
-             padding:14px 16px; height:100%;}}
-  .insight .t {{font-weight:700; font-size:0.95rem; margin-bottom:4px; color:{INK};}}
-  .insight .b {{font-size:0.86rem; color:{INK2}; line-height:1.45;}}
-  .section-note {{color:{INK2}; font-size:0.88rem; margin:-6px 0 10px 0;}}
-  div[data-testid="stTabs"] button p {{font-size:0.95rem; font-weight:600;}}
-  div[data-testid="stExpander"] details {{border-radius:12px;}}
-  .foot {{color:{INK3}; font-size:0.78rem; margin-top:28px; border-top:1px solid {BORDER}; padding-top:10px;}}
+  .block-container {{padding-top: 2.4rem; padding-bottom: 3rem; max-width: 1280px;}}
+  h1, h2, h3, h4 {{letter-spacing: -0.015em; font-stretch: 108%;}}
+  .hero {{margin-bottom: 26px;}}
+  .hero .who {{font-size: .9rem; color: {INK2}; margin: 0 0 14px;}}
+  .hero h1 {{font-size: clamp(1.8rem, 3.6vw, 2.9rem); font-stretch: 118%; font-weight: 800; line-height: 1.04;
+             letter-spacing: -.025em; margin: 0 0 10px; padding: 0; max-width: 22ch;}}
+  .hero p {{color: {INK2}; margin: 0 0 22px; font-size: 1.02rem; max-width: 70ch;}}
+  .hero .tot {{display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 14px; margin-bottom:10px;}}
+  .hero .tot b {{font-stretch:118%; font-size:2.4rem; font-weight:800; letter-spacing:-.03em; line-height:1; white-space:nowrap;}}
+  .hero .tot span {{color:{INK2}; font-size:.92rem;}}
+  .scopes {{display:flex; height:64px;}}
+  .scopes div {{display:flex; align-items:flex-end; padding:8px 12px; color:#fff; font-weight:700; font-size:1.05rem; min-width:0;}}
+  .scopes div span {{font-weight:400; font-size:.82rem; margin-left:8px; opacity:.9; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}}
+  .demo {{font-size:.82rem; color:{INK2}; margin-top:8px;}}
+  .kpi {{border-top:3px solid {INK}; padding:12px 2px 6px; min-height:132px;}}
+  .kpi .label {{font-size:0.86rem; color:{INK}; font-weight:600;}}
+  .kpi .value {{font-size:1.85rem; font-weight:800; font-stretch:112%; color:{INK}; line-height:1.15; margin-top:6px;
+               font-variant-numeric:tabular-nums; letter-spacing:-.02em;}}
+  .kpi .unit {{font-size:0.9rem; font-weight:500; color:{INK2}; font-stretch:100%;}}
+  .kpi .sub {{font-size:0.82rem; color:{INK2}; margin-top:2px;}}
+  .chip {{display:inline-block; font-size:0.8rem; font-weight:700; margin-top:6px;}}
+  .chip.good {{color:#1f6b3a;}} .chip.bad {{color:#a32a2a;}} .chip.neutral {{color:{INK2};}}
+  .insight {{border-top:1px solid {BORDER}; padding:14px 0 4px; height:100%;}}
+  .insight .t {{font-weight:700; font-size:1rem; margin-bottom:4px; color:{INK};}}
+  .insight .b {{font-size:0.9rem; color:{INK2}; line-height:1.5;}}
+  .section-note {{color:{INK2}; font-size:0.9rem; margin:-6px 0 12px 0;}}
+  div[data-testid="stTabs"] [data-baseweb="tab-list"] {{gap: 22px; border-bottom: 2px solid {INK};}}
+  div[data-testid="stTabs"] button p {{font-size:0.98rem; font-weight:600;}}
+  [data-testid="stSidebar"] a, [data-testid="stSidebar"] button {{color: #fff !important;}}
+  .foot {{color:{INK2}; font-size:0.82rem; margin-top:36px; border-top:2px solid {INK}; padding-top:12px;}}
+  @media (max-width: 768px) {{
+    .block-container {{padding: 3.4rem .9rem 2rem;}}
+    .hero h1 {{font-size: 1.7rem;}} .hero .tot b {{font-size: 1.9rem;}} .scopes {{height: 52px;}} .scopes div span {{display:none;}}
+    .kpi {{min-height: 0; padding-bottom: 10px;}} .kpi .value {{font-size: 1.5rem;}}
+    div[data-testid="stTabs"] [data-baseweb="tab-list"] {{overflow-x:auto; flex-wrap:nowrap; gap:14px;}}
+    div[data-testid="stTabs"] button {{white-space:nowrap;}}
+    div[data-testid="stHorizontalBlock"] {{flex-wrap: wrap; gap: .4rem;}}
+    div[data-testid="stHorizontalBlock"] > div[data-testid="stColumn"] {{min-width: calc(50% - .4rem); flex: 1 1 calc(50% - .4rem);}}
+  }}
 </style>""", unsafe_allow_html=True)
 
 
@@ -90,7 +104,7 @@ def kpi(col, label, value, unit="", sub="", chip=None):
 
 
 def insight(col, icon, title, body, accent="#2a78d6"):
-    col.markdown(f'<div class="insight" style="border-left-color:{accent}"><div class="t">{icon} {title}</div>'
+    col.markdown(f'<div class="insight"><div class="t">{title}</div>'
                  f'<div class="b">{body}</div></div>', unsafe_allow_html=True)
 
 
@@ -99,11 +113,11 @@ def style(fig, title=None, height=380, legend=True, ytitle=None, xtitle=None):
         title=dict(text=f"<b>{title}</b>" if title else None, font=dict(size=15, color=INK), x=0, xanchor="left"),
         height=height, margin=dict(l=8, r=16, t=48 if title else 12, b=70 if legend else 8),
         paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Source Sans Pro, Inter, sans-serif", size=12.5, color=INK2),
+        font=dict(family="Archivo, sans-serif", size=12.5, color=INK2),
         legend=dict(orientation="h", yanchor="top", y=-0.12, xanchor="left", x=0, title=None, traceorder="normal",
                     font=dict(size=12, color=INK2)) if legend else None,
         showlegend=legend, hoverlabel=dict(bgcolor="white", bordercolor=BORDER, font=dict(color=INK, size=12.5)),
-        barcornerradius=4, bargap=0.38,
+        barcornerradius=0, bargap=0.38,
     )
     fig.update_xaxes(showgrid=False, linecolor=BORDER, tickcolor=BORDER, title=xtitle, zeroline=False)
     fig.update_yaxes(gridcolor=GRID, gridwidth=1, zeroline=False, title=ytitle, tickformat=",")
@@ -150,7 +164,7 @@ yearly = summarise(df, ["year"]).set_index("year")["tco2e"]
 
 # ----------------------------------------------------------------------------- sidebar
 with st.sidebar:
-    st.markdown("### 🌍 EcoNaija Manufacturing Ltd")
+    st.markdown("### EcoNaija Manufacturing Ltd")
     st.caption("Fictional Nigerian manufacturer · 3 sites · 2023–2025")
     st.markdown("**Sites:** Lagos HQ, Abuja Office, Port Harcourt Plant")
     st.markdown("**Standard:** GHG Protocol Corporate & Scope 3 · AR5 GWP100 · operational control")
@@ -164,21 +178,24 @@ with st.sidebar:
     st.divider()
     pdf = ROOT / "reports" / "executive_summary.pdf"
     if pdf.exists():
-        st.download_button("📄 Executive summary (PDF)", pdf.read_bytes(), "EcoNaija_executive_summary.pdf",
+        st.download_button("Executive summary (PDF)", pdf.read_bytes(), "EcoNaija_executive_summary.pdf",
                            "application/pdf", width="stretch")
-    st.link_button("💻 Code & methodology on GitHub", REPO, width="stretch")
-    st.caption("Built by **Daniel Oyewale** · Petgrave.io")
+    st.link_button("Code and methodology", REPO, width="stretch")
+    st.caption("Daniel Oyewale")
 
 # ----------------------------------------------------------------------------- hero
-st.markdown(f"""
-<div class="hero">
-  <h1>Carbon Footprint &amp; Decarbonisation Strategy</h1>
-  <p>Where EcoNaija's emissions come from, what it would cost to cut them, and whether the plan keeps pace with
-     SBTi's minimum reduction rates.</p>
-  <span class="badge warn">⚠️ Synthetic activity data, real 2026 factors &amp; prices</span>
-  <span class="badge">GHG Protocol · Scopes 1–3</span><span class="badge">DESNZ 2026 verified</span>
-  <span class="badge">Tested in CI</span>
-</div>""", unsafe_allow_html=True)
+_sc = df.groupby("scope").tco2e.sum() / df.tco2e.sum()
+_lab = {1: "fuel, generators, refrigerants", 2: "grid electricity", 3: "supply chain, freight, travel, waste"}
+_col = {1: "#1f4e45", 2: "#4f8a78", 3: "#8fb8a6"}
+st.markdown(f"""<div class="hero"><div class="who">EcoNaija Manufacturing Ltd, 3 sites, 2023 to 2025</div>
+<h1>Carbon footprint and decarbonisation strategy</h1>
+<p>Where the company's emissions come from, what it would cost to cut them, and whether the plan keeps pace with
+SBTi's minimum reduction rates.</p>
+<div class="tot"><b>{df.tco2e.sum():,.0f} tCO₂e</b><span>Scopes 1 to 3, 2023 to 2025</span></div>
+<div class="scopes" role="img" aria-label="Scope split">""" + "".join(
+    f'<div style="flex:{_sc[k]:.3f};background:{_col[k]}">{_sc[k]:.0%}<span>Scope {k}: {_lab[k]}</span></div>' for k in (1, 2, 3))
+    + """</div><div class="demo">Synthetic activity data for a fictional company. Emission factors and 2026 prices are real
+and sourced.</div></div>""", unsafe_allow_html=True)
 
 t_over, t_fp, t_scen, t_s2, t_meth = st.tabs(
     ["Overview", "Footprint", "Decarbonisation scenarios", "Scope 2 & intensity", "Method & data"])
@@ -218,11 +235,11 @@ with t_over:
 
     pf = go.Figure()
     pf.add_scatter(x=path0.year, y=path0.with_levers_market_upper, line=dict(width=0), mode="lines", showlegend=False, hoverinfo="skip")
-    pf.add_scatter(x=path0.year, y=path0.with_levers_market_lower, fill="tonexty", fillcolor="rgba(27,175,122,0.12)",
+    pf.add_scatter(x=path0.year, y=path0.with_levers_market_lower, fill="tonexty", fillcolor="rgba(31,78,69,0.12)",
                    line=dict(width=0), mode="lines", name="Plan range", hoverinfo="skip")
     pf.add_scatter(mode="lines", x=path0.year, y=path0.bau, name="Business as usual", line=dict(color=INK3, width=2, dash="dot"),
                    hovertemplate="BAU %{x}: %{y:,.0f}<extra></extra>")
-    pf.add_scatter(mode="lines", x=path0.year, y=path0.with_levers_market, name="With lever plan", line=dict(color="#1baf7a", width=2.5),
+    pf.add_scatter(mode="lines", x=path0.year, y=path0.with_levers_market, name="With lever plan", line=dict(color="#1f4e45", width=2.5),
                    hovertemplate="Plan %{x}: %{y:,.0f}<extra></extra>")
     pf.add_scatter(mode="lines", x=path0.year, y=path0.sbti_target, name="Path at SBTi minimum rates", line=dict(color=TARGET, width=2, dash="dash"),
                    hovertemplate="Target %{x}: %{y:,.0f}<extra></extra>")
@@ -243,15 +260,15 @@ with t_over:
     i1, i2, i3 = st.columns(3, gap="medium")
     top_src = summarise(df, ["source"]).sort_values("tco2e", ascending=False)
     l2 = res0.set_index("lever_id").loc["L2"]
-    insight(i1, "🏭", "Materials drive the footprint",
+    insight(i1, "", "Materials drive the footprint",
             f"Steel and plastic resin alone are <b>{top_src.set_index('source').tco2e[['Steel','Plastic resin']].sum()/df.tco2e.sum():.0%}</b> "
             "of emissions. Supplier data and low-carbon procurement for these two inputs matter more than anything on site.",
             "#1baf7a")
-    insight(i2, "☀️", "Solar beats diesel on cost",
+    insight(i2, "", "Solar beats diesel on cost",
             f"A solar-battery hybrid at Port Harcourt cuts <b>{l2.abatement_tco2e:,.0f} tCO₂e/yr</b> and pays back in "
             f"<b>~{l2.simple_payback_years:.0f} years</b>. It is one of {int((res0.cost_per_tco2e_usd < 0).sum())} levers that save money.",
             "#2a78d6")
-    insight(i3, "⚡", "2030 hinges on clean power contracts",
+    insight(i3, "", "2030 hinges on clean power contracts",
             f"Physical measures alone leave a <b>{gap_loc:+,.0f} t</b> gap in 2030. Quality-assured renewable contracts close it "
             f"(<b>{gap:+,.0f} t</b>). Growth erodes the gains by 2035, so a second wave is needed.", "#eb6834")
 
@@ -391,11 +408,11 @@ with t_scen:
         a, b = st.columns([1.35, 1], gap="large")
         pf = go.Figure()
         pf.add_scatter(x=path.year, y=path.with_levers_market_upper, line=dict(width=0), mode="lines", showlegend=False, hoverinfo="skip")
-        pf.add_scatter(x=path.year, y=path.with_levers_market_lower, fill="tonexty", fillcolor="rgba(27,175,122,0.12)",
+        pf.add_scatter(x=path.year, y=path.with_levers_market_lower, fill="tonexty", fillcolor="rgba(31,78,69,0.12)",
                        line=dict(width=0), mode="lines", name="Range (lever effectiveness)", hoverinfo="skip")
         pf.add_scatter(mode="lines", x=path.year, y=path.bau, name="Business as usual", line=dict(color=INK3, width=2, dash="dot"))
-        pf.add_scatter(mode="lines", x=path.year, y=path.with_levers_location, name="Plan (location-based)", line=dict(color="#2a78d6", width=2))
-        pf.add_scatter(mode="lines", x=path.year, y=path.with_levers_market, name="Plan + renewable contracts", line=dict(color="#1baf7a", width=2.5))
+        pf.add_scatter(mode="lines", x=path.year, y=path.with_levers_location, name="Plan (location-based)", line=dict(color="#8fb8a6", width=2))
+        pf.add_scatter(mode="lines", x=path.year, y=path.with_levers_market, name="Plan + renewable contracts", line=dict(color="#1f4e45", width=2.5))
         pf.add_scatter(mode="lines", x=path.year, y=path.sbti_target, name="Path at SBTi minimum rates", line=dict(color=TARGET, width=2, dash="dash"))
         pf.add_scatter(x=path.year, y=path.actual, name="Actual", mode="lines+markers", line=dict(color=INK, width=2.5),
                        marker=dict(size=9, line=dict(color=SURFACE, width=2)))
@@ -408,7 +425,7 @@ with t_scen:
         lo = sv[["net_saving_low", "net_saving_high"]].min(axis=1)
         hi = sv[["net_saving_low", "net_saving_high"]].max(axis=1)
         fig = go.Figure(go.Bar(y=sv.parameter, x=(hi - lo) / 1000, base=lo / 1000, orientation="h",
-                               marker_color="#2a78d6", text=[f"${l/1000:,.0f}k – ${h/1000:,.0f}k" for l, h in zip(lo, hi)],
+                               marker_color="#4f8a78", text=[f"${l/1000:,.0f}k – ${h/1000:,.0f}k" for l, h in zip(lo, hi)],
                                textposition="outside", textfont=dict(color=INK2, size=11.5), cliponaxis=False,
                                hovertemplate="%{y}<br>%{base:,.0f}k to %{x:,.0f}k span<extra></extra>"))
         fig.add_vline(x=net / 1000, line=dict(color=INK, width=1, dash="dash"))
@@ -458,9 +475,9 @@ with t_s2:
     a, b = st.columns([1.4, 1], gap="large")
     dual = scope2_dual(df, eligible_kwh_by_year(v))
     fig = go.Figure()
-    fig.add_bar(x=dual.year.astype(str), y=dual.location_tco2e, name="Location-based", marker_color="#eb6834",
+    fig.add_bar(x=dual.year.astype(str), y=dual.location_tco2e, name="Location-based", marker_color="#5b6569",
                 hovertemplate="Location %{x}: %{y:,.0f}<extra></extra>")
-    fig.add_bar(x=dual.year.astype(str), y=dual.market_tco2e, name="Market-based", marker_color="#2a78d6",
+    fig.add_bar(x=dual.year.astype(str), y=dual.market_tco2e, name="Market-based", marker_color="#4f8a78",
                 hovertemplate="Market %{x}: %{y:,.0f}<extra></extra>")
     fig.update_layout(barmode="group", bargroupgap=0.12)
     show(a, style(fig, "Scope 2 dual reporting (tCO₂e)", height=330))
@@ -526,5 +543,5 @@ with t_meth:
                                 "factor_year": st.column_config.NumberColumn("Year", format="%d"),
                                 "source": st.column_config.TextColumn("Source", width="large")})
 
-st.markdown(f'<div class="foot">Illustrative case study · synthetic activity data · not a verified GHG inventory · '
-            f'<a href="{REPO}" target="_blank">source code</a></div>', unsafe_allow_html=True)
+st.markdown(f'<div class="foot">Illustrative case study on synthetic data; not a verified GHG inventory. '
+            f'<a href="{REPO}" target="_blank">Source code</a></div>', unsafe_allow_html=True)
